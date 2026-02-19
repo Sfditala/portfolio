@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+
+
+/* ألوان الثيم */
+:root {
+  --color-primary: #800020; /* برغندي */
+  --color-accent: #fff;      /* أبيض */
+  --color-dark: #000;        /* أسود */
+}
+
+/* مثال على عناصر ثانوية */
+.bg-primary { background-color: var(--color-primary); }
+.text-accent { color: var(--color-accent); }
+.text-dark { color: var(--color-dark); }
+
+a {
+  color: #b91c1c; /* برغندي قوي */
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #000000 ;
+}
+ @keyframes fadeIn {
+          0% { opacity: 0; transform: translateY(20px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 1s ease forwards;
+        }
