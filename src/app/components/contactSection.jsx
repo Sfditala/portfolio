@@ -3,22 +3,23 @@ import React from "react";
 import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from "react-icons/fa";
 
 export default function ContactSection() {
+  // ملاحظة: قمنا بتغيير <FaGithub /> إلى FaGithub (بدون أقواس الوسم)
   const socialLinks = [
     {
       name: "GitHub",
-      icon: <FaGithub />,
+      IconComponent: FaGithub,
       url: "https://github.com/sfditala",
       bgColor: "#24292e",
     },
     {
       name: "LinkedIn",
-      icon: <FaLinkedin />,
+      IconComponent: FaLinkedin,
       url: "https://www.linkedin.com/in/talasfdi/",
       bgColor: "#0077b5",
     },
     {
       name: "Instagram",
-      icon: <FaInstagram />,
+      IconComponent: FaInstagram,
       url: "https://www.instagram.com/talasafadyy/",
       bgColor: "#ee2a7b",
     },
@@ -72,9 +73,11 @@ export default function ContactSection() {
                 rel="noopener noreferrer"
                 className="group relative w-16 h-16 md:w-20 md:h-20 flex items-center justify-center bg-white/80 backdrop-blur-md rounded-2xl border border-[#F5E0DC] text-[#3A2F2F] text-2xl md:text-3xl shadow-sm transition-all duration-500 hover:-rotate-12 hover:rounded-[2rem] overflow-hidden"
               >
+                {/* هنا نستخدم المكون كـ وسم <link.IconComponent /> */}
                 <span className="z-10 transition-colors duration-300 group-hover:text-white">
-                  {link.icon}
+                  <link.IconComponent />
                 </span>
+
                 <div
                   className="absolute inset-0 scale-0 group-hover:scale-100 transition-transform duration-300 z-0"
                   style={{ backgroundColor: link.bgColor }}
