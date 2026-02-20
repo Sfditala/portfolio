@@ -6,8 +6,7 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen w-full flex flex-col md:flex-row justify-center items-center 
-                 px-8 md:px-20 bg-[#FDF6ED] overflow-hidden"
+      className="jsx-af21ddf7c2661f8f relative min-h-screen w-full flex flex-col md:flex-row justify-center items-center px-8 md:px-20 bg-[#FDF6ED] overflow-hidden"
     >
       {/* عناصر خلفية عائمة للجمالية */}
       <div
@@ -39,16 +38,13 @@ export default function HeroSection() {
         <div className="flex flex-col sm:flex-row gap-4">
           <a
             href="#projects"
-            className="px-8 py-4 bg-[#B06B6B] text-white rounded-2xl font-bold 
-                       shadow-[0_10px_20px_rgba(176,107,107,0.3)] hover:shadow-xl 
-                       hover:-translate-y-1 transition-all duration-300 text-center"
+            className="px-8 py-4 bg-[#B06B6B] text-white rounded-2xl font-bold shadow-[0_10px_20px_rgba(176,107,107,0.3)] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center"
           >
             View My Work
           </a>
           <a
             href="#contact"
-            className="px-8 py-4 border-2 border-[#B06B6B] text-[#B06B6B] rounded-2xl font-bold 
-                       hover:bg-[#F5E0DC]/20 transition-all duration-300 text-center"
+            className="px-8 py-4 border-2 border-[#B06B6B] text-[#B06B6B] rounded-2xl font-bold hover:bg-[#F5E0DC]/20 transition-all duration-300 text-center"
           >
             Contact Me
           </a>

@@ -32,24 +32,22 @@ export default function SkillsSection() {
   return (
     <section
       id="skills"
-      className="relative w-full min-h-[600px] flex items-center justify-center overflow-hidden bg-[#FDF6ED] py-20"
+      className="relative w-full min-h-[80vh] flex items-center justify-center overflow-hidden bg-[#FDF6ED] py-20"
     >
-      {/* العنوان خلف الأيقونات ليعطي عمق (Depth) */}
       <h2 className="absolute z-0 text-7xl md:text-9xl font-black text-[#C18A82]/10 select-none">
         SKILLS
       </h2>
 
-      <div className="relative z-10 w-full max-w-4xl h-[400px]">
+      <div className="relative z-10 w-full max-w-4xl h-full">
         {skills.map((skill, i) => (
           <div
             key={i}
             className="skill-sphere absolute flex flex-col items-center justify-center transition-all duration-500 hover:scale-125 cursor-pointer"
             style={{
-              // توزيع عشوائي أولي (يمكنك تعديل النسب لتناسب ذوقك)
               top: `${[10, 60, 20, 70, 40, 15][i]}%`,
               left: `${[10, 20, 50, 60, 80, 85][i]}%`,
               animationDelay: `${i * 0.5}s`,
-              animationDuration: `${4 + i}s`, // سرعات متفاوتة للحركة
+              animationDuration: `${4 + i}s`,
             }}
           >
             <div className="w-16 h-16 md:w-24 md:h-24 p-4 bg-white/40 backdrop-blur-sm rounded-full shadow-xl border border-white/50 flex items-center justify-center overflow-hidden">
@@ -73,21 +71,12 @@ export default function SkillsSection() {
           }
 
           @keyframes float-around {
-            0% {
-              transform: translate(0, 0) rotate(0deg);
-            }
-            33% {
-              transform: translate(15px, -25px) rotate(5deg);
-            }
-            66% {
-              transform: translate(-10px, 15px) rotate(-5deg);
-            }
-            100% {
-              transform: translate(0, 0) rotate(0deg);
-            }
+            0% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(15px, -25px) rotate(5deg); }
+            66% { transform: translate(-10px, 15px) rotate(-5deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
           }
 
-          /* إضافة تأثير توهج خفيف عند الحوم */
           .skill-sphere:hover div {
             box-shadow: 0 0 30px rgba(193, 138, 130, 0.4);
             border-color: #C18A82;
