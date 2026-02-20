@@ -10,11 +10,17 @@ export default function HeroSection() {
                  px-8 md:px-20 bg-[#FDF6ED] overflow-hidden"
     >
       {/* عناصر خلفية عائمة للجمالية */}
-      <div className="absolute top-20 left-10 w-32 h-32 bg-[#F5E0DC] rounded-full blur-3xl opacity-60 animate-pulse"></div>
-      <div className="absolute bottom-10 right-10 w-64 h-64 bg-[#E7C9C1] rounded-full blur-[100px] opacity-40"></div>
+      <div
+        className="absolute top-20 left-10 w-32 h-32 bg-[#F5E0DC] rounded-full opacity-60 animate-pulse"
+        style={{ filter: "blur(3xl)" }}
+      ></div>
+      <div
+        className="absolute bottom-10 right-10 w-64 h-64 bg-[#E7C9C1] rounded-full opacity-40"
+        style={{ filter: "blur(100px)" }}
+      ></div>
 
       {/* النصوص */}
-      <div className="relative z-10 flex-1 flex flex-col items-start justify-center md:pr-12 text-center md:text-left items-center md:items-start">
+      <div className="relative z-10 flex-1 flex flex-col md:pr-12 text-center md:text-left items-center md:items-start">
         <span className="text-[#C18A82] font-bold tracking-widest uppercase text-sm mb-4">
           Available for new opportunities
         </span>
@@ -51,14 +57,17 @@ export default function HeroSection() {
 
       {/* البروفايل مع Blob Animation */}
       <div className="relative z-10 flex-1 flex justify-center md:justify-end mt-16 md:mt-0">
-        <div className="relative w-72 h-72 md:w-[450px] md:h-[450px]">
+        <div
+          className="relative w-72 h-72"
+          style={{ width: "450px", height: "450px" }}
+        >
           {/* الشكل الانسيابي خلف الصورة */}
-          <div className="absolute inset-0 bg-[#C18A82] opacity-20 animate-blob filter blur-2xl"></div>
-
           <div
-            className="relative w-full h-full overflow-hidden shadow-2xl transition-all duration-500
-                          blob-shape border-4 border-white"
-          >
+            className="absolute inset-0 bg-[#C18A82] opacity-20 animate-blob"
+            style={{ filter: "blur(2xl)" }}
+          ></div>
+
+          <div className="relative w-full h-full overflow-hidden shadow-2xl transition-all duration-500 blob-shape border-4 border-white">
             <Image
               src="/about.jpg"
               alt="Tala Profile"
