@@ -44,7 +44,7 @@ export default function HeroSection() {
 
           {/* Value Proposition — هاد هو اللي بيبيع */}
           <p className="text-xl md:text-2xl font-semibold text-[#3A2F2F] mb-3 max-w-xl">
-            I build modern websites & AI-powered tools for businesses
+            I build modern websites for businesses
           </p>
 
           <p className="text-base md:text-lg max-w-xl mb-10 text-[#5A4A4A] leading-relaxed">
@@ -52,8 +52,8 @@ export default function HeroSection() {
             <span className="font-semibold text-[#B06B6B]">
               React & Next.js
             </span>
-            . From landing pages to full-stack web apps — fast, clean, and built
-            to convert.
+            . From landing pages to web apps — fast, clean, and built to
+            convert.
           </p>
 
           {/* CTAs */}
@@ -91,7 +91,7 @@ export default function HeroSection() {
 
           {/* Social Proof صغير */}
           <div className="mt-8 flex items-center gap-4 text-sm text-[#9A7A7A]">
-            <span>🛠 React · Next.js · Node.js · AI</span>
+            <span>🛠 React · Next.js </span>
             <span className="hidden sm:inline">·</span>
             <span className="hidden sm:inline">⚡ Fast delivery</span>
           </div>
