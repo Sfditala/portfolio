@@ -46,9 +46,10 @@ export default function AboutSection() {
         <div className="max-w-3xl mx-auto text-center mb-16">
           <p className="text-[#5A4A4A] text-lg md:text-xl leading-relaxed italic">
             "Hi, I’m <span className="text-[#C18A82] font-bold">Tala!</span> 💖
-            A self-taught Frontend Developer and AI & Data Science student. I
-            love creating projects that combine clean design, smooth
-            functionality, and meaningful impact."
+            A Front-end Engineer and AI & Data Science student. I specialize in
+            building modern web apps using React & Next.js, with a passion for
+            clean design and smart solutions. Whether you need a landing page,
+            an e-commerce store, or a custom dashboard — I've got you covered
           </p>
         </div>
 
