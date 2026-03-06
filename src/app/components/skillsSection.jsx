@@ -5,7 +5,7 @@ export default function SkillsSection() {
   const skills = [
     {
       src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
-      name: "JS",
+      name: "JavaScript",
     },
     {
       src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
@@ -13,11 +13,11 @@ export default function SkillsSection() {
     },
     {
       src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
-      name: "HTML",
+      name: "HTML5",
     },
     {
       src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
-      name: "CSS",
+      name: "CSS3",
     },
     {
       src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
@@ -29,60 +29,73 @@ export default function SkillsSection() {
     },
   ];
 
+  // نكررهم 4 مرات عشان الشريط ما ينقطع
+  const repeated = [...skills, ...skills, ...skills, ...skills];
+
   return (
     <section
       id="skills"
-      className="relative w-full min-h-[80vh] flex items-center justify-center overflow-hidden bg-[#FDF6ED] py-20"
+      className="relative w-full py-24 bg-[#FDF6ED] overflow-hidden"
     >
-      <h2 className="absolute z-0 text-7xl md:text-9xl font-black text-[#C18A82]/10 select-none">
-        SKILLS
-      </h2>
-
-      <div className="relative z-10 w-full max-w-4xl h-full">
-        {skills.map((skill, i) => (
-          <div
-            key={i}
-            className="skill-sphere absolute flex flex-col items-center justify-center transition-all duration-500 hover:scale-125 cursor-pointer"
-            style={{
-              top: `${[10, 60, 20, 70, 40, 15][i]}%`,
-              left: `${[10, 20, 50, 60, 80, 85][i]}%`,
-              animationDelay: `${i * 0.5}s`,
-              animationDuration: `${4 + i}s`,
-            }}
-          >
-            <div className="w-16 h-16 md:w-24 md:h-24 p-4 bg-white/40 backdrop-blur-sm rounded-full shadow-xl border border-white/50 flex items-center justify-center overflow-hidden">
-              <img
-                src={skill.src}
-                alt={skill.name}
-                className="w-full h-full object-contain"
-              />
-            </div>
-            <span className="mt-2 text-xs font-bold text-[#C18A82] bg-white/80 px-2 py-1 rounded-full shadow-sm">
-              {skill.name}
-            </span>
-          </div>
-        ))}
+      {/* عنوان */}
+      <div className="text-center mb-14">
+        <span className="text-xs font-bold tracking-widest uppercase text-[#C18A82] mb-2 block">
+          What I work with
+        </span>
+        <h2 className="text-4xl md:text-5xl font-black text-[#3A2F2F]">
+          Skills
+        </h2>
       </div>
 
-      <style>
-        {`
-          .skill-sphere {
-            animation: float-around ease-in-out infinite alternate;
-          }
+      {/* Fade edges */}
+      <div
+        className="absolute left-0 top-0 h-full w-24 z-10 pointer-events-none"
+        style={{
+          background: "linear-gradient(to right, #FDF6ED, transparent)",
+        }}
+      />
+      <div
+        className="absolute right-0 top-0 h-full w-24 z-10 pointer-events-none"
+        style={{ background: "linear-gradient(to left, #FDF6ED, transparent)" }}
+      />
 
-          @keyframes float-around {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(15px, -25px) rotate(5deg); }
-            66% { transform: translate(-10px, 15px) rotate(-5deg); }
-            100% { transform: translate(0, 0) rotate(0deg); }
-          }
+      {/* الشريط */}
+      <div className="relative overflow-hidden">
+        <div className="marquee-track flex gap-8 w-max">
+          {repeated.map((skill, i) => (
+            <div
+              key={i}
+              className="group flex flex-col items-center gap-3 cursor-default"
+            >
+              <div className="w-20 h-20 bg-white rounded-2xl shadow-md border-2 border-[#F5E0DC] flex items-center justify-center p-4 transition-all duration-300 group-hover:border-[#B06B6B] group-hover:shadow-[0_8px_24px_rgba(176,107,107,0.2)] group-hover:-translate-y-2">
+                <img
+                  src={skill.src}
+                  alt={skill.name}
+                  className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110"
+                />
+              </div>
+              <span className="text-xs font-bold text-[#9A7A7A] group-hover:text-[#B06B6B] transition-colors duration-300">
+                {skill.name}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
 
-          .skill-sphere:hover div {
-            box-shadow: 0 0 30px rgba(193, 138, 130, 0.4);
-            border-color: #C18A82;
-          }
-        `}
-      </style>
+      <style>{`
+        .marquee-track {
+          animation: marquee 20s linear infinite;
+        }
+
+        .marquee-track:hover {
+          animation-play-state: paused;
+        }
+
+        @keyframes marquee {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+      `}</style>
     </section>
   );
 }

@@ -44,7 +44,7 @@ export default function HeroSection() {
 
           {/* Value Proposition — هاد هو اللي بيبيع */}
           <p className="text-xl md:text-2xl font-semibold text-[#3A2F2F] mb-3 max-w-xl">
-            I build modern websites for businesses
+            I build modern websites for businesses .
           </p>
 
           <p className="text-base md:text-lg max-w-xl mb-10 text-[#5A4A4A] leading-relaxed">
