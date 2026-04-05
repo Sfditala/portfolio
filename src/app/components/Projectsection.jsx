@@ -7,7 +7,7 @@ const projects = [
       "A sleek front-end landing page for a café with smooth animations.",
     image: "/cafe.png",
     tags: ["Next.js 16", "Tailwind CSS"],
-    link: "https://cafeshop-ca1wdkrzt-talas-projects-fe470697.vercel.app/",
+    link: "cafeshop-seven.vercel.app/",
     github: "https://github.com/Sfditala/cafeshop",
   },
   {
