@@ -4,6 +4,7 @@ import HeroSection from "./components/HeroSection";
 import ProjectsSection from "./components/Projectsection";
 import SkillsSection from "./components/skillsSection";
 import ContactSection from "./components/contactSection";
+import TalaWidget from "./components/tala/TalaWidget";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <SkillsSection />
       <ProjectsSection />
       <ContactSection />
+      <TalaWidget />
     </div>
   );
 }
