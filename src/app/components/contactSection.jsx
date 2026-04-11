@@ -3,7 +3,6 @@ import React from "react";
 import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from "react-icons/fa";
 
 export default function ContactSection() {
-  // ملاحظة: قمنا بتغيير <FaGithub /> إلى FaGithub (بدون أقواس الوسم)
   const socialLinks = [
     {
       name: "GitHub",
@@ -28,52 +27,54 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative min-h-screen w-full flex flex-col justify-center items-center px-8 md:px-20 bg-[#FDF6ED] overflow-hidden"
+      className="relative min-h-screen w-full flex flex-col justify-center items-center px-4 sm:px-8 md:px-20 bg-[#FDF6ED] overflow-hidden py-20"
     >
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#F5E0DC] rounded-full blur-[120px] opacity-50"></div>
+      {/* الدائرة الخلفية - جعلت حجمها متجاوباً لكي لا تخرج عن الإطار في الموبايل */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-[#F5E0DC] rounded-full blur-[80px] md:blur-[120px] opacity-50"></div>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
-        <div className="mb-16">
-          <h2 className="text-sm uppercase tracking-[0.3em] text-[#C18A82] font-bold mb-4">
+      <div className="relative z-10 max-w-5xl mx-auto text-center w-full">
+        <div className="mb-10 md:mb-16">
+          <h2 className="text-xs md:text-sm uppercase tracking-[0.2em] md:tracking-[0.3em] text-[#C18A82] font-bold mb-4">
             Get In Touch
           </h2>
-          <h3 className="text-5xl md:text-6xl font-black text-[#3A2F2F] leading-tight">
-            Let’s talk about <br />
+          <h3 className="text-3xl sm:text-4xl md:text-6xl font-black text-[#3A2F2F] leading-tight px-2">
+            Let’s talk about <br className="hidden sm:block" />
             <span className="text-[#B06B6B]">your next project.</span>
           </h3>
         </div>
 
-        <div className="flex flex-col items-center justify-center gap-10">
+        <div className="flex flex-col items-center justify-center gap-6 md:gap-10">
+          {/* بطاقة الإيميل - جعلتها تصغر وتتغير محاذاتها في الموبايل الصغير */}
           <a
             href="mailto:safaditalaworksp@gmail.com"
-            className="group relative p-1"
+            className="group relative p-1 w-full max-w-md md:max-w-none"
           >
-            <div className="absolute inset-0 bg-[#B06B6B] rounded-3xl blur opacity-20 group-hover:opacity-40 transition-opacity"></div>
-            <div className="relative flex items-center gap-6 bg-white/60 backdrop-blur-xl border border-white px-10 py-6 rounded-3xl shadow-xl transition-transform duration-500 group-hover:-translate-y-2">
-              <div className="w-14 h-14 bg-[#B06B6B] text-white rounded-2xl flex items-center justify-center text-2xl shadow-lg">
+            <div className="absolute inset-0 bg-[#B06B6B] rounded-2xl md:rounded-3xl blur opacity-20 group-hover:opacity-40 transition-opacity"></div>
+            <div className="relative flex flex-col sm:flex-row items-center gap-4 md:gap-6 bg-white/60 backdrop-blur-xl border border-white px-6 py-5 md:px-10 md:py-6 rounded-2xl md:rounded-3xl shadow-xl transition-transform duration-500 group-hover:-translate-y-2">
+              <div className="w-12 h-12 md:w-14 md:h-14 bg-[#B06B6B] text-white rounded-xl md:rounded-2xl flex items-center justify-center text-xl md:text-2xl shadow-lg shrink-0">
                 <FaEnvelope />
               </div>
-              <div className="text-left">
-                <p className="text-xs uppercase tracking-widest text-[#C18A82] font-bold">
+              <div className="text-center sm:text-left overflow-hidden">
+                <p className="text-[10px] md:text-xs uppercase tracking-widest text-[#C18A82] font-bold">
                   Mail me at
                 </p>
-                <p className="text-xl md:text-2xl font-bold text-[#3A2F2F]">
+                <p className="text-base sm:text-xl md:text-2xl font-bold text-[#3A2F2F] truncate">
                   safaditalaworksp@gmail.com
                 </p>
               </div>
             </div>
           </a>
 
-          <div className="flex gap-6 mt-4">
+          {/* أيقونات التواصل الاجتماعي */}
+          <div className="flex flex-wrap justify-center gap-4 md:gap-6 mt-4">
             {socialLinks.map((link, i) => (
               <a
                 key={i}
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative w-16 h-16 md:w-20 md:h-20 flex items-center justify-center bg-white/80 backdrop-blur-md rounded-2xl border border-[#F5E0DC] text-[#3A2F2F] text-2xl md:text-3xl shadow-sm transition-all duration-500 hover:-rotate-12 hover:rounded-[2rem] overflow-hidden"
+                className="group relative w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 flex items-center justify-center bg-white/80 backdrop-blur-md rounded-xl md:rounded-2xl border border-[#F5E0DC] text-[#3A2F2F] text-xl sm:text-2xl md:text-3xl shadow-sm transition-all duration-500 hover:-rotate-12 hover:rounded-[1.5rem] md:hover:rounded-[2rem] overflow-hidden"
               >
-                {/* هنا نستخدم المكون كـ وسم <link.IconComponent /> */}
                 <span className="z-10 transition-colors duration-300 group-hover:text-white">
                   <link.IconComponent />
                 </span>

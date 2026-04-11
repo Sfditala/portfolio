@@ -3,13 +3,14 @@ import React, { useState, useEffect, useRef } from "react";
 import Groq from "groq-sdk";
 import MessageBubble from "./MessageBubble";
 import ChatInput from "./ChatInput";
+import { X } from "lucide-react";
 
 const groq = new Groq({
   apiKey: process.env.NEXT_PUBLIC_GROQ_API_KEY,
   dangerouslyAllowBrowser: true,
 });
 
-export default function ChatWindow() {
+export default function ChatWindow({ onClose }) {
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -92,8 +93,11 @@ export default function ChatWindow() {
             </div>
           </div>
         </div>
-        <button className="text-white/60 hover:text-white transition-colors">
-          {/* يمكنك إضافة أيقونة إغلاق هنا إذا أردتِ */}
+        <button
+          onClick={onClose}
+          className="text-white/60 hover:text-white transition-colors"
+        >
+          <X size={16} />
         </button>
       </div>
 

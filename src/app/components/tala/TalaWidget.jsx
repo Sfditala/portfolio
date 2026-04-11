@@ -13,12 +13,18 @@ export default function TalaWidget() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            initial={{
+              opacity: 0,
+              scale: 0.8,
+              y: 20,
+              transformOrigin: "bottom right",
+            }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
-            className="mb-4 shadow-2xl"
+            className="mb-2 shadow-2xl origin-bottom-right"
           >
-            <ChatWindow />
+            {/* نمرر دالة الإغلاق هنا لكي يعمل زر X الموجود داخل النافذة أيضاً */}
+            <ChatWindow onClose={() => setIsOpen(false)} />
           </motion.div>
         )}
       </AnimatePresence>
