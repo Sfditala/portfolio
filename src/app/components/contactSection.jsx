@@ -1,6 +1,12 @@
 "use client";
 import React from "react";
-import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from "react-icons/fa";
+import {
+  FaGithub,
+  FaLinkedin,
+  FaInstagram,
+  FaEnvelope,
+  FaDownload,
+} from "react-icons/fa";
 
 export default function ContactSection() {
   const socialLinks = [
@@ -29,7 +35,7 @@ export default function ContactSection() {
       id="contact"
       className="relative min-h-screen w-full flex flex-col justify-center items-center px-4 sm:px-8 md:px-20 bg-[#FDF6ED] overflow-hidden py-20"
     >
-      {/* الدائرة الخلفية - جعلت حجمها متجاوباً لكي لا تخرج عن الإطار في الموبايل */}
+      {/* الدائرة الخلفية */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-[#F5E0DC] rounded-full blur-[80px] md:blur-[120px] opacity-50"></div>
 
       <div className="relative z-10 max-w-5xl mx-auto text-center w-full">
@@ -43,11 +49,11 @@ export default function ContactSection() {
           </h3>
         </div>
 
-        <div className="flex flex-col items-center justify-center gap-6 md:gap-10">
-          {/* بطاقة الإيميل - جعلتها تصغر وتتغير محاذاتها في الموبايل الصغير */}
+        <div className="flex flex-col items-center justify-center gap-6 md:gap-8">
+          {/* بطاقة الإيميل */}
           <a
             href="mailto:safaditalaworksp@gmail.com"
-            className="group relative p-1 w-full max-w-md md:max-w-none"
+            className="group relative p-1 w-full max-w-md md:max-w-xl"
           >
             <div className="absolute inset-0 bg-[#B06B6B] rounded-2xl md:rounded-3xl blur opacity-20 group-hover:opacity-40 transition-opacity"></div>
             <div className="relative flex flex-col sm:flex-row items-center gap-4 md:gap-6 bg-white/60 backdrop-blur-xl border border-white px-6 py-5 md:px-10 md:py-6 rounded-2xl md:rounded-3xl shadow-xl transition-transform duration-500 group-hover:-translate-y-2">
@@ -63,6 +69,16 @@ export default function ContactSection() {
                 </p>
               </div>
             </div>
+          </a>
+
+          {/* زر تحميل الـ CV - الإضافة الجديدة */}
+          <a
+            href="/cv.pdf" // تأكدي من وضع ملف الـ pdf بهذا الاسم داخل مجلد public
+            download="Tala_AlSafadi_CV.pdf"
+            className="group relative flex items-center gap-3 bg-[#ffffff] text-[#FDF6ED] px-8 py-4 rounded-2xl font-bold tracking-wide shadow-lg transition-all duration-300 hover:bg-[#B06B6B] hover:shadow-[#B06B6B]/40 hover:-translate-y-1 active:scale-95"
+          >
+            <FaDownload className="text-lg group-hover:animate-bounce" />
+            <span>Download My CV</span>
           </a>
 
           {/* أيقونات التواصل الاجتماعي */}

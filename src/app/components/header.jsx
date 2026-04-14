@@ -32,7 +32,7 @@ export default function Header() {
       {/* Logo + Profile */}
       <div className="flex items-center ml-2">
         <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-[#B06B6B] shadow-inner">
-          <Image src="/about.jpg" alt="Tala" fill className="object-cover" />
+          <Image src="/profile.jpg" alt="Tala" fill className="object-cover" />
         </div>
         <span className="ml-3 font-bold text-[#3A2F2F] tracking-tight hidden sm:block">
           TALA.
