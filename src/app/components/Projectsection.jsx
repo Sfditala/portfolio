@@ -14,7 +14,7 @@ const projects = [
     title: "E-commerce Store",
     description:
       "A full-featured e-commerce store with cart management and checkout flow.",
-    image: "mahastore.png",
+    image: "/maha.png",
     tags: ["Next.js 16", "Node js ", "MongoDB", "Tailwind CSS"],
     link: "https://mahastore-ecommerce.vercel.app/",
     github: "https://github.com/Sfditala/ecommerce",
@@ -23,26 +23,28 @@ const projects = [
     title: "Dashboard App",
     description:
       "Admin dashboard with interactive analytics, charts, and data tables. \n\n * Note: This project is private (Client Work), live demo is restricted. *",
-    image: "/dashboard.png",
+    image: "/dash.png",
     tags: ["Next.js 16", "Node js ", "MongoDB", "Lucide Icons", "Tailwind CSS"],
     link: "https://deploy-link.com/dashboard",
     github: "https://github.com/Sfditala/dashboard",
   },
+
   {
-    title: "Real-Time Chat App",
+    title: "Modavi",
     description: "A live messaging application with private rooms.",
-    image: "/chat.png",
+    image: "/modavi.png",
     tags: [
       "Next.js 16",
       "Shadcn UI",
       "Lucide Icons",
       "Tailwind CSS",
-      "convex",
+      "supabase",
       "clerk",
-      "next-themes",
+      "motion-framer",
+      "cloudinary",
     ],
-    link: "https://your-chat-app.vercel.app/",
-    github: "https://github.com/Sfditala/chat",
+    link: "https://modavi.vercel.app/",
+    github: "https://github.com/Sfditala/modavi",
   },
 ];
 
