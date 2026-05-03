@@ -14,7 +14,7 @@ const projects = [
     title: "E-commerce Store",
     description:
       "A full-featured e-commerce store with cart management and checkout flow.",
-    image: "/maha.png",
+    image: "/Maha.png",
     tags: ["Next.js 16", "Node js ", "MongoDB", "Tailwind CSS"],
     link: "https://mahastore-ecommerce.vercel.app/",
     github: "https://github.com/Sfditala/ecommerce",
