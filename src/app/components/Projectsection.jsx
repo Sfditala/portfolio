@@ -31,7 +31,8 @@ const projects = [
 
   {
     title: "Modavi",
-    description: "A live messaging application with private rooms.",
+    description:
+      "An intelligent AI stylist platform providing hyper-personalized outfit coordination and style profiling",
     image: "/modavi.png",
     tags: [
       "Next.js 16",
@@ -40,11 +41,28 @@ const projects = [
       "Tailwind CSS",
       "supabase",
       "clerk",
-      "motion-framer",
+      "framer-motion",
       "cloudinary",
     ],
     link: "https://modavi.vercel.app/",
     github: "https://github.com/Sfditala/modavi",
+  },
+  {
+    title: "Shadow AI Detector",
+    description:
+      "A security-focused web platform and browser extension driven by a custom-trained Python model to detect and prevent sensitive data exposure to AI systems.",
+    image: "/shadow.png",
+    tags: [
+      "Next.js 16",
+      "Shadcn UI",
+      "Tailwind CSS",
+      "Framer Motion",
+      "Python",
+      "FastAPI",
+      "Machine Learning",
+    ],
+    link: "https://shadowai-frontend-beta.vercel.app/",
+    github: "https://github.com/Sfditala/shadowai_frontend",
   },
 ];
 
