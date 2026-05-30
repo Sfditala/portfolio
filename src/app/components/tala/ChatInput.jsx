@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { Send } from "lucide-react";
 
 export default function ChatInput({ onSendMessage }) {
@@ -7,32 +8,69 @@ export default function ChatInput({ onSendMessage }) {
 
   const handleSend = () => {
     if (message.trim()) {
-      onSendMessage(message); // نرسل الرسالة للمكون الأب
-      setMessage(""); // ننظف الحقل بعد الإرسال
+      onSendMessage(message);
+      setMessage("");
     }
   };
   const handleKeyPress = (e) => {
     if (e.key === "Enter") handleSend();
   };
+
   return (
-    <div className="p-4 border-t border-gray-100 bg-white">
-      <div className="flex items-center gap-2 bg-gray-50 rounded-full px-4 py-2 focus-within:ring-2 focus-within:ring-[#B06B6B] transition-all">
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          onKeyDown={handleKeyPress}
-          placeholder="اسأل تالا..."
-          className="flex-1 bg-transparent border-none focus:outline-none text-sm text-gray-700 p-1"
-        />
-        <button
-          onClick={handleSend}
-          disabled={!message.trim()}
-          className="text-[#B06B6B] hover:text-[#B06B6B] disabled:text-gray-300 transition-colors"
-        >
-          <Send size={20} />
-        </button>
-      </div>
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "8px",
+        background: "rgba(255,255,255,0.04)",
+        border: "1px solid rgba(255,255,255,0.07)",
+        borderRadius: "8px",
+        padding: "8px 12px",
+        transition: "border-color 0.3s ease",
+      }}
+      onFocus={(e) =>
+        (e.currentTarget.style.borderColor = "rgba(230,57,70,0.4)")
+      }
+      onBlur={(e) =>
+        (e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)")
+      }
+    >
+      <input
+        type="text"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        onKeyDown={handleKeyPress}
+        placeholder="اسأل تالا..."
+        style={{
+          flex: 1,
+          background: "transparent",
+          border: "none",
+          outline: "none",
+          fontFamily: "'DM Sans', sans-serif",
+          fontSize: "0.82rem",
+          fontWeight: 300,
+          color: "rgba(255,255,255,0.75)",
+          padding: "2px 0",
+        }}
+      />
+      <motion.button
+        onClick={handleSend}
+        disabled={!message.trim()}
+        whileHover={message.trim() ? { scale: 1.15 } : {}}
+        whileTap={message.trim() ? { scale: 0.9 } : {}}
+        style={{
+          background: "transparent",
+          border: "none",
+          cursor: message.trim() ? "pointer" : "default",
+          color: message.trim() ? "#E63946" : "rgba(255,255,255,0.2)",
+          display: "flex",
+          alignItems: "center",
+          padding: 0,
+          transition: "color 0.3s ease",
+        }}
+      >
+        <Send size={17} />
+      </motion.button>
     </div>
   );
 }

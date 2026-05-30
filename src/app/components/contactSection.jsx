@@ -1,5 +1,6 @@
 "use client";
-import React from "react";
+import React, { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import {
   FaGithub,
   FaLinkedin,
@@ -8,102 +9,314 @@ import {
   FaDownload,
 } from "react-icons/fa";
 
+const socials = [
+  {
+    name: "GitHub",
+    Icon: FaGithub,
+    url: "https://github.com/sfditala",
+    color: "#ffffff",
+  },
+  {
+    name: "LinkedIn",
+    Icon: FaLinkedin,
+    url: "https://www.linkedin.com/in/talasfdi/",
+    color: "#0077b5",
+  },
+  {
+    name: "Instagram",
+    Icon: FaInstagram,
+    url: "https://www.instagram.com/talasafadyy/",
+    color: "#ee2a7b",
+  },
+];
+
 export default function ContactSection() {
-  const socialLinks = [
-    {
-      name: "GitHub",
-      IconComponent: FaGithub,
-      url: "https://github.com/sfditala",
-      bgColor: "#24292e",
-    },
-    {
-      name: "LinkedIn",
-      IconComponent: FaLinkedin,
-      url: "https://www.linkedin.com/in/talasfdi/",
-      bgColor: "#0077b5",
-    },
-    {
-      name: "Instagram",
-      IconComponent: FaInstagram,
-      url: "https://www.instagram.com/talasafadyy/",
-      bgColor: "#ee2a7b",
-    },
-  ];
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section
-      id="contact"
-      className="relative min-h-screen w-full flex flex-col justify-center items-center px-4 sm:px-8 md:px-20 bg-[#FDF6ED] overflow-hidden py-20"
-    >
-      {/* الدائرة الخلفية */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-[#F5E0DC] rounded-full blur-[80px] md:blur-[120px] opacity-50"></div>
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap');
+        .contact-v2 { background: #080808; }
+      `}</style>
 
-      <div className="relative z-10 max-w-5xl mx-auto text-center w-full">
-        <div className="mb-10 md:mb-16">
-          <h2 className="text-xs md:text-sm uppercase tracking-[0.2em] md:tracking-[0.3em] text-[#C18A82] font-bold mb-4">
-            Get In Touch
-          </h2>
-          <h3 className="text-3xl sm:text-4xl md:text-6xl font-black text-[#3A2F2F] leading-tight px-2">
-            Let’s talk about <br className="hidden sm:block" />
-            <span className="text-[#B06B6B]">your next project.</span>
-          </h3>
-        </div>
+      <section
+        id="contact"
+        className="contact-v2 w-full py-32 relative overflow-hidden"
+      >
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            height: "1px",
+            background:
+              "linear-gradient(90deg, transparent, rgba(230,57,70,0.25), transparent)",
+          }}
+        />
 
-        <div className="flex flex-col items-center justify-center gap-6 md:gap-8">
-          {/* بطاقة الإيميل */}
-          <a
-            href="mailto:safaditalaworksp@gmail.com"
-            className="group relative p-1 w-full max-w-md md:max-w-xl"
+        {/* Big ambient glow */}
+        <motion.div
+          animate={{ scale: [1, 1.12, 1], opacity: [0.5, 0.8, 0.5] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          style={{
+            position: "absolute",
+            left: "50%",
+            top: "50%",
+            transform: "translate(-50%,-50%)",
+            width: "700px",
+            height: "700px",
+            borderRadius: "50%",
+            background:
+              "radial-gradient(circle, rgba(230,57,70,0.08) 0%, transparent 70%)",
+            pointerEvents: "none",
+          }}
+        />
+
+        <div
+          ref={ref}
+          className="max-w-7xl mx-auto px-6 md:px-16 relative z-10"
+        >
+          {/* Label */}
+          <motion.span
+            initial={{ opacity: 0, x: -20 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            style={{
+              fontFamily: "'Bebas Neue', sans-serif",
+              fontSize: "0.75rem",
+              letterSpacing: "0.3em",
+              color: "#E63946",
+              display: "block",
+              marginBottom: "12px",
+            }}
           >
-            <div className="absolute inset-0 bg-[#B06B6B] rounded-2xl md:rounded-3xl blur opacity-20 group-hover:opacity-40 transition-opacity"></div>
-            <div className="relative flex flex-col sm:flex-row items-center gap-4 md:gap-6 bg-white/60 backdrop-blur-xl border border-white px-6 py-5 md:px-10 md:py-6 rounded-2xl md:rounded-3xl shadow-xl transition-transform duration-500 group-hover:-translate-y-2">
-              <div className="w-12 h-12 md:w-14 md:h-14 bg-[#B06B6B] text-white rounded-xl md:rounded-2xl flex items-center justify-center text-xl md:text-2xl shadow-lg shrink-0">
+            — Get In Touch
+          </motion.span>
+
+          {/* Big title */}
+          <div style={{ overflow: "hidden", marginBottom: "16px" }}>
+            {["LET'S", "WORK", "TOGETHER."].map((w, i) => (
+              <motion.div
+                key={w}
+                initial={{ y: 120 }}
+                animate={inView ? { y: 0 } : {}}
+                transition={{
+                  duration: 0.85,
+                  delay: i * 0.12,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                style={{
+                  fontFamily: "'Bebas Neue', sans-serif",
+                  fontSize: "clamp(4rem,10vw,10rem)",
+                  lineHeight: 0.88,
+                  letterSpacing: "-0.01em",
+                  color: i < 2 ? "#fff" : "#E63946",
+                  textShadow: i === 2 ? "0 0 80px rgba(230,57,70,0.4)" : "none",
+                  display: "block",
+                }}
+              >
+                {w}
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={inView ? { scaleX: 1 } : {}}
+            transition={{ duration: 0.7, delay: 0.5 }}
+            style={{
+              width: "60px",
+              height: "2px",
+              background: "#E63946",
+              transformOrigin: "left",
+              boxShadow: "0 0 12px rgba(230,57,70,0.5)",
+              marginBottom: "64px",
+            }}
+          />
+
+          {/* Cards row */}
+          <div className="flex flex-col md:flex-row gap-6 items-stretch mb-12">
+            {/* Email card */}
+            <motion.a
+              href="mailto:safaditalaworksp@gmail.com"
+              initial={{ opacity: 0, y: 40 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.3 }}
+              whileHover={{ y: -6, borderColor: "rgba(230,57,70,0.4)" }}
+              style={{
+                flex: 2,
+                display: "flex",
+                alignItems: "center",
+                gap: "20px",
+                background: "rgba(255,255,255,0.025)",
+                border: "1px solid rgba(255,255,255,0.07)",
+                borderRadius: "8px",
+                padding: "28px 32px",
+                textDecoration: "none",
+                cursor: "pointer",
+                transition: "all 0.3s ease",
+                position: "relative",
+                overflow: "hidden",
+              }}
+            >
+              <div
+                style={{
+                  width: "52px",
+                  height: "52px",
+                  background: "#E63946",
+                  borderRadius: "8px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                  boxShadow: "0 0 24px rgba(230,57,70,0.35)",
+                  fontSize: "1.3rem",
+                  color: "#fff",
+                }}
+              >
                 <FaEnvelope />
               </div>
-              <div className="text-center sm:text-left overflow-hidden">
-                <p className="text-[10px] md:text-xs uppercase tracking-widest text-[#C18A82] font-bold">
-                  Mail me at
+              <div>
+                <p
+                  style={{
+                    fontFamily: "'Bebas Neue', sans-serif",
+                    fontSize: "0.65rem",
+                    letterSpacing: "0.25em",
+                    color: "#E63946",
+                    marginBottom: "4px",
+                  }}
+                >
+                  MAIL ME AT
                 </p>
-                <p className="text-base sm:text-xl md:text-2xl font-bold text-[#3A2F2F] truncate">
+                <p
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: "clamp(0.85rem,1.5vw,1.05rem)",
+                    color: "#fff",
+                    fontWeight: 500,
+                  }}
+                >
                   safaditalaworksp@gmail.com
                 </p>
               </div>
-            </div>
-          </a>
+              {/* Hover shimmer */}
+              <motion.div
+                initial={{ x: "-100%" }}
+                whileHover={{ x: "200%" }}
+                transition={{ duration: 0.6 }}
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  bottom: 0,
+                  width: "60px",
+                  background:
+                    "linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent)",
+                  pointerEvents: "none",
+                }}
+              />
+            </motion.a>
 
-          {/* زر تحميل الـ CV - الإضافة الجديدة */}
-          <a
-            href="/cv.pdf" // تأكدي من وضع ملف الـ pdf بهذا الاسم داخل مجلد public
-            download="Tala_AlSafadi_CV.pdf"
-            className="group relative flex items-center gap-3 bg-[#ffffff] text-[#FDF6ED] px-8 py-4 rounded-2xl font-bold tracking-wide shadow-lg transition-all duration-300 hover:bg-[#B06B6B] hover:shadow-[#B06B6B]/40 hover:-translate-y-1 active:scale-95"
+            {/* CV button */}
+            <motion.a
+              href="/cv.pdf"
+              download="Tala_AlSafadi_CV.pdf"
+              initial={{ opacity: 0, y: 40 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.42 }}
+              whileHover={{ y: -6, scale: 1.01 }}
+              whileTap={{ scale: 0.97 }}
+              style={{
+                flex: 1,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "12px",
+                background: "rgba(230,57,70,0.08)",
+                border: "1px solid rgba(230,57,70,0.2)",
+                borderRadius: "8px",
+                padding: "28px 24px",
+                textDecoration: "none",
+                fontFamily: "'Bebas Neue', sans-serif",
+                fontSize: "1rem",
+                letterSpacing: "0.14em",
+                color: "#E63946",
+                transition: "all 0.3s ease",
+              }}
+              className="hover:bg-[rgba(230,57,70,0.15)] hover:border-[#E63946]/50"
+            >
+              <motion.div
+                animate={{ y: [0, -3, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              >
+                <FaDownload />
+              </motion.div>
+              DOWNLOAD CV
+            </motion.a>
+          </div>
+
+          {/* Social Icons */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.55 }}
+            style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}
           >
-            <FaDownload className="text-lg group-hover:animate-bounce" />
-            <span>Download My CV</span>
-          </a>
-
-          {/* أيقونات التواصل الاجتماعي */}
-          <div className="flex flex-wrap justify-center gap-4 md:gap-6 mt-4">
-            {socialLinks.map((link, i) => (
-              <a
+            {socials.map((s, i) => (
+              <motion.a
                 key={i}
-                href={link.url}
+                href={s.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 flex items-center justify-center bg-white/80 backdrop-blur-md rounded-xl md:rounded-2xl border border-[#F5E0DC] text-[#3A2F2F] text-xl sm:text-2xl md:text-3xl shadow-sm transition-all duration-500 hover:-rotate-12 hover:rounded-[1.5rem] md:hover:rounded-[2rem] overflow-hidden"
+                whileHover={{ y: -8, rotate: -8, scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                transition={{ type: "spring", stiffness: 300, damping: 16 }}
+                style={{
+                  width: "54px",
+                  height: "54px",
+                  background: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  borderRadius: "10px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "rgba(255,255,255,0.45)",
+                  fontSize: "1.25rem",
+                  textDecoration: "none",
+                  position: "relative",
+                  overflow: "hidden",
+                  transition: "color 0.3s ease",
+                }}
               >
-                <span className="z-10 transition-colors duration-300 group-hover:text-white">
-                  <link.IconComponent />
+                <motion.div
+                  initial={{ scale: 0, opacity: 0 }}
+                  whileHover={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.25 }}
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    background: s.color,
+                    zIndex: 0,
+                  }}
+                />
+                <span
+                  style={{
+                    position: "relative",
+                    zIndex: 1,
+                    transition: "color 0.2s ease",
+                  }}
+                  className="group-hover:text-white"
+                >
+                  <s.Icon />
                 </span>
-
-                <div
-                  className="absolute inset-0 scale-0 group-hover:scale-100 transition-transform duration-300 z-0"
-                  style={{ backgroundColor: link.bgColor }}
-                ></div>
-              </a>
+              </motion.a>
             ))}
-          </div>
+          </motion.div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

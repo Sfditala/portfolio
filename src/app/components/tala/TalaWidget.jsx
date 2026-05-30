@@ -1,51 +1,101 @@
 "use client";
 import React, { useState } from "react";
 import { MessageCircle, X } from "lucide-react";
-import ChatWindow from "./ChatWindow";
 import { motion, AnimatePresence } from "framer-motion";
+import ChatWindow from "./ChatWindow";
 
 export default function TalaWidget() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4">
-      {/* نافذة الدردشة مع أنيميشن عند الظهور والاختفاء */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{
-              opacity: 0,
-              scale: 0.8,
-              y: 20,
-              transformOrigin: "bottom right",
-            }}
+            initial={{ opacity: 0, scale: 0.85, y: 20, originX: 1, originY: 1 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: 20 }}
-            className="mb-2 shadow-2xl origin-bottom-right"
+            exit={{ opacity: 0, scale: 0.85, y: 20 }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* نمرر دالة الإغلاق هنا لكي يعمل زر X الموجود داخل النافذة أيضاً */}
             <ChatWindow onClose={() => setIsOpen(false)} />
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* الزر العائم (Floating Button) */}
-      <button
+      <motion.button
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 transform hover:scale-110 ${
-          isOpen ? "bg-gray-100 text-gray-600" : "bg-[#B06B6B] text-white"
-        }`}
+        whileHover={{ scale: 1.12 }}
+        whileTap={{ scale: 0.92 }}
+        animate={
+          isOpen
+            ? {}
+            : {
+                boxShadow: [
+                  "0 0 0px rgba(230,57,70,0)",
+                  "0 0 24px rgba(230,57,70,0.6)",
+                  "0 0 0px rgba(230,57,70,0)",
+                ],
+              }
+        }
+        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+        style={{
+          width: "54px",
+          height: "54px",
+          borderRadius: "50%",
+          background: isOpen ? "rgba(255,255,255,0.06)" : "#E63946",
+          border: isOpen
+            ? "1px solid rgba(255,255,255,0.1)"
+            : "1px solid rgba(230,57,70,0.5)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: isOpen ? "rgba(255,255,255,0.6)" : "#fff",
+          cursor: "pointer",
+          position: "relative",
+        }}
       >
-        {isOpen ? (
-          <X size={28} />
-        ) : (
-          <div className="relative">
-            <MessageCircle size={28} />
-            {/* نقطة إشعار صغيرة تعطي حيوية للزر */}
-            <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></span>
-          </div>
+        <AnimatePresence mode="wait">
+          {isOpen ? (
+            <motion.div
+              key="close"
+              initial={{ rotate: -90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: 90, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <X size={22} />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="open"
+              initial={{ rotate: 90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: -90, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <MessageCircle size={22} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Notification dot */}
+        {!isOpen && (
+          <motion.span
+            animate={{ scale: [1, 1.3, 1] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+            style={{
+              position: "absolute",
+              top: "-2px",
+              right: "-2px",
+              width: "12px",
+              height: "12px",
+              background: "#fff",
+              borderRadius: "50%",
+              border: "2px solid #E63946",
+            }}
+          />
         )}
-      </button>
+      </motion.button>
     </div>
   );
 }
