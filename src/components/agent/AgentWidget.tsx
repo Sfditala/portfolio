@@ -1,12 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { MessageCircle, X } from "lucide-react";
+import { AGENT_OPEN_EVENT, type AgentOpenDetail } from "@/lib/agent-bus";
+import { useAgentChat } from "@/lib/agent/useAgentChat";
 import ChatWindow from "./ChatWindow";
 
 export default function AgentWidget() {
   const [isOpen, setIsOpen] = useState(false);
+  const chat = useAgentChat();
+  const { send } = chat;
+
+  useEffect(() => {
+    const onOpen = (event: Event) => {
+      const { message } = (event as CustomEvent<AgentOpenDetail>).detail ?? {};
+      setIsOpen(true);
+      if (message) void send(message);
+    };
+    window.addEventListener(AGENT_OPEN_EVENT, onOpen);
+    return () => window.removeEventListener(AGENT_OPEN_EVENT, onOpen);
+  }, [send]);
 
   return (
     <div className="fixed right-4 bottom-4 z-50 flex flex-col items-end gap-4 sm:right-6 sm:bottom-6">
@@ -20,7 +34,7 @@ export default function AgentWidget() {
             exit={{ opacity: 0, scale: 0.92, y: 16 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
           >
-            <ChatWindow onClose={() => setIsOpen(false)} />
+            <ChatWindow {...chat} onClose={() => setIsOpen(false)} />
           </motion.div>
         )}
       </AnimatePresence>

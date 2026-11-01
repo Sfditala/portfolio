@@ -1,17 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { X } from "lucide-react";
-import { streamAgentReply, type AgentMessage } from "@/lib/agent/client";
+import type { AgentMessage } from "@/lib/agent/client";
 import MessageBubble from "./MessageBubble";
 import ChatInput from "./ChatInput";
-
-const GREETING: AgentMessage = {
-  id: "greeting",
-  role: "assistant",
-  content:
-    "Hi, I'm Tala AI. Tell me about a process that eats your team's time, and I'll show you how an agent could handle it. (I speak Arabic too.)",
-};
 
 const TYPING_DOT_DELAYS = [
   "[animation-delay:0ms]",
@@ -19,69 +12,27 @@ const TYPING_DOT_DELAYS = [
   "[animation-delay:300ms]",
 ];
 
-export default function ChatWindow({ onClose }: { onClose: () => void }) {
-  const [messages, setMessages] = useState<AgentMessage[]>([GREETING]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+type ChatWindowProps = {
+  messages: AgentMessage[];
+  isLoading: boolean;
+  error: string | null;
+  send: (text: string) => void;
+  onClose: () => void;
+};
+
+export default function ChatWindow({
+  messages,
+  isLoading,
+  error,
+  send,
+  onClose,
+}: ChatWindowProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const abortRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
     const el = scrollRef.current;
     if (el) el.scrollTop = el.scrollHeight;
   }, [messages, isLoading]);
-
-  useEffect(() => () => abortRef.current?.abort(), []);
-
-  const send = async (text: string) => {
-    const userMessage: AgentMessage = {
-      id: crypto.randomUUID(),
-      role: "user",
-      content: text,
-    };
-    const replyId = crypto.randomUUID();
-    // The greeting is UI-only; the server prompt already sets context.
-    const history = [...messages, userMessage]
-      .filter((m) => m.id !== GREETING.id)
-      .map(({ role, content }) => ({ role, content }));
-
-    setMessages((prev) => [...prev, userMessage]);
-    setError(null);
-    setIsLoading(true);
-
-    const controller = new AbortController();
-    abortRef.current = controller;
-
-    try {
-      let started = false;
-      await streamAgentReply(
-        history,
-        (token) => {
-          if (!started) {
-            started = true;
-            setIsLoading(false);
-            setMessages((prev) => [
-              ...prev,
-              { id: replyId, role: "assistant", content: token },
-            ]);
-            return;
-          }
-          setMessages((prev) =>
-            prev.map((m) =>
-              m.id === replyId ? { ...m, content: m.content + token } : m,
-            ),
-          );
-        },
-        controller.signal,
-      );
-    } catch (err) {
-      if (!controller.signal.aborted) {
-        setError(err instanceof Error ? err.message : "Something went wrong.");
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   return (
     <section

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
-import Header from "./components/header";
-import Footer from "./components/footer";
+import Header from "@/components/sections/Header";
+import Footer from "@/components/sections/Footer";
 import AgentWidget from "@/components/agent/AgentWidget";
 import { site } from "@/content/site";
 
@@ -54,8 +54,14 @@ export default function RootLayout({
       className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
       <body>
+        <a
+          href="#content"
+          className="sr-only z-50 rounded-lg bg-accent px-4 py-2 text-sm text-text focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
+        >
+          Skip to content
+        </a>
         <Header />
-        <main>{children}</main>
+        <main id="content">{children}</main>
         <Footer />
         <AgentWidget />
       </body>

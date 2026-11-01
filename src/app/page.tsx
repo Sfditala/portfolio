@@ -1,18 +1,29 @@
-// Phase 0: old sections still render here until Home v2 replaces them in Phase 1.
-import AboutSection from "./components/aboutSection";
-import HeroSection from "./components/HeroSection";
-import ProjectsSection from "./components/Projectsection";
-import SkillsSection from "./components/skillsSection";
-import ContactSection from "./components/contactSection";
+import Hero from "@/components/sections/Hero";
+import StackStrip from "@/components/sections/StackStrip";
+import AiRankFeature from "@/components/sections/AiRankFeature";
+import Services from "@/components/sections/Services";
+import AutomationWork from "@/components/sections/AutomationWork";
+import ProductsWork from "@/components/sections/ProductsWork";
+import Process from "@/components/sections/Process";
+import AboutTeaser from "@/components/sections/AboutTeaser";
+import FinalCta from "@/components/sections/FinalCta";
+import { SectionDivider } from "@/components/ui/Section";
 
 export default function Home() {
   return (
     <>
-      <HeroSection />
-      <AboutSection />
-      <SkillsSection />
-      <ProjectsSection />
-      <ContactSection />
+      <Hero />
+      <StackStrip />
+      <AiRankFeature />
+      <SectionDivider />
+      <Services />
+      <AutomationWork />
+      <ProductsWork />
+      <SectionDivider />
+      <Process />
+      <AboutTeaser />
+      <SectionDivider />
+      <FinalCta />
     </>
   );
 }

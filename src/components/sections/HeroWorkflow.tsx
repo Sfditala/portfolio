@@ -1,0 +1,291 @@
+"use client";
+
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
+import { Bot, Check, DatabaseZap, Loader2, RotateCcw } from "lucide-react";
+import { siGooglegemini, siGooglesheets, siTelegram } from "simple-icons";
+import BrandIcon from "@/components/ui/BrandIcon";
+
+/*
+ * Hero teaser of the Workflow Replay (full version in Phase 2).
+ * Coordinates live in a 160×100 space so the SVG edges and the
+ * percentage-positioned nodes line up at any width.
+ * TODO(tala): replace with data from a real AI Marketing Team execution.
+ */
+
+type Status = "idle" | "running" | "success";
+
+// step: 0 idle · 1 trigger · 2 agent · 3 sheets · 4 reply · 5 done
+const LAST_STEP = 5;
+const STEP_MS = [500, 700, 1900, 900, 900];
+
+const LOG: Record<number, string> = {
+  0: "waiting for trigger…",
+  1: "telegram_trigger · message received",
+  2: "orchestrator · rag(brand) → content + calendar agents",
+  3: "google_sheets · append 7 rows to content calendar",
+  4: "telegram · send weekly plan",
+  5: "run finished · 4 nodes · success",
+};
+
+const statusFor = (order: number, step: number): Status =>
+  step > order ? "success" : step === order ? "running" : "idle";
+
+function StatusBadge({ status }: { status: Status }) {
+  if (status === "idle") return null;
+  return (
+    <span
+      className={`absolute -top-[18%] -right-[18%] flex size-[2.6cqw] min-h-3.5 min-w-3.5 items-center justify-center rounded-full ${
+        status === "success" ? "bg-success text-bg" : "bg-surface-2 text-accent"
+      }`}
+    >
+      {status === "success" ? (
+        <Check className="size-[70%]" strokeWidth={3} />
+      ) : (
+        <Loader2 className="size-[80%] animate-spin" strokeWidth={3} />
+      )}
+    </span>
+  );
+}
+
+const ring: Record<Status, string> = {
+  idle: "border-border text-text-dim",
+  running: "border-accent text-text shadow-[0_0_0_4px] shadow-accent/20 animate-pulse",
+  success: "border-success/50 text-text",
+};
+
+function SquareNode({
+  status,
+  icon,
+  label,
+  position,
+}: {
+  status: Status;
+  icon: ReactNode;
+  label: string;
+  position: string;
+}) {
+  return (
+    <div className={`absolute aspect-square w-[10%] ${position}`}>
+      <div
+        className={`relative flex size-full items-center justify-center rounded-[22%] border bg-surface-2 transition-[border-color,color,box-shadow] duration-300 ${ring[status]}`}
+      >
+        {icon}
+        <StatusBadge status={status} />
+      </div>
+      <p className="absolute top-full left-1/2 mt-[0.8cqw] w-[180%] -translate-x-1/2 text-center font-mono text-[max(8px,1.45cqw)] leading-tight text-balance text-text-muted">
+        {label}
+      </p>
+    </div>
+  );
+}
+
+function SubNode({ active, icon, label, position }: { active: boolean; icon: ReactNode; label: string; position: string }) {
+  return (
+    <div className={`absolute aspect-square w-[6.875%] ${position}`}>
+      <div
+        className={`flex size-full items-center justify-center rounded-full border bg-surface-2 transition-colors duration-300 ${
+          active ? "border-accent/70 text-text" : "border-border text-text-dim"
+        }`}
+      >
+        {icon}
+      </div>
+      <p className="absolute top-full left-1/2 mt-[0.6cqw] -translate-x-1/2 font-mono text-[max(8px,1.3cqw)] whitespace-nowrap text-text-dim">
+        {label}
+      </p>
+    </div>
+  );
+}
+
+function Edge({ d, drawn, dashed = false, reduce }: { d: string; drawn: boolean; dashed?: boolean; reduce: boolean }) {
+  return (
+    <g>
+      <path
+        d={d}
+        fill="none"
+        className="stroke-white/15"
+        strokeWidth={1.25}
+        strokeDasharray={dashed ? "3 3" : undefined}
+        vectorEffect="non-scaling-stroke"
+      />
+      <motion.path
+        d={d}
+        fill="none"
+        className="stroke-accent"
+        strokeWidth={1.75}
+        strokeDasharray={dashed ? "3 3" : undefined}
+        vectorEffect="non-scaling-stroke"
+        initial={false}
+        animate={{ pathLength: drawn ? 1 : 0, opacity: drawn ? 1 : 0 }}
+        transition={{ duration: reduce ? 0 : 0.45, ease: "easeInOut" }}
+      />
+    </g>
+  );
+}
+
+export default function HeroWorkflow() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.4 });
+  const reduce = useReducedMotion() ?? false;
+  const [step, setStep] = useState(0);
+  const [runId, setRunId] = useState(0);
+
+  // Advance one step at a time once the canvas is visible.
+  useEffect(() => {
+    if (reduce || !inView || step >= LAST_STEP) return;
+    const t = setTimeout(() => setStep((s) => s + 1), STEP_MS[step]);
+    return () => clearTimeout(t);
+  }, [inView, reduce, step, runId]);
+
+  const s = reduce ? LAST_STEP : step;
+  const done = s === LAST_STEP;
+
+  const replay = () => {
+    setStep(0);
+    setRunId((n) => n + 1);
+  };
+
+  return (
+    <div
+      ref={ref}
+      className="overflow-hidden rounded-2xl border border-border bg-surface/80 shadow-2xl shadow-black/60 backdrop-blur"
+    >
+      {/* Canvas header */}
+      <div className="flex items-center justify-between gap-3 border-b border-border px-4 py-2.5">
+        <div className="flex min-w-0 items-center gap-2.5">
+          <span aria-hidden className="flex gap-1.5">
+            <span className="size-2.5 rounded-full bg-white/10" />
+            <span className="size-2.5 rounded-full bg-white/10" />
+            <span className="size-2.5 rounded-full bg-white/10" />
+          </span>
+          <span className="truncate font-mono text-xs text-text-dim">ai-marketing-team.workflow</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <span className="hidden font-mono text-[0.65rem] tracking-wider text-text-dim uppercase sm:inline">
+            Replay preview
+          </span>
+          <button
+            type="button"
+            onClick={replay}
+            disabled={!done || reduce}
+            aria-label="Replay workflow"
+            className="flex items-center gap-1.5 rounded-md border border-border px-2 py-1 font-mono text-[0.65rem] text-text-muted transition-colors hover:border-text-dim hover:text-text disabled:opacity-40"
+          >
+            <RotateCcw className="size-3" /> Replay
+          </button>
+        </div>
+      </div>
+
+      {/* Canvas */}
+      <div className="@container relative aspect-[16/10] w-full">
+        <div aria-hidden className="dot-grid absolute inset-0" />
+
+        <svg aria-hidden viewBox="0 0 160 100" className="absolute inset-0 size-full">
+          <Edge d="M24 42 L40 42" drawn={s >= 2} reduce={reduce} />
+          <Edge d="M52 50 L52 64.5" drawn={s >= 2} dashed reduce={reduce} />
+          <Edge d="M76 50 L76 64.5" drawn={s >= 2} dashed reduce={reduce} />
+          <Edge d="M88 42 C95 42 93 26 100 26" drawn={s >= 3} reduce={reduce} />
+          <Edge d="M116 26 C125 26 123 50 132 50" drawn={s >= 4} reduce={reduce} />
+        </svg>
+
+        {/* Trigger message */}
+        <AnimatePresence>
+          {s >= 1 && (
+            <motion.div
+              initial={reduce ? false : { opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="absolute top-[7%] left-[3%] max-w-[36%] rounded-lg rounded-bl-sm border border-border bg-surface-2 px-[1.4cqw] py-[1cqw] text-[max(9px,1.55cqw)] leading-snug text-text-muted"
+            >
+              Plan next week&apos;s Instagram content for the café
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <SquareNode
+          status={statusFor(1, s)}
+          position="top-[34%] left-[5%]"
+          label="Telegram Trigger"
+          icon={<BrandIcon icon={siTelegram} className="size-[46%]" />}
+        />
+
+        {/* AI Agent node (wide, n8n style) */}
+        <div className="absolute top-[34%] left-[25%] h-[16%] w-[30%]">
+          <div
+            className={`relative flex size-full items-center gap-[1.4cqw] rounded-[1.4cqw] border bg-surface-2 px-[1.6cqw] transition-[border-color,color,box-shadow] duration-300 ${ring[statusFor(2, s)]}`}
+          >
+            <Bot className="size-[5cqw] shrink-0" />
+            <div className="min-w-0 leading-tight">
+              <p className="truncate text-[max(9px,1.8cqw)] font-medium text-text">AI Agent</p>
+              <p className="truncate font-mono text-[max(8px,1.35cqw)] text-text-dim">orchestrator</p>
+            </div>
+            <StatusBadge status={statusFor(2, s)} />
+          </div>
+        </div>
+
+        <SubNode
+          active={s === 2}
+          position="top-[64.5%] left-[29.06%]"
+          label="Gemini"
+          icon={<BrandIcon icon={siGooglegemini} className="size-[50%]" />}
+        />
+        <SubNode
+          active={s === 2}
+          position="top-[64.5%] left-[44.06%]"
+          label="Pinecone"
+          icon={<DatabaseZap className="size-[50%]" />}
+        />
+
+        <SquareNode
+          status={statusFor(3, s)}
+          position="top-[18%] left-[62.5%]"
+          label="Google Sheets"
+          icon={<BrandIcon icon={siGooglesheets} className="size-[44%]" />}
+        />
+        <SquareNode
+          status={statusFor(4, s)}
+          position="top-[42%] left-[82.5%]"
+          label="Send Reply"
+          icon={<BrandIcon icon={siTelegram} className="size-[46%]" />}
+        />
+
+        {/* Result */}
+        <AnimatePresence>
+          {done && (
+            <motion.div
+              initial={reduce ? false : { opacity: 0, y: 8, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute right-[3%] bottom-[5%] w-[40%] rounded-lg rounded-br-sm border border-accent/30 bg-accent/10 px-[1.6cqw] py-[1.2cqw] text-[max(9px,1.5cqw)] leading-snug text-text"
+            >
+              <p className="mb-[0.4cqw] font-mono text-[max(8px,1.3cqw)] text-accent">✓ weekly plan</p>
+              {/* Narrow canvases only have room for the summary line. */}
+              <span className="hidden @md:inline">
+                Mon · Reel: new seasonal drink
+                <br />
+                Wed · Carousel: behind the bar
+                <br />
+              </span>
+              <span className="text-text-dim">
+                <span className="@md:hidden">7 posts · </span>
+                <span className="hidden @md:inline">+5 more · </span>
+                saved to Sheets
+              </span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Execution log */}
+      <div className="flex items-center gap-2 border-t border-border bg-bg/60 px-4 py-2.5 font-mono text-[0.7rem]">
+        <span
+          aria-hidden
+          className={`size-1.5 shrink-0 rounded-full ${done ? "bg-success" : s > 0 ? "bg-accent" : "bg-text-dim"}`}
+        />
+        <p aria-live="polite" className="truncate text-text-muted">
+          <span className="text-text-dim">› </span>
+          {LOG[s]}
+        </p>
+      </div>
+    </div>
+  );
+}

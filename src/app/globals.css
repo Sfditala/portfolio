@@ -79,6 +79,26 @@
   }
 }
 
+@keyframes draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 /* n8n-style dot grid used behind key sections */
 @utility dot-grid {
   background-image: radial-gradient(
