@@ -7,8 +7,6 @@ export type Project = {
   label: string;
   summary: string;
   stack: string[];
-  /** Node chain shown on the home page for automation projects. */
-  pipeline?: string[];
   liveUrl?: string;
   image?: string;
 };
@@ -23,7 +21,6 @@ export const projects: Project[] = [
     summary:
       "A multi-agent marketing team for a café, built in n8n. An Orchestrator Agent delegates to Content, Calendar and Analyst agents, with RAG over brand knowledge, Google Sheets as the content calendar and Telegram as the interface.",
     stack: ["n8n", "Gemini", "Pinecone", "Google Sheets", "Telegram"],
-    pipeline: ["Telegram Trigger", "Orchestrator Agent", "Pinecone RAG", "Content + Calendar Agents", "Google Sheets", "Telegram Reply"],
   },
   {
     slug: "telegram-ai-assistant",
@@ -33,7 +30,6 @@ export const projects: Project[] = [
     summary:
       "A conversational Telegram assistant. A main agent routes to Tasks and Calendar sub-agents, stores tasks in Supabase synced to Google Tasks, and sends a morning schedule and a weekly report.",
     stack: ["n8n", "Supabase", "Google Tasks", "Google Calendar", "Telegram"],
-    pipeline: ["Telegram Trigger", "Main Agent", "Tasks Agent", "Calendar Agent", "Telegram Reply"],
   },
   {
     slug: "restaurant-voice-agent",
@@ -43,7 +39,6 @@ export const projects: Project[] = [
     summary:
       "A bilingual (AR/EN) voice agent that takes takeaway orders for restaurants and cafés, reading the menu and writing orders through an n8n MCP server.",
     stack: ["ElevenLabs", "n8n MCP Server", "Google Sheets"],
-    pipeline: ["ElevenLabs Voice", "MCP Server Trigger", "get_menu", "create_order", "Spoken Confirmation"],
   },
   {
     slug: "shadow-ai-detector",

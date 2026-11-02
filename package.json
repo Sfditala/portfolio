@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "replay:convert": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/n8n-to-replay.ts",
+    "replay:check": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/n8n-to-replay.ts --check"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

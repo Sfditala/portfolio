@@ -1,0 +1,128 @@
+{
+  "_placeholder": true,
+  "id": "plan-weekly-content",
+  "projectSlug": "ai-marketing-team",
+  "title": "Plan next week's content",
+  "prompt": "Plan next week's Instagram content for the café",
+  "nodes": [
+    { "id": "trigger", "label": "Telegram", "kind": "trigger", "icon": "telegram", "position": { "x": 16, "y": 228 } },
+    { "id": "orchestrator", "label": "Orchestrator", "kind": "agent", "icon": "bot", "position": { "x": 229, "y": 228 } },
+    { "id": "pinecone", "label": "Brand RAG", "kind": "rag", "icon": "vector", "position": { "x": 229, "y": 410 } },
+    { "id": "content", "label": "Content Agent", "kind": "agent", "icon": "bot", "position": { "x": 442, "y": 90 } },
+    { "id": "calendar", "label": "Calendar Agent", "kind": "agent", "icon": "bot", "position": { "x": 442, "y": 340 } },
+    { "id": "sheets", "label": "Google Sheets", "kind": "db", "icon": "sheets", "position": { "x": 655, "y": 340 } },
+    { "id": "reply", "label": "Telegram", "kind": "output", "icon": "telegram", "position": { "x": 868, "y": 228 } }
+  ],
+  "edges": [
+    { "from": "trigger", "to": "orchestrator" },
+    { "from": "orchestrator", "to": "pinecone", "label": "brand voice" },
+    { "from": "orchestrator", "to": "content", "label": "delegate" },
+    { "from": "content", "to": "calendar", "label": "posts" },
+    { "from": "calendar", "to": "sheets", "label": "rows" },
+    { "from": "sheets", "to": "reply" }
+  ],
+  "steps": [
+    {
+      "nodeId": "trigger",
+      "durationMs": 700,
+      "log": "message received",
+      "view": "json",
+      "output": { "chat_id": "<redacted>", "from": "café owner", "text": "Plan next week's Instagram content for the café" }
+    },
+    {
+      "nodeId": "orchestrator",
+      "durationMs": 1300,
+      "log": "needs brand context first",
+      "view": "text",
+      "input": { "text": "Plan next week's Instagram content for the café" },
+      "output": "This is a planning request. I need the brand voice and current menu before delegating, so I'll query the brand knowledge base."
+    },
+    {
+      "nodeId": "pinecone",
+      "durationMs": 1000,
+      "log": "top_k=3 · 3 matches",
+      "view": "json",
+      "input": { "query": "brand voice, seasonal menu, content pillars", "top_k": 3 },
+      "output": {
+        "matches": [
+          { "source": "brand-guide", "text": "Warm, neighbourly tone. Short captions." },
+          { "source": "menu", "text": "Seasonal: spiced latte, orange cake." },
+          { "source": "content-pillars", "text": "Drinks · behind the bar · regulars." }
+        ]
+      }
+    },
+    {
+      "nodeId": "orchestrator",
+      "durationMs": 800,
+      "log": "delegating to Content Agent",
+      "view": "text",
+      "output": "Context is ready. Handing the brief to the Content Agent, then the Calendar Agent will schedule the result."
+    },
+    {
+      "nodeId": "content",
+      "durationMs": 1600,
+      "log": "7 posts drafted",
+      "view": "table",
+      "input": { "brief": "1 week of Instagram · brand voice attached" },
+      "output": {
+        "columns": ["Format", "Idea"],
+        "rows": [
+          ["Reel", "Pouring the new spiced latte"],
+          ["Carousel", "A morning behind the bar"],
+          ["Photo", "Orange cake, fresh from the oven"],
+          ["Story", "Poll: this week's special"],
+          ["Reel", "Meet a regular"],
+          ["Photo", "Weekend brunch table"],
+          ["Carousel", "Three ways to take your coffee"]
+        ]
+      }
+    },
+    {
+      "nodeId": "calendar",
+      "durationMs": 1000,
+      "log": "assigned days and times",
+      "view": "text",
+      "input": { "posts": 7 },
+      "output": "Reels go out on the two busiest days. Stories stay flexible. Every post now has a date and a time."
+    },
+    {
+      "nodeId": "sheets",
+      "durationMs": 900,
+      "log": "append · 7 rows",
+      "view": "table",
+      "input": { "operation": "append", "sheet": "Content Calendar" },
+      "output": {
+        "columns": ["Day", "Time", "Format", "Status"],
+        "rows": [
+          ["Mon", "09:00", "Reel", "Planned"],
+          ["Tue", "12:30", "Carousel", "Planned"],
+          ["Wed", "08:30", "Photo", "Planned"],
+          ["Thu", "17:00", "Story", "Planned"],
+          ["Fri", "09:00", "Reel", "Planned"],
+          ["Sat", "10:00", "Photo", "Planned"],
+          ["Sun", "11:00", "Carousel", "Planned"]
+        ]
+      }
+    },
+    {
+      "nodeId": "reply",
+      "durationMs": 700,
+      "log": "message sent",
+      "view": "json",
+      "output": { "ok": true, "sent_to": "<redacted>" }
+    }
+  ],
+  "result": {
+    "type": "telegram",
+    "data": {
+      "bot": "Marketing Team",
+      "messages": [
+        { "from": "user", "text": "Plan next week's Instagram content for the café" },
+        {
+          "from": "bot",
+          "text": "Next week is planned and saved to your content calendar:\n\nMon · Reel: pouring the spiced latte\nTue · Carousel: a morning behind the bar\nWed · Photo: orange cake\nThu · Story: poll for this week's special\nFri · Reel: meet a regular\nSat · Photo: weekend brunch\nSun · Carousel: three ways to take your coffee"
+        }
+      ]
+    }
+  }
+}

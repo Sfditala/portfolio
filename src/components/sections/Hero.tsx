@@ -45,7 +45,7 @@ export default function Hero() {
               <MessageSquareText className="size-4.5" />
               {hero.primaryCta}
             </AgentButton>
-            <ButtonLink href="#work" variant="outline" size="lg">
+            <ButtonLink href="#replay" variant="outline" size="lg">
               {hero.secondaryCta}
               <ArrowDown className="size-4 transition-transform group-hover/btn:translate-y-0.5" />
             </ButtonLink>
@@ -80,7 +80,7 @@ export default function Hero() {
         <div className="relative">
           <HeroWorkflow />
           <p className="mt-3 text-center font-mono text-[0.68rem] text-text-dim">
-            A real architecture of one of my agents, replayed. Full replays below.
+            A real architecture with sample data. Full replays below.
           </p>
         </div>
       </Container>
