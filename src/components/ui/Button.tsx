@@ -9,7 +9,7 @@ const base =
 
 const variants: Record<Variant, string> = {
   primary:
-    "bg-accent text-text shadow-[0_8px_30px_-8px] shadow-accent/50 hover:bg-[color-mix(in_oklab,var(--color-accent),white_10%)]",
+    "bg-accent-solid text-text shadow-[0_8px_30px_-8px] shadow-accent/50 hover:bg-accent",
   outline: "border border-border bg-surface/60 text-text hover:border-text-dim",
   ghost: "text-text-muted hover:text-text",
 };

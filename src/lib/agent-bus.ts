@@ -7,6 +7,8 @@ export const AGENT_OPEN_EVENT = "tala:agent-open";
 export type AgentOpenDetail = {
   /** Sent as the visitor's first message (booking mode). */
   message?: string;
+  /** True when the CTA's purpose is booking a call. */
+  booking?: boolean;
 };
 
 export function openAgent(detail: AgentOpenDetail = {}) {

@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useReducer } from "react";
 import type { ReplayStep, WorkflowScenario } from "@/content/workflows/types";
+import { trackEvent } from "@/lib/analytics";
 
 export type ReplayStatus = "idle" | "running" | "paused" | "done";
 export type NodeStatus = "idle" | "running" | "success" | "error";
@@ -136,9 +137,15 @@ export function useReplay(scenario: WorkflowScenario) {
     lastFinished,
     announcement,
     openNode,
-    run: () => dispatch({ type: "run" }),
+    run: () => {
+      if (status !== "paused") trackEvent("replay_run", { project: scenario.projectSlug });
+      dispatch({ type: "run" });
+    },
     pause: () => dispatch({ type: "pause" }),
-    replay: () => dispatch({ type: "replay" }),
+    replay: () => {
+      trackEvent("replay_run", { project: scenario.projectSlug });
+      dispatch({ type: "replay" });
+    },
     step: () => dispatch({ type: "step" }),
     setSpeed: (value: Speed) => dispatch({ type: "speed", speed: value }),
     pin: (target: number | "result") => dispatch({ type: "pin", target }),

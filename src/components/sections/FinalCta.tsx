@@ -20,6 +20,7 @@ export default function FinalCta() {
       message: described
         ? `Here's a process I'd like to automate: ${described}`
         : bookingPrompt,
+      booking: !described,
     });
     setText("");
   };

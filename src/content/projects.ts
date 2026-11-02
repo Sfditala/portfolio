@@ -7,6 +7,8 @@ export type Project = {
   label: string;
   summary: string;
   stack: string[];
+  /** English and Arabic terms the agent matches against a visitor's problem. */
+  keywords: string[];
   liveUrl?: string;
   image?: string;
   // Case study page.
@@ -48,6 +50,7 @@ export const projects: Project[] = [
     summary:
       "A multi-agent marketing team for a café, built in n8n. An Orchestrator Agent delegates to Content, Calendar and Analyst agents, with RAG over brand knowledge, Google Sheets as the content calendar and Telegram as the interface.",
     stack: ["n8n", "Gemini", "Pinecone", "Google Sheets", "Telegram", "Voice agent"],
+    keywords: ["marketing","content","social media","instagram","posts","campaign","brand","cafe","café","تسويق","محتوى","سوشال","انستغرام","انستجرام","منشورات","بوستات","حملات","مقهى","كافيه"],
     problem:
       "Marketing a café means repeating the same cycle every week: deciding what to post, writing it in the brand's voice, and keeping a content calendar up to date. It's steady work that takes time away from running the café.",
     solution:
@@ -70,6 +73,7 @@ export const projects: Project[] = [
     summary:
       "A conversational Telegram assistant. A main agent routes to Tasks and Calendar sub-agents, stores tasks in Supabase synced to Google Tasks, and sends a morning schedule and a weekly report.",
     stack: ["n8n", "Supabase", "Google Tasks", "Google Calendar", "Telegram"],
+    keywords: ["assistant","tasks","task","reminder","remind","schedule","calendar","meeting","telegram","productivity","مساعد","مهام","مهمة","تذكير","جدول","مواعيد","موعد","اجتماع","تلغرام","تيليجرام","تلجرام"],
     problem:
       "Tasks and meetings live in separate apps, and adding one means stopping what you're doing to open them. Most bots don't help much, because they make you learn slash commands.",
     solution:
@@ -93,6 +97,7 @@ export const projects: Project[] = [
     summary:
       "A bilingual (AR/EN) voice agent that takes takeaway orders for restaurants and cafés, reading the menu and writing orders through an n8n MCP server.",
     stack: ["ElevenLabs", "n8n MCP Server", "Google Sheets"],
+    keywords: ["voice","phone","call","calls","order","orders","restaurant","booking","bookings","reservation","takeaway","customer support","صوت","صوتي","تلفون","هاتف","مكالمات","طلبات","طلب","مطعم","مطاعم","حجز","حجوزات","خدمة العملاء","دعم العملاء"],
     problem:
       "Takeaway orders arrive by phone, often when staff are busiest. Every call needs someone to answer it, go through the menu and write the order down correctly.",
     solution:
@@ -115,6 +120,7 @@ export const projects: Project[] = [
     summary:
       "A security platform and browser extension with a custom-trained ML model that detects sensitive data being exposed to AI tools.",
     stack: ["Next.js", "FastAPI", "Python", "Hugging Face"],
+    keywords: ["security","sensitive","data leak","privacy","compliance","machine learning","browser extension","أمن","أمان","حساسة","تسريب","خصوصية","تعلم آلي"],
     liveUrl: "https://shadowai-frontend-beta.vercel.app/",
     image: "/shadow.png",
     problem:
@@ -137,6 +143,7 @@ export const projects: Project[] = [
     summary:
       "An AI stylist platform with personalized outfit coordination and style profiling.",
     stack: ["Next.js", "Supabase", "Clerk", "Cloudinary"],
+    keywords: ["fashion","style","stylist","outfit","clothes","recommendation","موضة","أزياء","ستايل","ملابس","توصيات"],
     liveUrl: "https://modavi.vercel.app/",
     image: "/modavi.png",
     problem: "Deciding what to wear and what goes together is personal, and generic advice rarely fits.",
@@ -152,6 +159,7 @@ export const projects: Project[] = [
     label: "Client Work",
     summary: "A full e-commerce store with admin dashboards.",
     stack: ["Next.js", "Node.js", "MongoDB"],
+    keywords: ["store","shop","e-commerce","ecommerce","admin","dashboard","متجر","تجارة","لوحة تحكم"],
     liveUrl: "https://mahastore-ecommerce.vercel.app/",
     image: "/Maha.png",
     problem: "An online store needs both a shop for customers and a way to run it behind the scenes.",

@@ -16,7 +16,7 @@ export default function ReplayControls({ replay }: { replay: Replay }) {
       <button
         type="button"
         onClick={running ? replay.pause : replay.run}
-        className="flex h-9 items-center gap-1.5 rounded-lg bg-accent px-3.5 text-sm font-medium text-text transition-transform active:scale-[0.97]"
+        className="flex h-9 items-center gap-1.5 rounded-lg bg-accent-solid px-3.5 text-sm font-medium text-text transition-transform active:scale-[0.97]"
       >
         {running ? <Pause className="size-3.5" /> : <Play className="size-3.5" />}
         {primaryLabel}

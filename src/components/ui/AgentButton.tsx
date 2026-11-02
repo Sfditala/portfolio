@@ -22,7 +22,7 @@ export default function AgentButton({
   return (
     <button
       type="button"
-      onClick={() => openAgent({ message })}
+      onClick={() => openAgent({ message, booking: message === bookingPrompt })}
       aria-haspopup="dialog"
       className={buttonClasses(variant, size, className)}
     >

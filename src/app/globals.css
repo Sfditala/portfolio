@@ -14,6 +14,8 @@
   --color-text-muted: #a1a1a1;
   --color-text-dim: #6b6b6b;
   --color-accent: #e63946;
+  /* Backgrounds behind text: --color-accent with light text misses AA. */
+  --color-accent-solid: #cf2d3b;
   --color-accent-deep: #8e1b26;
   --color-success: #4ade80;
 
