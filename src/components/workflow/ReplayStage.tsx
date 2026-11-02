@@ -1,8 +1,9 @@
 "use client";
 
 import { useRef, useState, type KeyboardEvent } from "react";
+import Link from "next/link";
 import AgentButton from "@/components/ui/AgentButton";
-import type { Project } from "@/content/projects";
+import { projectUrl, type Project } from "@/content/projects";
 import LazyReplay from "./LazyReplay";
 
 /** One stage for all automation projects: pick a tab, press Run. */
@@ -70,7 +71,7 @@ export default function ReplayStage({ projects }: { projects: Project[] }) {
 
         <LazyReplay projectSlug={project.slug} />
 
-        <div className="mt-5">
+        <div className="mt-5 flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
           <AgentButton
             variant="ghost"
             size="inline"
@@ -78,6 +79,12 @@ export default function ReplayStage({ projects }: { projects: Project[] }) {
           >
             Want this for your business? <span className="text-accent">Talk to my agent →</span>
           </AgentButton>
+          <Link
+            href={projectUrl(project.slug)}
+            className="text-sm font-medium text-text transition-colors hover:text-accent"
+          >
+            Read case study →
+          </Link>
         </div>
       </div>
     </div>
