@@ -22,7 +22,7 @@ export default function ProjectCard({ project }: { project: Project }) {
         <p className="mt-2 text-sm leading-relaxed text-pretty text-text-muted">{project.summary}</p>
         <p className="mt-5 font-mono text-[0.68rem] text-text-dim">{project.stack.join(" · ")}</p>
         <div className="mt-auto flex items-center justify-between gap-4 pt-6 text-sm font-medium">
-          <span className="inline-flex items-center gap-1.5 text-text transition-colors group-hover:text-accent">
+          <span className="inline-flex items-center gap-1.5 text-text transition-colors group-hover:text-accent-bright">
             Read more
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
           </span>

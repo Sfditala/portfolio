@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Award, GraduationCap, MapPin } from "lucide-react";
+import { ArrowRight, GraduationCap, MapPin } from "lucide-react";
+import CertificateList from "@/components/ui/CertificateList";
 import Placeholder, { isPlaceholder } from "@/components/ui/Placeholder";
 import Reveal from "@/components/ui/Reveal";
 import Section from "@/components/ui/Section";
@@ -52,29 +53,13 @@ export default function AboutTeaser() {
 
           <Reveal className="mt-10">
             <p className="mb-3 font-mono text-[0.68rem] tracking-[0.16em] text-text-dim uppercase">Certificates</p>
-            <ul className="grid gap-3 sm:grid-cols-3">
-              {about.certificates.map((cert, i) => (
-                <li key={i} className="flex items-start gap-3 rounded-xl border border-border bg-surface p-3.5">
-                  <Award className="mt-0.5 size-4 shrink-0 text-text-dim" />
-                  <div className="min-w-0 space-y-1">
-                    {isPlaceholder(cert.name) ? (
-                      <Placeholder>{cert.name}</Placeholder>
-                    ) : (
-                      <p className="text-sm text-text">{cert.name}</p>
-                    )}
-                    <p className="font-mono text-[0.65rem] text-text-dim">
-                      {cert.issuer} · {cert.year}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ul>
+            <CertificateList />
           </Reveal>
 
           <Reveal className="mt-10">
             <Link
               href="/about"
-              className="group inline-flex items-center gap-2 text-sm font-medium text-text transition-colors hover:text-accent"
+              className="group inline-flex items-center gap-2 text-sm font-medium text-text transition-colors hover:text-accent-bright"
             >
               More about me
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />

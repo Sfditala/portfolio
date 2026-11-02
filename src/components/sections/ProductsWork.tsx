@@ -14,8 +14,8 @@ export default function ProductsWork() {
       <SectionHeading index="03" label="AI products & client work" title="Products and client builds." />
 
       <div className="grid gap-5 md:grid-cols-3">
-        {products.map((project, i) => (
-          <Reveal key={project.slug} delay={i * 0.05}>
+        {products.map((project) => (
+          <Reveal key={project.slug}>
             <ProjectCard project={project} />
           </Reveal>
         ))}
@@ -24,7 +24,7 @@ export default function ProductsWork() {
       <Reveal className="mt-8">
         <Link
           href="/work"
-          className="group inline-flex items-center gap-2 text-sm font-medium text-text transition-colors hover:text-accent"
+          className="group inline-flex items-center gap-2 text-sm font-medium text-text transition-colors hover:text-accent-bright"
         >
           See all work
           <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />

@@ -23,7 +23,7 @@ const socials = [
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="relative overflow-hidden border-t border-border pt-16">
+    <footer className="lazy-render relative overflow-hidden border-t border-border pt-16">
       <Container>
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
@@ -31,7 +31,7 @@ export default function Footer() {
             <p className="mt-2 max-w-sm text-sm leading-relaxed text-text-muted">{site.positioning}</p>
             <a
               href={`mailto:${site.email}`}
-              className="mt-6 inline-flex items-center gap-2 text-sm text-text transition-colors hover:text-accent"
+              className="mt-6 inline-flex items-center gap-2 text-sm text-text transition-colors hover:text-accent-bright"
             >
               <Mail className="size-4" /> {site.email}
             </a>
@@ -73,9 +73,7 @@ export default function Footer() {
 
         <div className="mt-16 flex flex-col justify-between gap-3 border-t border-border py-6 font-mono text-[0.68rem] text-text-dim sm:flex-row">
           <p>© {year} {site.name}</p>
-          <p className="flex items-center gap-2">
-            <span aria-hidden className="size-1.5 rounded-full bg-success" /> all workflows operational
-          </p>
+          <p>{site.title}</p>
         </div>
       </Container>
 

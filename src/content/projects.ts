@@ -10,7 +10,12 @@ export type Project = {
   /** English and Arabic terms the agent matches against a visitor's problem. */
   keywords: string[];
   liveUrl?: string;
+  /** Logo cover on a white background; shown inverted until screenshots exist. */
   image?: string;
+  /** Real screenshots, in /public/projects/<slug>/. The first also becomes the cover. */
+  screenshots?: { src: string; alt: string }[];
+  /** Demo video, in /public/projects/<slug>/. */
+  demoVideo?: string;
   // Case study page.
   problem: string;
   solution: string;

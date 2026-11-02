@@ -29,7 +29,7 @@ export default function SectionHeading({
         <span aria-hidden className="h-px w-8 bg-linear-to-r from-transparent to-accent/70" />
         <span aria-hidden className="size-2 rounded-full border border-accent bg-bg" />
         <span>
-          <span className="text-accent">{index}</span> · {label}
+          <span className="text-accent-bright">{index}</span> · {label}
         </span>
       </div>
       <h2 className="text-3xl leading-[1.1] font-semibold tracking-tight text-balance text-text md:text-5xl">

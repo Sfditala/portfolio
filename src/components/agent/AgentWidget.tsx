@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import dynamic from "next/dynamic";
 import { MessageCircle, X } from "lucide-react";
 import { AGENT_OPEN_EVENT, type AgentOpenDetail } from "@/lib/agent-bus";
 import { useAgentChat } from "@/lib/agent/useAgentChat";
 import { trackEvent } from "@/lib/analytics";
-import ChatWindow from "./ChatWindow";
+
+// Loaded on first open, so it costs nothing for visitors who never chat.
+const ChatWindow = dynamic(() => import("./ChatWindow"), { ssr: false });
 
 export default function AgentWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,20 +34,11 @@ export default function AgentWidget() {
 
   return (
     <div className="fixed right-4 bottom-4 z-50 flex flex-col items-end gap-4 sm:right-6 sm:bottom-6">
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            id="tala-agent"
-            className="origin-bottom-right"
-            initial={{ opacity: 0, scale: 0.92, y: 16 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.92, y: 16 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <ChatWindow chat={chat} onClose={() => setIsOpen(false)} />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {isOpen && (
+        <div id="tala-agent" className="origin-bottom-right animate-[rise_0.25s_var(--ease-out-expo)_both]">
+          <ChatWindow chat={chat} onClose={() => setIsOpen(false)} />
+        </div>
+      )}
 
       <button
         type="button"

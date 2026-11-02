@@ -29,14 +29,14 @@ export default function FinalCta() {
     <Section id="contact" grid>
       <div
         aria-hidden
-        className="pointer-events-none absolute top-1/2 left-1/2 size-[560px] -translate-1/2 rounded-full bg-accent-deep/20 blur-[140px]"
+        className="pointer-events-none absolute top-1/2 left-1/2 size-[900px] -translate-1/2 glow-accent"
       />
       <Reveal className="relative mx-auto max-w-3xl text-center">
         <p className="mb-6 font-mono text-xs tracking-[0.18em] text-text-dim uppercase">
-          <span className="text-accent">{"//"}</span> Your workflow, next
+          <span className="text-accent-bright">{"//"}</span> Your workflow, next
         </p>
         <h2 className="text-4xl leading-[1.05] font-semibold tracking-[-0.03em] text-balance text-text md:text-6xl">
-          {finalCta.title} <span className="text-accent">{finalCta.accent}</span>
+          {finalCta.title} <span className="text-accent-bright">{finalCta.accent}</span>
         </h2>
         <p className="mx-auto mt-6 max-w-xl text-lg text-pretty text-text-muted">
           Describe it in a sentence. My agent will ask a few questions and help you book a 20-minute discovery call.
@@ -44,13 +44,13 @@ export default function FinalCta() {
 
         <form
           onSubmit={submit}
-          className="mx-auto mt-10 max-w-2xl rounded-2xl border border-border bg-surface/90 p-2 text-left shadow-2xl shadow-black/50 backdrop-blur transition-colors focus-within:border-accent/50"
+          className="mx-auto mt-10 max-w-2xl rounded-2xl border border-border bg-surface/90 p-2 text-left shadow-2xl shadow-black/50 transition-colors focus-within:border-accent/50"
         >
           <label htmlFor="cta-process" className="sr-only">
             Describe the process you want to automate
           </label>
           <div className="flex items-start gap-3 px-3 pt-3">
-            <span aria-hidden className="pt-0.5 font-mono text-sm text-accent">
+            <span aria-hidden className="pt-0.5 font-mono text-sm text-accent-bright">
               &gt;
             </span>
             <textarea

@@ -17,7 +17,7 @@ export default function Section({
   grid?: boolean;
 }) {
   return (
-    <section id={id} className={`relative scroll-mt-24 py-24 md:py-32 ${className}`}>
+    <section id={id} className={`lazy-render relative scroll-mt-24 py-24 md:py-32 ${className}`}>
       {grid && (
         <div
           aria-hidden

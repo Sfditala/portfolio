@@ -23,7 +23,7 @@ export default function WorkPage() {
       <Container className="relative">
         <header className="max-w-3xl">
           <p className="mb-5 font-mono text-xs tracking-[0.18em] text-text-dim uppercase">
-            <span className="text-accent">{"//"}</span> Work
+            <span className="text-accent-bright">{"//"}</span> Work
           </p>
           <h1 className="text-4xl leading-[1.05] font-semibold tracking-[-0.03em] text-balance text-text md:text-6xl">
             Agents, automations and products I&apos;ve built.

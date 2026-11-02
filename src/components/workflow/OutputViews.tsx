@@ -31,7 +31,7 @@ export function JsonView({ value }: { value: unknown }) {
     const isKey = Boolean(match[2]);
     const isString = Boolean(match[1]);
     parts.push(
-      <span key={index} className={isKey ? "text-text-dim" : isString ? "text-text" : "text-accent"}>
+      <span key={index} className={isKey ? "text-text-dim" : isString ? "text-text" : "text-accent-bright"}>
         {match[0]}
       </span>,
     );

@@ -45,7 +45,7 @@ export default function ChatInput({
         type="submit"
         disabled={!canSend}
         aria-label="Send message"
-        className="flex items-center rounded-md p-1 text-accent transition-colors disabled:text-text-dim"
+        className="flex items-center rounded-md p-1 text-accent-bright transition-colors disabled:text-text-dim"
       >
         <Send size={17} />
       </button>

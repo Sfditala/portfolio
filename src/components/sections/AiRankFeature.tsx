@@ -4,6 +4,7 @@ import { buttonClasses } from "@/components/ui/Button";
 import Placeholder, { isPlaceholder } from "@/components/ui/Placeholder";
 import Reveal from "@/components/ui/Reveal";
 import Section from "@/components/ui/Section";
+import TrackedLink from "@/components/ui/TrackedLink";
 import { aiRank } from "@/content/site";
 
 // Abstract stand-in for the product screenshot: a ranking, one row chosen.
@@ -20,7 +21,7 @@ function ScreenshotStandIn() {
             i === 0 ? "border-accent/50 bg-accent/10" : "border-border bg-surface-2/80"
           }`}
         >
-          <span className={`font-mono text-xs ${i === 0 ? "text-accent" : "text-text-dim"}`}>0{i + 1}</span>
+          <span className={`font-mono text-xs ${i === 0 ? "text-accent-bright" : "text-text-dim"}`}>0{i + 1}</span>
           <span className="size-5 rounded-md bg-white/10" />
           <span className="h-1.5 flex-1 rounded-full bg-white/5">
             <span className={`block h-full rounded-full ${width} ${i === 0 ? "bg-accent" : "bg-white/20"}`} />
@@ -42,12 +43,12 @@ export default function AiRankFeature() {
         <article className="relative overflow-hidden rounded-3xl border border-border bg-surface">
           <div
             aria-hidden
-            className="pointer-events-none absolute -bottom-40 -left-20 size-[520px] rounded-full bg-accent-deep/20 blur-[120px]"
+            className="pointer-events-none absolute -bottom-64 -left-48 size-[800px] glow-accent"
           />
           <div className="relative grid items-center gap-10 p-6 sm:p-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14 lg:p-14">
             <div>
               <p className="mb-6 font-mono text-xs tracking-[0.18em] text-text-dim uppercase">
-                <span className="text-accent">{"//"}</span> Featured product
+                <span className="text-accent-bright">{"//"}</span> Featured product
               </p>
               <h2 className="text-5xl font-semibold tracking-[-0.03em] text-text md:text-6xl">{aiRank.name}</h2>
               <p className="mt-4 inline-flex items-center gap-2 rounded-full border border-border bg-surface-2 px-3 py-1 font-mono text-xs text-text-muted">
@@ -68,7 +69,8 @@ export default function AiRankFeature() {
 
               <div className="mt-10 flex flex-wrap items-center gap-4">
                 {aiRank.url ? (
-                  <a
+                  <TrackedLink
+                    event="ai_rank_click"
                     href={aiRank.url}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -76,7 +78,7 @@ export default function AiRankFeature() {
                   >
                     Try AI Rank
                     <ArrowUpRight className="size-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
-                  </a>
+                  </TrackedLink>
                 ) : (
                   <>
                     <span aria-disabled className={buttonClasses("primary", "lg", "opacity-50")}>

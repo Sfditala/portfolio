@@ -13,7 +13,7 @@ export default function WorkflowRow({ project, index }: { project: Project; inde
       <div className="flex items-start justify-between gap-6">
         <div className="min-w-0">
           <p className="font-mono text-xs text-text-dim">
-            <span className="text-accent">0{index + 1}</span> · {project.label}
+            <span className="text-accent-bright">0{index + 1}</span> · {project.label}
           </p>
           <h3 className="mt-3 text-2xl font-semibold tracking-tight text-text">
             <Link href={projectUrl(project.slug)} className="after:absolute after:inset-0">
@@ -24,7 +24,7 @@ export default function WorkflowRow({ project, index }: { project: Project; inde
         </div>
         <ArrowRight
           aria-hidden
-          className="mt-1 hidden size-5 shrink-0 text-text-dim transition-[color,transform] duration-200 group-hover:translate-x-1 group-hover:text-accent sm:block"
+          className="mt-1 hidden size-5 shrink-0 text-text-dim transition-[color,transform] duration-200 group-hover:translate-x-1 group-hover:text-accent-bright sm:block"
         />
       </div>
 

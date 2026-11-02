@@ -13,14 +13,18 @@ export const site = {
     linkedin: "https://www.linkedin.com/in/talasfdi/",
     instagram: "https://www.instagram.com/talasafadyy/",
   },
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : "http://localhost:3000"),
 } as const;
 
 export const nav = [
   { label: "Work", href: "/work" },
   { label: "Services", href: "/#services" },
   { label: "Process", href: "/#process" },
-  { label: "About", href: "/#about" },
+  { label: "About", href: "/about" },
 ] as const;
 
 export const hero = {
@@ -51,7 +55,19 @@ export const aiRank = {
 } as const;
 
 // TODO(tala): review the story copy; it is a draft built only from the brief.
-export const about = {
+export const about: {
+  story: string[];
+  teaser: string[];
+  university: string;
+  education: string;
+  certificates: { name: string; issuer: string; year: string; url?: string }[];
+} = {
+  story: [
+    "I'm an AI Engineer and the co-founder & CEO of AI Rank, a platform for comparing AI tools and choosing the best tool for a given task. I've spent the last 2+ years building real software products, first for the web, and now with AI at the core.",
+    "Today I focus on one thing: finding the work a team repeats every week and handing it to agents that do it reliably. That means multi-agent systems, voice assistants, RAG over a company's own data, and automation workflows that connect the tools people already use.",
+    "I care about systems that are clear to read, easy to hand over, and boring to run. You should be able to see exactly what an agent did and why, which is why the work on this site is shown running, node by node.",
+  ],
+  university: "University College of Applied Sciences (UCAS)",
   teaser: [
     "I'm Tala, an AI Engineer and the co-founder & CEO of AI Rank. I've spent the last 2+ years building real software products, first for the web, and now with AI at the core.",
     "Today I focus on one thing: finding the work your team repeats every week and handing it to agents that do it reliably. I care about systems that are clear to read, easy to hand over, and boring to run.",
@@ -59,11 +75,12 @@ export const about = {
   education: "AI & Data Science Engineering · University College of Applied Sciences (UCAS)",
   // TODO(tala): certificates (name, issuer, year, link).
   certificates: [
+    // Add url: "https://…" to make a certificate link out.
     { name: "[[TALA: certificate]]", issuer: "[[issuer]]", year: "[[year]]" },
     { name: "[[TALA: certificate]]", issuer: "[[issuer]]", year: "[[year]]" },
     { name: "[[TALA: certificate]]", issuer: "[[issuer]]", year: "[[year]]" },
   ],
-} as const;
+};
 
 export const finalCta = {
   title: "Have a process that eats your team's time?",

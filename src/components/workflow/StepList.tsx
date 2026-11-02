@@ -64,9 +64,9 @@ export default function StepList({
                     {finished || running ? (step.log ?? node?.kind) : node?.kind}
                   </span>
                 </span>
-                {running && <Loader2 aria-hidden className="size-4 shrink-0 animate-spin text-accent" />}
+                {running && <Loader2 aria-hidden className="size-4 shrink-0 animate-spin text-accent-bright" />}
                 {finished && !failed && <Check aria-hidden className="size-4 shrink-0 text-success" />}
-                {failed && <X aria-hidden className="size-4 shrink-0 text-accent" />}
+                {failed && <X aria-hidden className="size-4 shrink-0 text-accent-bright" />}
               </button>
 
               {open && (

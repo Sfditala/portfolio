@@ -10,7 +10,7 @@ export default function Placeholder({
 }) {
   return (
     <span
-      className={`inline-flex items-center rounded-md border border-dashed border-accent/40 bg-accent/5 px-2 py-0.5 font-mono text-xs text-accent/90 ${className}`}
+      className={`inline-flex items-center rounded-md border border-dashed border-accent/40 bg-accent/5 px-2 py-0.5 font-mono text-xs text-accent-bright ${className}`}
     >
       {children}
     </span>

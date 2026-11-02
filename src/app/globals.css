@@ -12,10 +12,13 @@
   --color-border: rgba(255, 255, 255, 0.08);
   --color-text: #f5f5f5;
   --color-text-muted: #a1a1a1;
-  --color-text-dim: #6b6b6b;
+  /* Lighter than the brief's #6b6b6b, which misses AA contrast on these backgrounds. */
+  --color-text-dim: #858585;
   --color-accent: #e63946;
   /* Backgrounds behind text: --color-accent with light text misses AA. */
   --color-accent-solid: #cf2d3b;
+  /* Small text: --color-accent misses AA on the surface colours. */
+  --color-accent-bright: #ef5a66;
   --color-accent-deep: #8e1b26;
   --color-success: #4ade80;
 
@@ -91,6 +94,17 @@
   }
 }
 
+@keyframes rise {
+  from {
+    transform: translateY(10px) scale(0.98);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
 @keyframes pop {
   from {
     transform: scale(0);
@@ -100,6 +114,32 @@
     transform: scale(1);
     opacity: 1;
   }
+}
+
+/* Soft red glow. A radial gradient, because a large blur filter is costly to render. */
+@utility glow-accent {
+  background: radial-gradient(
+    closest-side,
+    color-mix(in oklab, var(--color-accent-deep) 32%, transparent),
+    transparent
+  );
+}
+
+/* Scroll-driven fade up, with no JavaScript. Elsewhere content simply shows. */
+@utility reveal {
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+  }
+}
+
+/* Skips layout and paint for sections until they near the viewport. */
+@utility lazy-render {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
 }
 
 /* n8n-style dot grid used behind key sections */

@@ -44,7 +44,7 @@ function ReplayPlayer({ scenario }: { scenario: WorkflowScenario }) {
       </div>
 
       <p dir="auto" className="border-b border-border bg-bg/60 px-4 py-2.5 text-sm text-text-muted">
-        <span aria-hidden className="mr-2 font-mono text-accent">
+        <span aria-hidden className="mr-2 font-mono text-accent-bright">
           ›
         </span>
         {scenario.prompt}

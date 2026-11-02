@@ -83,7 +83,7 @@ function StatusBadge({ status }: { status: NodeStatus }) {
         className={status === "success" ? "fill-success" : status === "error" ? "fill-accent" : "fill-surface-2 stroke-accent"}
       />
       {status === "running" ? (
-        <g className="origin-center animate-spin text-accent [transform-box:fill-box]">
+        <g className="origin-center animate-spin text-accent-bright [transform-box:fill-box]">
           <Loader2 x={cx - 7} y={cy - 7} width={14} height={14} strokeWidth={3} />
         </g>
       ) : status === "success" ? (

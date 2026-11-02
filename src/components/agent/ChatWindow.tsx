@@ -31,7 +31,7 @@ function ToolChip({ name, status }: { name: string; status: ToolStatus }) {
         <Settings2 aria-hidden className="size-3 shrink-0" />
       )}
       <span className="truncate">{name}</span>
-      <span className={status === "done" ? "text-success" : status === "error" ? "text-accent" : ""}>
+      <span className={status === "done" ? "text-success" : status === "error" ? "text-accent-bright" : ""}>
         · {status === "running" ? "running" : status === "done" ? "done" : "needs input"}
       </span>
     </p>

@@ -48,7 +48,7 @@ export default function ReplayStage({ projects }: { projects: Project[] }) {
                 : "border-border text-text-muted hover:border-white/20 hover:text-text"
             }`}
           >
-            <span className={`font-mono text-xs ${i === active ? "text-accent" : "text-text-dim"}`}>0{i + 1}</span>
+            <span className={`font-mono text-xs ${i === active ? "text-accent-bright" : "text-text-dim"}`}>0{i + 1}</span>
             {p.title}
           </button>
         ))}
@@ -77,11 +77,11 @@ export default function ReplayStage({ projects }: { projects: Project[] }) {
             size="inline"
             message={`I'm interested in something like your ${project.title}. Could it work for my business?`}
           >
-            Want this for your business? <span className="text-accent">Talk to my agent →</span>
+            Want this for your business? <span className="text-accent-bright">Talk to my agent →</span>
           </AgentButton>
           <Link
             href={projectUrl(project.slug)}
-            className="text-sm font-medium text-text transition-colors hover:text-accent"
+            className="text-sm font-medium text-text transition-colors hover:text-accent-bright"
           >
             Read case study →
           </Link>

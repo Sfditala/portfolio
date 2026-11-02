@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
@@ -96,7 +97,7 @@ export default async function CaseStudyPage({ params }: Props) {
           </div>
         </header>
 
-        {!scenario && project.image && (
+        {!scenario && (project.image || project.screenshots?.length) && (
           <div className="group mt-12 overflow-hidden rounded-2xl border border-border">
             <ProjectCover project={project} sizes="(min-width: 1152px) 1104px, 100vw" className="aspect-[21/9]" />
           </div>
@@ -152,8 +153,36 @@ export default async function CaseStudyPage({ params }: Props) {
                 ))}
               </ul>
             ) : (
-              // TODO(tala): real results, screenshots and a demo video for this project.
-              <Placeholder>[[TALA: real results, screenshots, demo video]]</Placeholder>
+              // TODO(tala): real results for this project.
+              <Placeholder>[[TALA: real results]]</Placeholder>
+            )}
+          </Stop>
+
+          <Stop label="In action">
+            {project.demoVideo || project.screenshots?.length ? (
+              <div className="space-y-4">
+                {project.demoVideo && (
+                  <video
+                    controls
+                    preload="none"
+                    poster={project.screenshots?.[0]?.src}
+                    src={project.demoVideo}
+                    className="aspect-video w-full rounded-2xl border border-border bg-surface"
+                  />
+                )}
+                {project.screenshots && (
+                  <div className="grid gap-4 md:grid-cols-2">
+                    {project.screenshots.map((shot) => (
+                      <div key={shot.src} className="relative aspect-[16/10] overflow-hidden rounded-xl border border-border bg-surface">
+                        <Image src={shot.src} alt={shot.alt} fill sizes="(min-width: 768px) 540px, 100vw" className="object-cover object-top" />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              // TODO(tala): screenshots and a demo video for this project.
+              <Placeholder>[[TALA: screenshots, demo video]]</Placeholder>
             )}
           </Stop>
 
@@ -194,7 +223,7 @@ export default async function CaseStudyPage({ params }: Props) {
             <span className="font-mono text-xs tracking-[0.16em] text-text-dim uppercase">Next project</span>
             <span className="flex items-center justify-between gap-4 text-xl font-semibold tracking-tight text-text">
               {next.title}
-              <ArrowRight className="size-5 shrink-0 transition-[color,transform] duration-200 group-hover:translate-x-1 group-hover:text-accent" />
+              <ArrowRight className="size-5 shrink-0 transition-[color,transform] duration-200 group-hover:translate-x-1 group-hover:text-accent-bright" />
             </span>
           </Link>
         </div>

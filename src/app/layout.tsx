@@ -3,7 +3,9 @@ import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/sections/Header";
 import Footer from "@/components/sections/Footer";
+import { Analytics } from "@vercel/analytics/next";
 import AgentWidget from "@/components/agent/AgentWidget";
+import JsonLd from "@/components/ui/JsonLd";
 import { site } from "@/content/site";
 
 const spaceGrotesk = Space_Grotesk({
@@ -12,10 +14,11 @@ const spaceGrotesk = Space_Grotesk({
   display: "swap",
 });
 
+// "optional" because a late swap of body text would count as the page's LCP on slow connections.
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  display: "swap",
+  display: "optional",
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -24,7 +27,6 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-// Interim metadata; OG images, sitemap and JSON-LD land in Phase 5.
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
@@ -43,6 +45,20 @@ export const metadata: Metadata = {
     site.name,
   ],
   authors: [{ name: site.name, url: site.url }],
+  openGraph: {
+    type: "website",
+    siteName: site.name,
+    title: `${site.name} · ${site.title}`,
+    description: site.description,
+    url: "/",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${site.name} · ${site.title}`,
+    description: site.description,
+  },
+  alternates: { canonical: "/" },
 };
 
 export default function RootLayout({
@@ -64,6 +80,9 @@ export default function RootLayout({
         <main id="content">{children}</main>
         <Footer />
         <AgentWidget />
+        <JsonLd />
+        {/* The analytics script only exists on Vercel. */}
+        {process.env.VERCEL && <Analytics />}
       </body>
     </html>
   );

@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
+import { useEffect, useState, type ReactNode } from "react";
 import { Bot, Check, DatabaseZap, Loader2, RotateCcw } from "lucide-react";
 import { siGooglegemini, siGooglesheets, siTelegram } from "simple-icons";
 import BrandIcon from "@/components/ui/BrandIcon";
+import { useInViewOnce, useReducedMotionPreference } from "@/lib/motion";
 
 /*
  * Hero teaser of the Workflow Replay (full version in Phase 2).
@@ -36,7 +36,7 @@ function StatusBadge({ status }: { status: Status }) {
   return (
     <span
       className={`absolute -top-[18%] -right-[18%] flex size-[2.6cqw] min-h-3.5 min-w-3.5 items-center justify-center rounded-full ${
-        status === "success" ? "bg-success text-bg" : "bg-surface-2 text-accent"
+        status === "success" ? "bg-success text-bg" : "bg-surface-2 text-accent-bright"
       }`}
     >
       {status === "success" ? (
@@ -97,7 +97,7 @@ function SubNode({ active, icon, label, position }: { active: boolean; icon: Rea
   );
 }
 
-function Edge({ d, drawn, dashed = false, reduce }: { d: string; drawn: boolean; dashed?: boolean; reduce: boolean }) {
+function Edge({ d, drawn, dashed = false }: { d: string; drawn: boolean; dashed?: boolean }) {
   return (
     <g>
       <path
@@ -108,25 +108,23 @@ function Edge({ d, drawn, dashed = false, reduce }: { d: string; drawn: boolean;
         strokeDasharray={dashed ? "3 3" : undefined}
         vectorEffect="non-scaling-stroke"
       />
-      <motion.path
+      {/* pathLength=1 lets the dash offset draw the line from start to end. */}
+      <path
         d={d}
         fill="none"
-        className="stroke-accent"
+        pathLength={1}
+        strokeDasharray={1}
+        strokeDashoffset={drawn ? 0 : 1}
         strokeWidth={1.75}
-        strokeDasharray={dashed ? "3 3" : undefined}
-        vectorEffect="non-scaling-stroke"
-        initial={false}
-        animate={{ pathLength: drawn ? 1 : 0, opacity: drawn ? 1 : 0 }}
-        transition={{ duration: reduce ? 0 : 0.45, ease: "easeInOut" }}
+        className={`stroke-accent transition-[stroke-dashoffset] duration-500 ease-in-out ${drawn ? "" : "opacity-0"}`}
       />
     </g>
   );
 }
 
 export default function HeroWorkflow() {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.4 });
-  const reduce = useReducedMotion() ?? false;
+  const [ref, inView] = useInViewOnce<HTMLDivElement>("0px 0px -25% 0px");
+  const reduce = useReducedMotionPreference();
   const [step, setStep] = useState(0);
   const [runId, setRunId] = useState(0);
 
@@ -148,7 +146,7 @@ export default function HeroWorkflow() {
   return (
     <div
       ref={ref}
-      className="overflow-hidden rounded-2xl border border-border bg-surface/80 shadow-2xl shadow-black/60 backdrop-blur"
+      className="overflow-hidden rounded-2xl border border-border bg-surface shadow-2xl shadow-black/60"
     >
       {/* Canvas header */}
       <div className="flex items-center justify-between gap-3 border-b border-border px-4 py-2.5">
@@ -181,25 +179,20 @@ export default function HeroWorkflow() {
         <div aria-hidden className="dot-grid absolute inset-0" />
 
         <svg aria-hidden viewBox="0 0 160 100" className="absolute inset-0 size-full">
-          <Edge d="M24 42 L40 42" drawn={s >= 2} reduce={reduce} />
-          <Edge d="M52 50 L52 64.5" drawn={s >= 2} dashed reduce={reduce} />
-          <Edge d="M76 50 L76 64.5" drawn={s >= 2} dashed reduce={reduce} />
-          <Edge d="M88 42 C95 42 93 26 100 26" drawn={s >= 3} reduce={reduce} />
-          <Edge d="M116 26 C125 26 123 50 132 50" drawn={s >= 4} reduce={reduce} />
+          <Edge d="M24 42 L40 42" drawn={s >= 2} />
+          <Edge d="M52 50 L52 64.5" drawn={s >= 2} dashed />
+          <Edge d="M76 50 L76 64.5" drawn={s >= 2} dashed />
+          <Edge d="M88 42 C95 42 93 26 100 26" drawn={s >= 3} />
+          <Edge d="M116 26 C125 26 123 50 132 50" drawn={s >= 4} />
         </svg>
 
         {/* Trigger message */}
-        <AnimatePresence>
-          {s >= 1 && (
-            <motion.div
-              initial={reduce ? false : { opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="absolute top-[7%] left-[3%] max-w-[36%] rounded-lg rounded-bl-sm border border-border bg-surface-2 px-[1.4cqw] py-[1cqw] text-[max(9px,1.55cqw)] leading-snug text-text-muted"
+        {s >= 1 && (
+          <div className="absolute animate-[rise_0.3s_var(--ease-out-expo)_both] top-[7%] left-[3%] max-w-[36%] rounded-lg rounded-bl-sm border border-border bg-surface-2 px-[1.4cqw] py-[1cqw] text-[max(9px,1.55cqw)] leading-snug text-text-muted"
             >
-              Plan next week&apos;s Instagram content for the café
-            </motion.div>
-          )}
-        </AnimatePresence>
+            Plan next week&apos;s Instagram content for the café
+          </div>
+        )}
 
         <SquareNode
           status={statusFor(1, s)}
@@ -249,15 +242,10 @@ export default function HeroWorkflow() {
         />
 
         {/* Result */}
-        <AnimatePresence>
-          {done && (
-            <motion.div
-              initial={reduce ? false : { opacity: 0, y: 8, scale: 0.97 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute right-[3%] bottom-[5%] w-[40%] rounded-lg rounded-br-sm border border-accent/30 bg-accent/10 px-[1.6cqw] py-[1.2cqw] text-[max(9px,1.5cqw)] leading-snug text-text"
+        {done && (
+          <div className="absolute animate-[rise_0.3s_var(--ease-out-expo)_both] right-[3%] bottom-[5%] w-[40%] rounded-lg rounded-br-sm border border-accent/30 bg-accent/10 px-[1.6cqw] py-[1.2cqw] text-[max(9px,1.5cqw)] leading-snug text-text"
             >
-              <p className="mb-[0.4cqw] font-mono text-[max(8px,1.3cqw)] text-accent">✓ weekly plan</p>
+              <p className="mb-[0.4cqw] font-mono text-[max(8px,1.3cqw)] text-accent-bright">✓ weekly plan</p>
               {/* Narrow canvases only have room for the summary line. */}
               <span className="hidden @md:inline">
                 Mon · Reel: new seasonal drink
@@ -270,9 +258,8 @@ export default function HeroWorkflow() {
                 <span className="hidden @md:inline">+5 more · </span>
                 saved to Sheets
               </span>
-            </motion.div>
-          )}
-        </AnimatePresence>
+          </div>
+        )}
       </div>
 
       {/* Execution log */}

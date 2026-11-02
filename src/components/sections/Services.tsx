@@ -40,13 +40,13 @@ export default function Services() {
         {services.map((service, i) => {
           const Icon = icons[service.id];
           return (
-            <Reveal key={service.id} delay={i * 0.05} className={spans[i]}>
+            <Reveal key={service.id} className={spans[i]}>
               <article className="group relative flex h-full flex-col rounded-2xl border border-border bg-surface p-6 transition-colors duration-200 hover:border-white/20 md:p-7">
                 <Handle side="left" />
                 <Handle side="right" />
 
                 <div className="flex items-start justify-between">
-                  <span className="flex size-11 items-center justify-center rounded-xl border border-border bg-surface-2 text-text-muted transition-colors duration-200 group-hover:border-accent/50 group-hover:text-accent">
+                  <span className="flex size-11 items-center justify-center rounded-xl border border-border bg-surface-2 text-text-muted transition-colors duration-200 group-hover:border-accent/50 group-hover:text-accent-bright">
                     <Icon className="size-5" />
                   </span>
                   <span className="font-mono text-xs text-text-dim">0{i + 1}</span>
@@ -58,7 +58,7 @@ export default function Services() {
                 <dl className="mt-6 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1.5 rounded-lg border border-border bg-bg/60 px-3.5 py-3 font-mono text-xs">
                   <dt className="text-text-dim">in</dt>
                   <dd className="text-text-muted">{service.io.in}</dd>
-                  <dt className="text-accent">out</dt>
+                  <dt className="text-accent-bright">out</dt>
                   <dd className="text-text">{service.io.out}</dd>
                 </dl>
 

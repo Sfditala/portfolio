@@ -5,7 +5,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import Placeholder, { isPlaceholder } from "@/components/ui/Placeholder";
 import { Container } from "@/components/ui/Section";
 import { hero, site } from "@/content/site";
-import HeroWorkflow from "./HeroWorkflow";
+import HeroWorkflow from "./LazyHeroWorkflow";
 
 export default function Hero() {
   return (
@@ -16,13 +16,13 @@ export default function Hero() {
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-40 right-[-10%] size-[640px] rounded-full bg-accent-deep/25 blur-[140px]"
+        className="pointer-events-none absolute -top-72 right-[-25%] size-[1000px] glow-accent"
       />
 
       <Container className="relative grid items-center gap-16 lg:grid-cols-[1fr_1.08fr] lg:gap-12">
         <div>
           <p className="mb-6 font-mono text-[0.7rem] tracking-[0.16em] text-text-dim sm:text-xs">
-            <span className="text-accent">{"//"}</span>
+            <span className="text-accent-bright">{"//"}</span>
             {hero.eyebrow.replace("//", "")}
           </p>
 
@@ -59,6 +59,7 @@ export default function Hero() {
                 alt="Tala Safadi"
                 width={240}
                 height={320}
+                sizes="120px"
                 priority
                 className="size-full origin-[50%_24%] scale-[2.4] object-cover grayscale-[35%]"
               />

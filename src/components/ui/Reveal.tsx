@@ -1,28 +1,15 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
 
-/** Fades content up once when it scrolls into view. */
+/**
+ * Fades content up as it scrolls into view. CSS only (see the `reveal` utility),
+ * so it adds no JavaScript and content stays visible where it isn't supported.
+ */
 export default function Reveal({
   children,
-  delay = 0,
-  className,
+  className = "",
 }: {
   children: ReactNode;
-  delay?: number;
   className?: string;
 }) {
-  const reduce = useReducedMotion();
-  return (
-    <motion.div
-      className={className}
-      initial={reduce ? false : { opacity: 0, y: 18 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.4, delay, ease: [0.16, 1, 0.3, 1] }}
-    >
-      {children}
-    </motion.div>
-  );
+  return <div className={`reveal ${className}`}>{children}</div>;
 }
