@@ -249,7 +249,7 @@ export const projects: Project[] = [
     label: "AI Product · Co-founder & CEO",
     summary:
       "An Arabic-first platform for discovering, comparing and rating AI tools, so choosing the right one takes minutes, not weeks. I built it from scratch and co-founded it.",
-    stack: ["Next.js"],
+    stack: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase", "Vercel", "Cloudflare"],
     keywords: ["ai tools","compare tools","comparison","directory","which tool","tool recommendation","platform","arabic","saas","product","أدوات الذكاء الاصطناعي","مقارنة","مقارنات","دليل","منصة","ترشيح","تقييم"],
     liveUrl: "https://airanktools.com/",
     screenshots: [

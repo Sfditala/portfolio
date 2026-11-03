@@ -6,7 +6,7 @@ Paths under `public/` become site URLs: `public/projects/modavi/home.png` is wri
 
 ## AI Rank
 
-Done: URL, screenshots, pitch and features, taken from the live site. They live in `aiRank` in `src/content/site.ts` and the `ai-rank` entry in `src/content/projects.ts`. Still needed: its tech stack.
+Done: URL, screenshots, pitch, features and tech stack. They live in `aiRank` in `src/content/site.ts` and the `ai-rank` entry in `src/content/projects.ts`.
 
 ## About you
 
