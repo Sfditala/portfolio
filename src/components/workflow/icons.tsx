@@ -1,4 +1,4 @@
-import { Bot, DatabaseZap, Volume2, Wrench, type LucideIcon } from "lucide-react";
+import { Bot, Code2, DatabaseZap, Mic, ShieldCheck, Volume2, Wrench, type LucideIcon } from "lucide-react";
 import {
   siElevenlabs,
   siGooglecalendar,
@@ -28,6 +28,9 @@ const generic: Record<string, LucideIcon> = {
   vector: DatabaseZap,
   tool: Wrench,
   speaker: Volume2,
+  mic: Mic,
+  code: Code2,
+  approval: ShieldCheck,
 };
 
 /** Renders as a nested <svg>, so it works inside the canvas and in plain HTML. */

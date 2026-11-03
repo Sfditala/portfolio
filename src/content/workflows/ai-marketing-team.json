@@ -1,127 +1,142 @@
 {
   "_placeholder": true,
-  "id": "plan-weekly-content",
+  "id": "write-and-schedule-post",
   "projectSlug": "ai-marketing-team",
-  "title": "Plan next week's content",
-  "prompt": "Plan next week's Instagram content for the café",
+  "title": "Write a post, schedule it, catch the conflict",
+  "prompt": "Write me a post about the Cold Brew and schedule it Thursday at 7",
   "nodes": [
     { "id": "trigger", "label": "Telegram", "kind": "trigger", "icon": "telegram", "position": { "x": 16, "y": 228 } },
     { "id": "orchestrator", "label": "Orchestrator", "kind": "agent", "icon": "bot", "position": { "x": 229, "y": 228 } },
-    { "id": "pinecone", "label": "Brand RAG", "kind": "rag", "icon": "vector", "position": { "x": 229, "y": 410 } },
-    { "id": "content", "label": "Content Agent", "kind": "agent", "icon": "bot", "position": { "x": 442, "y": 90 } },
-    { "id": "calendar", "label": "Calendar Agent", "kind": "agent", "icon": "bot", "position": { "x": 442, "y": 340 } },
-    { "id": "sheets", "label": "Google Sheets", "kind": "db", "icon": "sheets", "position": { "x": 655, "y": 340 } },
-    { "id": "reply", "label": "Telegram", "kind": "output", "icon": "telegram", "position": { "x": 868, "y": 228 } }
+    { "id": "content", "label": "Content Agent", "kind": "agent", "icon": "bot", "position": { "x": 442, "y": 50 } },
+    { "id": "pinecone", "label": "Brand RAG", "kind": "rag", "icon": "vector", "position": { "x": 655, "y": 50 } },
+    { "id": "calendar", "label": "Calendar Agent", "kind": "agent", "icon": "bot", "position": { "x": 442, "y": 228 } },
+    { "id": "analyst", "label": "Analyst Agent", "kind": "agent", "icon": "bot", "position": { "x": 442, "y": 410 } },
+    { "id": "conflict", "label": "Conflict check", "kind": "tool", "icon": "code", "position": { "x": 655, "y": 170 } },
+    { "id": "approval", "label": "Owner approval", "kind": "tool", "icon": "approval", "position": { "x": 655, "y": 300 } },
+    { "id": "sheets", "label": "Google Sheets", "kind": "db", "icon": "sheets", "position": { "x": 868, "y": 300 } },
+    { "id": "reply", "label": "Telegram", "kind": "output", "icon": "telegram", "position": { "x": 868, "y": 120 } }
   ],
   "edges": [
     { "from": "trigger", "to": "orchestrator" },
-    { "from": "orchestrator", "to": "pinecone", "label": "brand voice" },
-    { "from": "orchestrator", "to": "content", "label": "delegate" },
-    { "from": "content", "to": "calendar", "label": "posts" },
-    { "from": "calendar", "to": "sheets", "label": "rows" },
+    { "from": "orchestrator", "to": "content" },
+    { "from": "orchestrator", "to": "calendar" },
+    { "from": "orchestrator", "to": "analyst" },
+    { "from": "content", "to": "pinecone" },
+    { "from": "calendar", "to": "conflict" },
+    { "from": "conflict", "to": "approval" },
+    { "from": "approval", "to": "sheets" },
     { "from": "sheets", "to": "reply" }
   ],
   "steps": [
     {
       "nodeId": "trigger",
       "durationMs": 700,
-      "log": "message received",
+      "log": "owner on the allowlist · language detected: en",
       "view": "json",
-      "output": { "chat_id": "<redacted>", "from": "café owner", "text": "Plan next week's Instagram content for the café" }
+      "output": { "chat_id": "<redacted>", "input_type": "text", "reply_language": "en", "text": "Write me a post about the Cold Brew and schedule it Thursday at 7" }
     },
     {
       "nodeId": "orchestrator",
-      "durationMs": 1300,
-      "log": "needs brand context first",
+      "durationMs": 1200,
+      "log": "2 tasks: content, then schedule",
       "view": "text",
-      "input": { "text": "Plan next week's Instagram content for the café" },
-      "output": "This is a planning request. I need the brand voice and current menu before delegating, so I'll query the brand knowledge base."
+      "output": "Two tasks. The Content Agent writes the post first, then the Calendar Agent schedules it."
+    },
+    {
+      "nodeId": "content",
+      "durationMs": 900,
+      "log": "short, separate searches",
+      "view": "json",
+      "input": { "task": "Instagram post about the Cold Brew" },
+      "output": { "searches": ["Cold Brew", "Instagram rules", "current offers", "tone of voice"] }
     },
     {
       "nodeId": "pinecone",
       "durationMs": 1000,
-      "log": "top_k=3 · 3 matches",
-      "view": "json",
-      "input": { "query": "brand voice, seasonal menu, content pillars", "top_k": 3 },
+      "log": "4 searches · brand knowledge",
+      "view": "table",
       "output": {
-        "matches": [
-          { "source": "brand-guide", "text": "Warm, neighbourly tone. Short captions." },
-          { "source": "menu", "text": "Seasonal: spiced latte, orange cake." },
-          { "source": "content-pillars", "text": "Drinks · behind the bar · regulars." }
+        "columns": ["Search", "Source"],
+        "rows": [
+          ["Cold Brew", "Menu & prices"],
+          ["Instagram rules", "Platform rules"],
+          ["Current offers", "Offers"],
+          ["Tone of voice", "Brand guide"]
         ]
       }
-    },
-    {
-      "nodeId": "orchestrator",
-      "durationMs": 800,
-      "log": "delegating to Content Agent",
-      "view": "text",
-      "output": "Context is ready. Handing the brief to the Content Agent, then the Calendar Agent will schedule the result."
     },
     {
       "nodeId": "content",
-      "durationMs": 1600,
-      "log": "7 posts drafted",
-      "view": "table",
-      "input": { "brief": "1 week of Instagram · brand voice attached" },
+      "durationMs": 1300,
+      "log": "caption ready",
+      "view": "text",
+      "output": "Instagram caption drafted with the café's voice and hashtags, using the price and offer found in the knowledge base."
+    },
+    {
+      "nodeId": "orchestrator",
+      "durationMs": 600,
+      "log": "post reviewed · delegating to Calendar Agent",
+      "view": "text",
+      "output": "The post looks right. Now the Calendar Agent can schedule it for Thursday at 7."
+    },
+    {
+      "nodeId": "calendar",
+      "durationMs": 800,
+      "log": "requested: Thursday 19:00",
+      "view": "json",
+      "input": { "post": "Cold Brew", "requested": "Thursday 19:00" },
+      "output": { "tool_call": "check_conflicts" }
+    },
+    {
+      "nodeId": "conflict",
+      "durationMs": 800,
+      "log": "slot taken · 2 free slots",
+      "view": "json",
+      "input": { "slot": "Thursday 19:00" },
+      "output": { "conflict": true, "taken_by": "V60 post", "free_slots": ["Thursday 20:00", "Saturday 11:00"] }
+    },
+    {
+      "nodeId": "approval",
+      "durationMs": 1500,
+      "log": "paused until the owner approves",
+      "view": "chat",
       "output": {
-        "columns": ["Format", "Idea"],
-        "rows": [
-          ["Reel", "Pouring the new spiced latte"],
-          ["Carousel", "A morning behind the bar"],
-          ["Photo", "Orange cake, fresh from the oven"],
-          ["Story", "Poll: this week's special"],
-          ["Reel", "Meet a regular"],
-          ["Photo", "Weekend brunch table"],
-          ["Carousel", "Three ways to take your coffee"]
+        "messages": [
+          { "from": "bot", "text": "That slot is taken by the V60 post. Free slots: Thursday 20:00 or Saturday 11:00." },
+          { "from": "user", "text": "Saturday 11" },
+          { "from": "bot", "text": "Approve adding the Cold Brew post on Saturday at 11:00?" },
+          { "from": "user", "text": "Approve" }
         ]
       }
     },
     {
-      "nodeId": "calendar",
-      "durationMs": 1000,
-      "log": "assigned days and times",
-      "view": "text",
-      "input": { "posts": 7 },
-      "output": "Reels go out on the two busiest days. Stories stay flexible. Every post now has a date and a time."
-    },
-    {
       "nodeId": "sheets",
-      "durationMs": 900,
-      "log": "append · 7 rows",
+      "durationMs": 800,
+      "log": "append · 1 row, after approval",
       "view": "table",
       "input": { "operation": "append", "sheet": "Content Calendar" },
       "output": {
-        "columns": ["Day", "Time", "Format", "Status"],
-        "rows": [
-          ["Mon", "09:00", "Reel", "Planned"],
-          ["Tue", "12:30", "Carousel", "Planned"],
-          ["Wed", "08:30", "Photo", "Planned"],
-          ["Thu", "17:00", "Story", "Planned"],
-          ["Fri", "09:00", "Reel", "Planned"],
-          ["Sat", "10:00", "Photo", "Planned"],
-          ["Sun", "11:00", "Carousel", "Planned"]
-        ]
+        "columns": ["Day", "Time", "Post", "Platform", "Status"],
+        "rows": [["Saturday", "11:00", "Cold Brew", "Instagram", "Scheduled"]]
       }
     },
     {
       "nodeId": "reply",
       "durationMs": 700,
-      "log": "message sent",
+      "log": "replied in the same format: text",
       "view": "json",
-      "output": { "ok": true, "sent_to": "<redacted>" }
+      "output": { "ok": true, "format": "text" }
     }
   ],
   "result": {
     "type": "telegram",
     "data": {
-      "bot": "Marketing Team",
+      "bot": "Ben Al-Sabah Marketing Team",
       "messages": [
-        { "from": "user", "text": "Plan next week's Instagram content for the café" },
-        {
-          "from": "bot",
-          "text": "Next week is planned and saved to your content calendar:\n\nMon · Reel: pouring the spiced latte\nTue · Carousel: a morning behind the bar\nWed · Photo: orange cake\nThu · Story: poll for this week's special\nFri · Reel: meet a regular\nSat · Photo: weekend brunch\nSun · Carousel: three ways to take your coffee"
-        }
+        { "from": "user", "text": "Write me a post about the Cold Brew and schedule it Thursday at 7" },
+        { "from": "bot", "text": "That slot is taken by the V60 post. Free slots: Thursday 20:00 or Saturday 11:00." },
+        { "from": "user", "text": "Saturday 11" },
+        { "from": "bot", "text": "Done. The Cold Brew post is on the calendar for Saturday at 11:00, after your approval." }
       ]
     }
   }

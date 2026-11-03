@@ -1,4 +1,5 @@
 import aiMarketingTeam from "./ai-marketing-team.json";
+import clinicAiReceptionist from "./clinic-ai-receptionist.json";
 import telegramAiAssistant from "./telegram-ai-assistant.json";
 import restaurantVoiceAgent from "./restaurant-voice-agent.json";
 import type { WorkflowScenario } from "./types";
@@ -7,6 +8,7 @@ import type { WorkflowScenario } from "./types";
 // and checked by `npm run replay:check`.
 export const scenarios = [
   aiMarketingTeam,
+  clinicAiReceptionist,
   telegramAiAssistant,
   restaurantVoiceAgent,
 ] as unknown as WorkflowScenario[];

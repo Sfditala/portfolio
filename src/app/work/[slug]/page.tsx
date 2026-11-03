@@ -97,6 +97,12 @@ export default async function CaseStudyPage({ params }: Props) {
           </div>
         </header>
 
+        {project.note && (
+          <p className="mt-8 max-w-3xl rounded-xl border border-border bg-surface px-4 py-3 text-sm leading-relaxed text-pretty text-text-muted">
+            {project.note}
+          </p>
+        )}
+
         {!scenario && (project.image || project.screenshots?.length) && (
           <div className="group mt-12 overflow-hidden rounded-2xl border border-border">
             <ProjectCover project={project} sizes="(min-width: 1152px) 1104px, 100vw" className="aspect-[21/9]" />
@@ -147,16 +153,37 @@ export default async function CaseStudyPage({ params }: Props) {
 
           <Stop label="Results">
             {project.results.length > 0 ? (
-              <ul className="max-w-2xl space-y-2 text-lg text-text-muted">
-                {project.results.map((result) => (
-                  <li key={result}>{result}</li>
-                ))}
-              </ul>
+              <>
+                <ul className="max-w-3xl list-disc space-y-2 pl-5 text-base leading-relaxed text-pretty text-text-muted marker:text-accent-bright">
+                  {project.results.map((result) => (
+                    <li key={result}>{result}</li>
+                  ))}
+                </ul>
+                {project.resultsNote && (
+                  <p className="mt-3 font-mono text-xs text-text-dim">{project.resultsNote}</p>
+                )}
+              </>
             ) : (
               // TODO(tala): real results for this project.
               <Placeholder>[[TALA: real results]]</Placeholder>
             )}
           </Stop>
+
+          {project.challenges && (
+            <Stop label="Challenges and fixes">
+              <ul className="grid max-w-5xl gap-3 md:grid-cols-2">
+                {project.challenges.map(({ challenge, solution }) => (
+                  <li key={challenge} className="rounded-xl border border-border bg-surface p-4 text-sm leading-relaxed">
+                    <p className="text-text-muted">{challenge}</p>
+                    <p className="mt-2 text-text">
+                      <span aria-hidden className="mr-1.5 font-mono text-success">→</span>
+                      {solution}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </Stop>
+          )}
 
           <Stop label="In action">
             {project.demoVideo || project.screenshots?.length ? (
@@ -204,6 +231,16 @@ export default async function CaseStudyPage({ params }: Props) {
               <Placeholder>[[TALA: your role on this project]]</Placeholder>
             )}
           </Stop>
+
+          {project.nextSteps && (
+            <Stop label="What I'd add next">
+              <ul className="max-w-2xl list-disc space-y-1.5 pl-5 text-base text-text-muted marker:text-text-dim">
+                {project.nextSteps.map((step) => (
+                  <li key={step}>{step}</li>
+                ))}
+              </ul>
+            </Stop>
+          )}
         </div>
 
         <div className="mt-20 grid gap-4 md:mt-28 md:grid-cols-[1.4fr_1fr]">

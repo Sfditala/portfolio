@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState, type ReactNode } from "react";
-import { Bot, Check, DatabaseZap, Loader2, RotateCcw } from "lucide-react";
-import { siGooglegemini, siGooglesheets, siTelegram } from "simple-icons";
+import { Bot, Check, Cpu, DatabaseZap, Loader2, RotateCcw } from "lucide-react";
+import { siGooglesheets, siTelegram } from "simple-icons";
 import BrandIcon from "@/components/ui/BrandIcon";
 import { useInViewOnce, useReducedMotionPreference } from "@/lib/motion";
 
@@ -22,9 +22,9 @@ const STEP_MS = [500, 700, 1900, 900, 900];
 const LOG: Record<number, string> = {
   0: "waiting for trigger…",
   1: "telegram_trigger · message received",
-  2: "orchestrator · rag(brand) → content + calendar agents",
-  3: "google_sheets · append 7 rows to content calendar",
-  4: "telegram · send weekly plan",
+  2: "orchestrator · content agent (rag) → calendar agent",
+  3: "google_sheets · slot free · added after approval",
+  4: "telegram · send confirmation",
   5: "run finished · 4 nodes · success",
 };
 
@@ -190,7 +190,7 @@ export default function HeroWorkflow() {
         {s >= 1 && (
           <div className="absolute animate-[rise_0.3s_var(--ease-out-expo)_both] top-[7%] left-[3%] max-w-[36%] rounded-lg rounded-bl-sm border border-border bg-surface-2 px-[1.4cqw] py-[1cqw] text-[max(9px,1.55cqw)] leading-snug text-text-muted"
             >
-            Plan next week&apos;s Instagram content for the café
+            Write a post about the Cold Brew and schedule it Saturday at 11
           </div>
         )}
 
@@ -218,8 +218,8 @@ export default function HeroWorkflow() {
         <SubNode
           active={s === 2}
           position="top-[64.5%] left-[29.06%]"
-          label="Gemini"
-          icon={<BrandIcon icon={siGooglegemini} className="size-[50%]" />}
+          label="OpenAI"
+          icon={<Cpu className="size-[50%]" />}
         />
         <SubNode
           active={s === 2}
@@ -245,18 +245,17 @@ export default function HeroWorkflow() {
         {done && (
           <div className="absolute animate-[rise_0.3s_var(--ease-out-expo)_both] right-[3%] bottom-[5%] w-[40%] rounded-lg rounded-br-sm border border-accent/30 bg-accent/10 px-[1.6cqw] py-[1.2cqw] text-[max(9px,1.5cqw)] leading-snug text-text"
             >
-              <p className="mb-[0.4cqw] font-mono text-[max(8px,1.3cqw)] text-accent-bright">✓ weekly plan</p>
+              <p className="mb-[0.4cqw] font-mono text-[max(8px,1.3cqw)] text-accent-bright">✓ post scheduled</p>
               {/* Narrow canvases only have room for the summary line. */}
               <span className="hidden @md:inline">
-                Mon · Reel: new seasonal drink
+                Instagram · Cold Brew
                 <br />
-                Wed · Carousel: behind the bar
+                Saturday · 11:00
                 <br />
               </span>
               <span className="text-text-dim">
-                <span className="@md:hidden">7 posts · </span>
-                <span className="hidden @md:inline">+5 more · </span>
-                saved to Sheets
+                <span className="@md:hidden">Sat 11:00 · </span>
+                                approved by the owner
               </span>
           </div>
         )}

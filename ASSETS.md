@@ -31,7 +31,7 @@ Newer photo: replace `public/profile.jpg`, keeping the filename. If the crop loo
 
 File: `src/content/projects.ts`. Put files in `public/projects/<slug>/`.
 
-Slugs: `ai-marketing-team`, `telegram-ai-assistant`, `restaurant-voice-agent`, `shadow-ai-detector`, `modavi`, `maha-store`.
+Slugs: `ai-marketing-team`, `clinic-ai-receptionist`, `telegram-ai-assistant`, `restaurant-voice-agent`, `shadow-ai-detector`, `modavi`, `maha-store`.
 
 | What | Field | Example |
 |---|---|---|

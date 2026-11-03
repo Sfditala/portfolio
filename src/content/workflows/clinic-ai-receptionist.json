@@ -1,0 +1,96 @@
+{
+  "_placeholder": true,
+  "id": "voice-question-implants",
+  "projectSlug": "clinic-ai-receptionist",
+  "title": "A voice question, answered from the clinic's own data",
+  "prompt": "🎙️ Voice note: \"Do you do dental implants?\"",
+  "nodes": [
+    { "id": "trigger", "label": "Telegram", "kind": "trigger", "icon": "telegram", "position": { "x": 16, "y": 228 } },
+    { "id": "fix", "label": "Fix .oga file", "kind": "tool", "icon": "code", "position": { "x": 229, "y": 70 } },
+    { "id": "whisper", "label": "Whisper", "kind": "llm", "icon": "mic", "position": { "x": 442, "y": 70 } },
+    { "id": "agent", "label": "AI Agent", "kind": "agent", "icon": "bot", "position": { "x": 442, "y": 228 } },
+    { "id": "knowledge", "label": "Clinic RAG", "kind": "rag", "icon": "supabase", "position": { "x": 442, "y": 400 } },
+    { "id": "speech", "label": "ElevenLabs", "kind": "voice", "icon": "elevenlabs", "position": { "x": 655, "y": 228 } },
+    { "id": "reply", "label": "Telegram", "kind": "output", "icon": "telegram", "position": { "x": 868, "y": 228 } }
+  ],
+  "edges": [
+    { "from": "trigger", "to": "fix", "label": "voice" },
+    { "from": "trigger", "to": "agent", "label": "text" },
+    { "from": "fix", "to": "whisper" },
+    { "from": "whisper", "to": "agent" },
+    { "from": "agent", "to": "knowledge" },
+    { "from": "agent", "to": "speech" },
+    { "from": "speech", "to": "reply" }
+  ],
+  "steps": [
+    {
+      "nodeId": "trigger",
+      "durationMs": 700,
+      "log": "voice note received",
+      "view": "json",
+      "output": { "chat_id": "<redacted>", "input_type": "voice", "file": "voice.oga" }
+    },
+    {
+      "nodeId": "fix",
+      "durationMs": 500,
+      "log": "renamed to .ogg",
+      "view": "json",
+      "input": { "file": "voice.oga" },
+      "output": { "file": "voice.ogg" }
+    },
+    {
+      "nodeId": "whisper",
+      "durationMs": 1100,
+      "log": "transcribed",
+      "view": "text",
+      "output": "Do you do dental implants?"
+    },
+    {
+      "nodeId": "agent",
+      "durationMs": 900,
+      "log": "factual question: search first",
+      "view": "json",
+      "input": { "text": "Do you do dental implants?", "spoken": true },
+      "output": { "tool_call": "search_clinic_knowledge", "query": "dental implants" }
+    },
+    {
+      "nodeId": "knowledge",
+      "durationMs": 900,
+      "log": "pgvector · match found",
+      "view": "json",
+      "input": { "query": "dental implants" },
+      "output": { "source": "clinic_knowledge.md", "section": "Services not offered", "match": "Implants are not offered at the clinic at the moment." }
+    },
+    {
+      "nodeId": "agent",
+      "durationMs": 1000,
+      "log": "short spoken answer",
+      "view": "text",
+      "output": "Implants are not offered at the clinic at the moment. For enquiries: 02-297-1234."
+    },
+    {
+      "nodeId": "speech",
+      "durationMs": 1100,
+      "log": "text cleaned · speech generated",
+      "view": "audio",
+      "output": { "transcript": "Implants are not offered at the clinic at the moment. For enquiries: 02-297-1234." }
+    },
+    {
+      "nodeId": "reply",
+      "durationMs": 600,
+      "log": "voice reply sent",
+      "view": "json",
+      "output": { "ok": true, "format": "voice" }
+    }
+  ],
+  "result": {
+    "type": "telegram",
+    "data": {
+      "bot": "Al Noor Dental Clinic",
+      "messages": [
+        { "from": "user", "text": "🎙️ Do you do dental implants?" },
+        { "from": "bot", "text": "🔊 Implants are not offered at the clinic at the moment. For enquiries: 02-297-1234." }
+      ]
+    }
+  }
+}
