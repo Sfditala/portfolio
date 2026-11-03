@@ -14,7 +14,6 @@ File: `src/content/site.ts`
 
 | What | Field |
 |---|---|
-| Location line | `site.location` |
 | Certificates: 5 added. New ones go in `about.certificates`, with the PDF in `public/certificates/` | `about.certificates` |
 | Review the drafted story | `about.story`, `about.teaser` |
 

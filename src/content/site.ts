@@ -5,8 +5,7 @@ export const site = {
     "AI Engineer · I build AI agents & automations that solve real business problems",
   description:
     "Tala Safadi, AI Engineer and Co-founder & CEO of AI Rank. I design and ship AI agents, voice assistants and automation workflows that take repetitive work off your team.",
-  // TODO(tala): confirm the location line.
-  location: "[[TALA: location line]]",
+  location: "Based in Gaza, Palestine · Working remotely with clients worldwide",
   email: "safaditalaworksp@gmail.com",
   socials: {
     github: "https://github.com/sfditala",
