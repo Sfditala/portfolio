@@ -53,7 +53,6 @@ export const aiRank = {
   ],
 } as const;
 
-// TODO(tala): review the story copy; it is a draft built only from the brief.
 export const about: {
   story: string[];
   teaser: string[];

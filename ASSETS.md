@@ -15,7 +15,6 @@ File: `src/content/site.ts`
 | What | Field |
 |---|---|
 | Certificates: 5 added. New ones go in `about.certificates`, with the PDF in `public/certificates/` | `about.certificates` |
-| Review the drafted story | `about.story`, `about.teaser` |
 
 Newer photo: replace `public/profile.jpg`, keeping the filename. If the crop looks off, adjust the avatar in `src/components/sections/Hero.tsx`.
 
