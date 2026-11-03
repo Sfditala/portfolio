@@ -6,7 +6,8 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import ProjectCard from "@/components/work/ProjectCard";
 import { projects } from "@/content/projects";
 
-const products = projects.filter((p) => p.category !== "automation");
+// AI Rank has its own featured section on the home page.
+const products = projects.filter((p) => p.category !== "automation" && p.slug !== "ai-rank");
 
 export default function ProductsWork() {
   return (

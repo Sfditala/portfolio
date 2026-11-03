@@ -4,16 +4,9 @@ Everything below shows as a red dashed `[[TALA: …]]` box on the site until it 
 
 Paths under `public/` become site URLs: `public/projects/modavi/home.png` is written as `/projects/modavi/home.png`.
 
-## AI Rank (highest priority: flagship product)
+## AI Rank
 
-File: `src/content/site.ts`, object `aiRank`
-
-| What | Field | Example |
-|---|---|---|
-| Live URL | `url` | `"https://…"` |
-| Screenshot, 16:10 | `screenshot`, file in `public/ai-rank/` | `"/ai-rank/home.png"` |
-| 3 key features | `features` | `["…", "…", "…"]` |
-| One-line pitch, to confirm | `pitch` | already drafted from the brief |
+Done: URL, screenshots, pitch and features, taken from the live site. They live in `aiRank` in `src/content/site.ts` and the `ai-rank` entry in `src/content/projects.ts`. Still needed: its tech stack.
 
 ## About you
 
@@ -31,14 +24,14 @@ Newer photo: replace `public/profile.jpg`, keeping the filename. If the crop loo
 
 File: `src/content/projects.ts`. Put files in `public/projects/<slug>/`.
 
-Slugs: `ai-marketing-team`, `clinic-ai-receptionist`, `telegram-ai-assistant`, `shadow-ai-detector`, `modavi`, `maha-store`.
+Slugs: `ai-rank`, `ai-marketing-team`, `clinic-ai-receptionist`, `telegram-ai-assistant`, `shadow-ai-detector`, `modavi`, `maha-store`.
 
 | What | Field | Example |
 |---|---|---|
 | Real results only | `results` | `["…"]` |
 | Screenshots; the first also becomes the card cover | `screenshots` | `[{ src: "/projects/modavi/home.png", alt: "Modavi home page" }]` |
 | Demo video, MP4 | `demoVideo` | `"/projects/modavi/demo.mp4"` |
-| Your role, currently missing for `modavi` and `maha-store` | `role` | `"…"` |
+| Your role, currently missing for `modavi` | `role` | `"…"` |
 | Review the drafted story | `problem`, `solution`, `capabilities` | |
 
 Keep videos small: Vercel serves files from `public/`, and large files load slowly. For anything over about 20 MB, compress it first.

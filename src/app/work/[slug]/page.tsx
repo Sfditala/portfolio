@@ -56,6 +56,8 @@ export default async function CaseStudyPage({ params }: Props) {
   const scenario = scenarioForProject(slug);
   const index = projects.indexOf(project);
   const next = projects[(index + 1) % projects.length];
+  // Without a replay, the first screenshot is already the page cover.
+  const gallery = (scenario ? project.screenshots : project.screenshots?.slice(1)) ?? [];
   const prose = "max-w-2xl text-lg leading-relaxed text-pretty text-text-muted";
 
   return (
@@ -185,8 +187,9 @@ export default async function CaseStudyPage({ params }: Props) {
             </Stop>
           )}
 
+          {(project.demoVideo || gallery.length > 0 || !project.screenshots?.length) && (
           <Stop label="In action">
-            {project.demoVideo || project.screenshots?.length ? (
+            {project.demoVideo || gallery.length > 0 ? (
               <div className="space-y-4">
                 {project.demoVideo && (
                   <video
@@ -197,9 +200,9 @@ export default async function CaseStudyPage({ params }: Props) {
                     className="aspect-video w-full rounded-2xl border border-border bg-surface"
                   />
                 )}
-                {project.screenshots && (
+                {gallery.length > 0 && (
                   <div className="grid gap-4 md:grid-cols-2">
-                    {project.screenshots.map((shot) => (
+                    {gallery.map((shot) => (
                       <figure key={shot.src}>
                         <a
                           href={shot.src}
@@ -221,8 +224,13 @@ export default async function CaseStudyPage({ params }: Props) {
               <Placeholder>[[TALA: screenshots, demo video]]</Placeholder>
             )}
           </Stop>
+          )}
 
           <Stop label="Stack">
+            {project.stack.length === 0 && (
+              // TODO(tala): the stack for this project.
+              <Placeholder>[[TALA: tech stack]]</Placeholder>
+            )}
             <ul className="flex flex-wrap gap-2">
               {project.stack.map((tool) => (
                 <li key={tool} className="rounded-lg border border-border bg-surface px-3 py-1.5 font-mono text-xs text-text-muted">

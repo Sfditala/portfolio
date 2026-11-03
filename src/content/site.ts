@@ -43,14 +43,14 @@ export const bookingPrompt =
 export const aiRank = {
   name: "AI Rank",
   role: "Co-founder & CEO",
-  pitch: "A platform for comparing AI tools and choosing the best tool for a given task.",
-  // TODO(tala): AI Rank URL, screenshot(s) and 2–3 key features.
-  url: "",
-  screenshot: "",
+  pitch:
+    "An Arabic-first platform for discovering, comparing and rating AI tools, so choosing the right one takes minutes, not weeks.",
+  url: "https://airanktools.com/",
+  screenshot: "/projects/ai-rank/home.png",
   features: [
-    "[[TALA: key feature 1]]",
-    "[[TALA: key feature 2]]",
-    "[[TALA: key feature 3]]",
+    "A directory of 600 rated AI tools, with filters by category and price",
+    "Side-by-side comparisons across 6 criteria, including Arabic support",
+    "AI Matchmaker: describe your need and get the 3 best-matched tools",
   ],
 } as const;
 
