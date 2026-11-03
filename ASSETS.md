@@ -24,14 +24,13 @@ Newer photo: replace `public/profile.jpg`, keeping the filename. If the crop loo
 
 File: `src/content/projects.ts`. Put files in `public/projects/<slug>/`.
 
-Slugs: `ai-rank`, `ai-marketing-team`, `clinic-ai-receptionist`, `telegram-ai-assistant`, `shadow-ai-detector`, `modavi`, `maha-store`.
+Slugs: `ai-rank`, `wejhet-ashwas`, `ai-marketing-team`, `clinic-ai-receptionist`, `telegram-ai-assistant`, `shadow-ai-detector`, `modavi`, `maha-store`.
 
 | What | Field | Example |
 |---|---|---|
 | Real results only | `results` | `["…"]` |
 | Screenshots; the first also becomes the card cover | `screenshots` | `[{ src: "/projects/modavi/home.png", alt: "Modavi home page" }]` |
 | Demo video, MP4 | `demoVideo` | `"/projects/modavi/demo.mp4"` |
-| Your role, currently missing for `modavi` | `role` | `"…"` |
 | Review the drafted story | `problem`, `solution`, `capabilities` | |
 
 Keep videos small: Vercel serves files from `public/`, and large files load slowly. For anything over about 20 MB, compress it first.

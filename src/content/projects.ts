@@ -1,4 +1,4 @@
-export type ProjectCategory = "automation" | "ai-product" | "client-work";
+export type ProjectCategory = "automation" | "ai-product" | "product" | "client-work";
 
 export type Project = {
   slug: string;
@@ -30,6 +30,8 @@ export type Project = {
   nextSteps?: string[];
   /** Null shows a [[TALA]] placeholder. */
   role: string | null;
+  /** People who built this with me. */
+  team?: { name: string; role: string; url?: string }[];
 };
 
 export const categories: { id: ProjectCategory; title: string; description: string }[] = [
@@ -42,6 +44,11 @@ export const categories: { id: ProjectCategory; title: string; description: stri
     id: "ai-product",
     title: "AI products",
     description: "Full products with AI at the core.",
+  },
+  {
+    id: "product",
+    title: "Products",
+    description: "Complete platforms built for real users.",
   },
   {
     id: "client-work",
@@ -266,7 +273,8 @@ export const projects: Project[] = [
     ],
     resultsNote: "As shown on the live site.",
     results: ["Live with 600 rated tools and 45 comparisons across 14 categories."],
-    role: "Co-founder & CEO. I built the platform from scratch, and I lead its vision and growth. Co-founded with Mohammad Abu Saada, COO.",
+    role: "Co-founder & CEO. I built the platform from scratch, and I lead its vision and growth.",
+    team: [{ name: "Mohammed Abu Saada", role: "Co-founder & COO, leading product, operations and data analysis", url: "https://www.linkedin.com/in/mohammed-abu-saada-858159265" }],
   },
   {
     slug: "shadow-ai-detector",
@@ -312,16 +320,60 @@ export const projects: Project[] = [
     category: "ai-product",
     label: "AI Product · Client project",
     summary:
-      "An AI stylist platform with personalized outfit coordination and style profiling.",
-    stack: ["Next.js", "Supabase", "Clerk", "Cloudinary"],
-    keywords: ["fashion","style","stylist","outfit","clothes","recommendation","موضة","أزياء","ستايل","ملابس","توصيات"],
+      "An AI stylist for the clothes you already own. Add your pieces, and it builds complete outfits from them, picks your outfit of the day and suggests looks for each occasion.",
+    stack: ["Next.js", "Groq (Llama)", "Supabase", "Clerk", "Cloudinary", "Framer Motion"],
+    keywords: ["fashion","style","stylist","outfit","clothes","wardrobe","recommendation","موضة","أزياء","ستايل","ملابس","خزانة","لبس","توصيات"],
     liveUrl: "https://modavi.vercel.app/",
     image: "/modavi.png",
-    problem: "Deciding what to wear and what goes together is personal, and generic advice rarely fits.",
-    solution: "An AI stylist platform that learns a person's style and coordinates outfits around it.",
-    capabilities: ["Personalized outfit coordination", "Style profiling"],
+    problem:
+      "Most people own plenty of clothes and still don't know what to wear. Generic style advice doesn't help, because it isn't built around the pieces in your own wardrobe.",
+    solution:
+      "A personal digital wardrobe with an AI stylist on top. You add a photo and the details of each piece. The AI then works only from what you own, following clear styling rules, to put together outfits that are actually wearable.",
+    capabilities: [
+      "Digital wardrobe: each piece has a photo, title, category, color and material note",
+      "Generates 4 complete outfits, for work, casual, evening and weekend",
+      "Picks an outfit of the day, and lets you browse looks by occasion",
+      "Styling rules for complete outfits, color harmony, shoes and accessories",
+      "A second check in code rejects combinations that don't make sense, such as two bottoms",
+      "Private accounts, so each person sees only their own wardrobe and outfits",
+    ],
     results: [],
-    role: null,
+    role: "Built from scratch, end to end.",
+  },
+  {
+    slug: "wejhet-ashwas",
+    title: "Wejhet Ashwas (وجهة أشوس)",
+    category: "product",
+    label: "Product · Built with Mohammed Abu Saada",
+    summary:
+      "A complete Arabic study platform for Palestinian Tawjihi students: weekly schedules, daily tasks, focus timers, real progress tracking and motivation in one place. It keeps working offline, because many students lose their connection often.",
+    stack: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase", "Dexie.js", "Serwist (PWA)", "Web Push", "Capacitor", "Vercel", "GitHub Actions"],
+    keywords: ["education","students","study","school","exam","tawjihi","learning","offline","pwa","mobile app","android","تعليم","طلاب","طلبة","مذاكرة","دراسة","توجيهي","امتحان","مدرسة","تطبيق"],
+    liveUrl: "https://wejhet-ashwas.vercel.app/app",
+    screenshots: [{ src: "/projects/wejhet-ashwas/login.png", alt: "Wejhet Ashwas sign-in screen" }],
+    problem:
+      "Tawjihi students juggle school, private lessons and their own studying, often with no clear view of where they're strong or weak. Frequent internet cuts make most online tools unreliable when they need them.",
+    solution:
+      "One Arabic app that holds the student's schedule, tasks, focus sessions and progress, with the student always in charge. It is local-first: every action is saved on the device right away and syncs in the background once the connection returns.",
+    capabilities: [
+      "Weekly schedules three ways: manual, assisted or fully automatic, always with the student's approval",
+      "Daily tasks generated from the schedule, with no pressure over missed ones",
+      "Pomodoro timer linked to tasks, with a quick box for questions that come up while studying",
+      "Spaced repetition: finishing a lesson creates review tasks automatically",
+      "Mastery map showing real progress per subject, unit and lesson, from completed work",
+      "Timed mock exams with automatic submission and detailed results",
+      "Five visual reward themes, built on real achievements, plus badges",
+      "Optional leaderboards and group challenges, scored on commitment rather than grades",
+      "Web push reminders, an installable PWA and a free Android app",
+      "Strict data permissions, so no student can see another student's data",
+    ],
+    resultsNote: "Current status of the project.",
+    results: [
+      "Version 1 is live on the web and as an Android app. Every feature above works on the published version.",
+    ],
+    nextSteps: ["Release the question bank, which is built and waiting for real question content"],
+    role: "Built together with Mohammed as a two-person development team.",
+    team: [{ name: "Mohammed Abu Saada", role: "Co-developer of the platform", url: "https://www.linkedin.com/in/mohammed-abu-saada-858159265" }],
   },
   {
     slug: "maha-store",

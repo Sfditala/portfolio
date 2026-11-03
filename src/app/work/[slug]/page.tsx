@@ -247,6 +247,29 @@ export default async function CaseStudyPage({ params }: Props) {
               // TODO(tala): your role on this project.
               <Placeholder>[[TALA: your role on this project]]</Placeholder>
             )}
+            {project.team && (
+              <ul className="mt-4 space-y-2">
+                {project.team.map((member) => (
+                  <li key={member.name} className="text-sm leading-relaxed text-text-muted">
+                    {member.url ? (
+                      <a
+                        href={member.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 font-medium text-text transition-colors hover:text-accent-bright"
+                      >
+                        {member.name}
+                        <ArrowUpRight aria-hidden className="size-3.5" />
+                      </a>
+                    ) : (
+                      <span className="font-medium text-text">{member.name}</span>
+                    )}
+                    {": "}
+                    {member.role}
+                  </li>
+                ))}
+              </ul>
+            )}
           </Stop>
 
           {project.nextSteps && (

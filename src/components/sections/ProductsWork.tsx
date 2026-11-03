@@ -14,7 +14,7 @@ export default function ProductsWork() {
     <Section id="products" className="pt-0 md:pt-0">
       <SectionHeading index="03" label="AI products & client work" title="Products and client builds." />
 
-      <div className="grid gap-5 md:grid-cols-3">
+      <div className="grid gap-5 md:grid-cols-2">
         {products.map((project) => (
           <Reveal key={project.slug}>
             <ProjectCard project={project} />

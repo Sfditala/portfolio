@@ -9,7 +9,7 @@ export default function ProjectCard({ project }: { project: Project }) {
     <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface transition-colors duration-200 hover:border-white/20">
       <ProjectCover
         project={project}
-        sizes="(min-width: 768px) 360px, 100vw"
+        sizes="(min-width: 768px) 560px, 100vw"
         className="aspect-[16/10] border-b border-border"
       />
       <div className="flex flex-1 flex-col p-6">
