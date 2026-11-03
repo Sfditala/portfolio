@@ -321,7 +321,7 @@ export const projects: Project[] = [
     label: "AI Product · Client project",
     summary:
       "An AI stylist for the clothes you already own. Add your pieces, and it builds complete outfits from them, picks your outfit of the day and suggests looks for each occasion.",
-    stack: ["Next.js", "Groq (Llama)", "Supabase", "Clerk", "Cloudinary", "Framer Motion"],
+    stack: ["Next.js", "Groq", "Supabase", "Clerk", "Cloudinary", "Framer Motion"],
     keywords: ["fashion","style","stylist","outfit","clothes","wardrobe","recommendation","موضة","أزياء","ستايل","ملابس","خزانة","لبس","توصيات"],
     liveUrl: "https://modavi.vercel.app/",
     image: "/modavi.png",
