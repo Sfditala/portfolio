@@ -1,110 +1,153 @@
 {
   "_placeholder": true,
-  "id": "invoice-and-call",
+  "id": "task-and-meeting-in-one-message",
   "projectSlug": "telegram-ai-assistant",
   "title": "A task and a meeting in one message",
-  "prompt": "Remind me to send the invoice tomorrow at 10 and add a call with Sara on Thursday at 4",
+  "runNote": "The workflow, tools and step order come from the real assistant. The message and values are sample data.",
+  "prompt": "ذكريني أبعت الفاتورة بكرا الساعة 10، وضيفي مكالمة مع سارة يوم الخميس الساعة 4",
+  "promptTranslation": "Remind me to send the invoice tomorrow at 10, and add a call with Sara on Thursday at 4",
   "nodes": [
     { "id": "trigger", "label": "Telegram", "kind": "trigger", "icon": "telegram", "position": { "x": 16, "y": 228 } },
-    { "id": "main", "label": "Main Agent", "kind": "agent", "icon": "bot", "position": { "x": 229, "y": 228 } },
-    { "id": "tasks", "label": "Tasks Agent", "kind": "agent", "icon": "bot", "position": { "x": 442, "y": 110 } },
-    { "id": "calendar", "label": "Calendar Agent", "kind": "agent", "icon": "bot", "position": { "x": 442, "y": 360 } },
-    { "id": "supabase", "label": "Supabase", "kind": "db", "icon": "supabase", "position": { "x": 655, "y": 40 } },
-    { "id": "gtasks", "label": "Google Tasks", "kind": "tool", "icon": "tasks", "position": { "x": 655, "y": 170 } },
-    { "id": "gcal", "label": "Google Calendar", "kind": "tool", "icon": "calendar", "position": { "x": 655, "y": 360 } },
-    { "id": "reply", "label": "Telegram", "kind": "output", "icon": "telegram", "position": { "x": 868, "y": 228 } }
+    { "id": "main", "label": "AI Agent", "kind": "agent", "icon": "bot", "position": { "x": 229, "y": 228 } },
+    { "id": "tasks", "label": "tasks_agent", "kind": "agent", "icon": "bot", "position": { "x": 442, "y": 110 } },
+    { "id": "calendar", "label": "calendar_agent", "kind": "agent", "icon": "bot", "position": { "x": 442, "y": 370 } },
+    { "id": "row", "label": "create_task_row", "kind": "db", "icon": "supabase", "position": { "x": 655, "y": 16 } },
+    { "id": "gtask", "label": "google_task", "kind": "tool", "icon": "tasks", "position": { "x": 655, "y": 110 } },
+    { "id": "save", "label": "save_task_id", "kind": "db", "icon": "supabase", "position": { "x": 655, "y": 204 } },
+    { "id": "events", "label": "get_events", "kind": "tool", "icon": "calendar", "position": { "x": 655, "y": 320 } },
+    { "id": "create", "label": "create_event", "kind": "tool", "icon": "calendar", "position": { "x": 655, "y": 420 } },
+    { "id": "reply", "label": "Send Reply", "kind": "output", "icon": "telegram", "position": { "x": 868, "y": 228 } }
   ],
   "edges": [
     { "from": "trigger", "to": "main" },
     { "from": "main", "to": "tasks", "label": "task" },
     { "from": "main", "to": "calendar", "label": "event" },
-    { "from": "tasks", "to": "supabase" },
-    { "from": "tasks", "to": "gtasks", "label": "sync" },
-    { "from": "calendar", "to": "gcal" },
-    { "from": "gtasks", "to": "reply" },
-    { "from": "gcal", "to": "reply" }
+    { "from": "main", "to": "reply" },
+    { "from": "tasks", "to": "row" },
+    { "from": "tasks", "to": "gtask" },
+    { "from": "tasks", "to": "save" },
+    { "from": "calendar", "to": "events" },
+    { "from": "calendar", "to": "create" }
   ],
   "steps": [
     {
       "nodeId": "trigger",
-      "durationMs": 700,
-      "log": "message received",
+      "durationMs": 600,
+      "log": "owner only · text message",
       "view": "json",
-      "output": { "chat_id": "<redacted>", "text": "Remind me to send the invoice tomorrow at 10 and add a call with Sara on Thursday at 4" }
+      "output": { "chat_id": "<redacted>", "text": "ذكريني أبعت الفاتورة بكرا الساعة 10، وضيفي مكالمة مع سارة يوم الخميس الساعة 4" }
     },
     {
       "nodeId": "main",
-      "durationMs": 1300,
-      "log": "2 intents found",
+      "durationMs": 1100,
+      "log": "a to-do and an appointment",
       "view": "json",
-      "input": { "text": "Remind me to send the invoice tomorrow at 10 and add a call with Sara on Thursday at 4" },
       "output": {
-        "intents": [
-          { "route_to": "tasks_agent", "action": "add", "title": "Send the invoice", "due": "tomorrow 10:00" },
-          { "route_to": "calendar_agent", "action": "create", "title": "Call with Sara", "start": "Thursday 16:00" }
-        ]
+        "tasks_agent": "Add task: send the invoice, due tomorrow 10:00, specific time",
+        "calendar_agent": "Book: call with Sara, Thursday 16:00"
       }
     },
     {
       "nodeId": "tasks",
-      "durationMs": 900,
-      "log": "add_task",
+      "durationMs": 500,
+      "log": "recipe: add",
       "view": "json",
-      "input": { "action": "add", "title": "Send the invoice", "due": "tomorrow 10:00" },
-      "output": { "tool_calls": ["supabase.insert", "google_tasks.create"] }
+      "output": { "tool_call": "create_task_row" }
     },
     {
-      "nodeId": "supabase",
+      "nodeId": "row",
       "durationMs": 700,
-      "log": "insert · 1 row",
+      "log": "Supabase · insert",
       "view": "table",
-      "input": { "table": "tasks", "operation": "insert" },
       "output": {
         "columns": ["Title", "Due", "Status"],
         "rows": [["Send the invoice", "Tomorrow 10:00", "open"]]
       }
     },
     {
-      "nodeId": "gtasks",
-      "durationMs": 700,
-      "log": "task synced",
+      "nodeId": "tasks",
+      "durationMs": 350,
+      "log": "next: Google Tasks",
       "view": "json",
-      "input": { "title": "Send the invoice", "due": "tomorrow 10:00" },
-      "output": { "status": "needsAction", "synced": true }
+      "output": { "tool_call": "create_google_task" }
+    },
+    {
+      "nodeId": "gtask",
+      "durationMs": 700,
+      "log": "task created",
+      "view": "json",
+      "output": { "status": "needsAction", "title": "Send the invoice" }
+    },
+    {
+      "nodeId": "tasks",
+      "durationMs": 350,
+      "log": "next: link the two records",
+      "view": "json",
+      "output": { "tool_call": "save_google_task_id" }
+    },
+    {
+      "nodeId": "save",
+      "durationMs": 600,
+      "log": "Supabase · update",
+      "view": "json",
+      "output": { "google_task_id": "<redacted>", "linked": true }
     },
     {
       "nodeId": "main",
       "durationMs": 500,
-      "log": "task done · next intent",
+      "log": "task done · next: the call",
       "view": "text",
-      "output": "Task saved and synced. Moving to the second intent: the call with Sara."
+      "output": "The task is saved and synced. Now the call with Sara goes to the calendar agent."
     },
     {
       "nodeId": "calendar",
-      "durationMs": 900,
-      "log": "create_event",
+      "durationMs": 500,
+      "log": "checks for overlaps first",
       "view": "json",
-      "input": { "action": "create", "title": "Call with Sara", "start": "Thursday 16:00" },
-      "output": { "tool_calls": ["google_calendar.create_event"], "duration_minutes": 30 }
+      "output": { "tool_call": "get_events", "range": "Thursday 16:00 to 17:00" }
     },
     {
-      "nodeId": "gcal",
-      "durationMs": 800,
-      "log": "event created",
+      "nodeId": "events",
+      "durationMs": 700,
+      "log": "no overlap",
       "view": "json",
-      "input": { "summary": "Call with Sara", "start": "Thursday 16:00", "end": "Thursday 16:30" },
+      "output": { "events": [] }
+    },
+    {
+      "nodeId": "calendar",
+      "durationMs": 350,
+      "log": "no duration given, so 1 hour",
+      "view": "json",
+      "output": { "tool_call": "create_event", "title": "Call with Sara", "start": "Thursday 16:00", "end": "Thursday 17:00" }
+    },
+    {
+      "nodeId": "create",
+      "durationMs": 700,
+      "log": "event booked",
+      "view": "json",
       "output": { "status": "confirmed", "summary": "Call with Sara" }
     },
     {
-      "nodeId": "reply",
+      "nodeId": "main",
       "durationMs": 700,
-      "log": "message sent",
+      "log": "one short reply",
       "view": "chat",
       "output": {
         "messages": [
-          { "from": "bot", "text": "تمام! ضفتلك مهمة «إرسال الفاتورة» بكرة الساعة 10، وحجزت مكالمة مع سارة يوم الخميس الساعة 4." }
+          {
+            "from": "bot",
+            "text": "تمام، ضفتلك:\n☐ أبعت الفاتورة — 10:00 AM (بكرا)\nوحجزتلك المكالمة مع سارة الخميس 4:00 PM",
+            "translation": "Done, added: ☐ Send the invoice, 10:00 AM (tomorrow). And I booked the call with Sara on Thursday at 4:00 PM."
+          }
         ]
       }
+    },
+    {
+      "nodeId": "reply",
+      "durationMs": 500,
+      "log": "message sent",
+      "view": "json",
+      "output": { "ok": true }
     }
   ],
   "result": {
@@ -112,8 +155,12 @@
     "data": {
       "bot": "Personal Assistant",
       "messages": [
-        { "from": "user", "text": "Remind me to send the invoice tomorrow at 10 and add a call with Sara on Thursday at 4" },
-        { "from": "bot", "text": "تمام! ضفتلك مهمة «إرسال الفاتورة» بكرة الساعة 10، وحجزت مكالمة مع سارة يوم الخميس الساعة 4." }
+        { "from": "user", "text": "ذكريني أبعت الفاتورة بكرا الساعة 10، وضيفي مكالمة مع سارة يوم الخميس الساعة 4" },
+        {
+          "from": "bot",
+          "text": "تمام، ضفتلك:\n☐ أبعت الفاتورة — 10:00 AM (بكرا)\nوحجزتلك المكالمة مع سارة الخميس 4:00 PM",
+          "translation": "Done, added: ☐ Send the invoice, 10:00 AM (tomorrow). And I booked the call with Sara on Thursday at 4:00 PM."
+        }
       ]
     }
   }

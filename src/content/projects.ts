@@ -134,7 +134,7 @@ export const projects: Project[] = [
     summary:
       "A Telegram assistant that answers patient questions accurately from the clinic's own information, by text or voice. It never invents an answer and never gives medical advice. Built in n8n as a demo with sample data.",
     stack: ["n8n", "OpenAI (gpt-5-mini, Whisper, embeddings)", "Supabase pgvector", "Google Drive", "ElevenLabs", "Telegram Bot API"],
-    keywords: ["clinic","dental","dentist","doctor","medical","healthcare","patient","patients","receptionist","reception","faq","questions","customer support","support","knowledge","documents","rag","عيادة","عيادات","أسنان","اسنان","طبيب","دكتور","طبي","مرضى","مريض","استقبال","أسئلة","اسئلة","خدمة العملاء","دعم العملاء","الرد على الزبائن","الزبائن","مستندات"],
+    keywords: ["voice","phone","calls","booking","bookings","clinic","dental","dentist","doctor","medical","healthcare","patient","patients","receptionist","reception","faq","questions","customer support","support","knowledge","documents","rag","صوت","صوتي","مكالمات","حجز","حجوزات","عيادة","عيادات","أسنان","اسنان","طبيب","دكتور","طبي","مرضى","مريض","استقبال","أسئلة","اسئلة","خدمة العملاء","دعم العملاء","الرد على الزبائن","الزبائن","مستندات"],
     note: 'Demo project with sample data, built around a fictional clinic, "Al Noor Dental Clinic".',
     problem:
       "Clinic receptionists spend a large part of the day answering the same questions about hours, prices, doctors and insurance. Patients often ask outside working hours and get no answer. A general chatbot is risky in a medical setting: it can invent prices or give medical advice.",
@@ -193,46 +193,47 @@ export const projects: Project[] = [
     category: "automation",
     label: "Automation · Personal assistant",
     summary:
-      "A conversational Telegram assistant. A main agent routes to Tasks and Calendar sub-agents, stores tasks in Supabase synced to Google Tasks, and sends a morning schedule and a weekly report.",
-    stack: ["n8n", "Supabase", "Google Tasks", "Google Calendar", "Telegram"],
-    keywords: ["assistant","tasks","task","reminder","remind","schedule","calendar","meeting","telegram","productivity","مساعد","مهام","مهمة","تذكير","جدول","مواعيد","موعد","اجتماع","تلغرام","تيليجرام","تلجرام"],
+      "My own assistant on Telegram. I message it like a friend, and a main agent hands the work to Tasks and Calendar agents, keeps Supabase and Google Tasks in sync, and sends me a morning brief, an evening plan and a weekly report.",
+    stack: ["n8n", "OpenAI (gpt-5, gpt-5-mini)", "Supabase", "Google Tasks", "Google Calendar", "Telegram Bot API"],
+    keywords: ["assistant","personal assistant","tasks","task","to-do","todo","reminder","remind","schedule","calendar","meeting","telegram","productivity","مساعد","مساعد شخصي","مهام","مهمة","تذكير","جدول","مواعيد","موعد","اجتماع","تلغرام","تيليجرام","تلجرام"],
+    note: "Built for my own daily use, so it has one user: me.",
     problem:
-      "Tasks and meetings live in separate apps, and adding one means stopping what you're doing to open them. Most bots don't help much, because they make you learn slash commands.",
+      "Tasks and meetings live in separate apps, and adding one means stopping what you're doing to open them. Most bots don't help much, because they make you learn commands and reply like a menu.",
     solution:
-      "An assistant you simply message, with no commands to learn. A main agent understands the request and routes it to a Tasks agent or a Calendar agent, so one message can create a task and book a meeting at the same time.",
+      "An assistant I simply message in Palestinian Arabic. A main agent understands the request and delegates it, so one message can add a task and book a meeting. It also comes to me: a morning brief, an evening plan and a Friday report arrive on their own.",
     capabilities: [
-      "Fully conversational, with no slash commands",
-      "List, add, complete, rename and delete tasks",
-      "Tasks stored in Supabase and synced to Google Tasks",
-      "A Calendar agent working on Google Calendar",
-      "A morning schedule and a weekly report, sent automatically",
-      "Replies in Palestinian Arabic",
+      "Conversational, with slash commands kept as optional shortcuts",
+      "Lists, adds, completes and renames tasks, and tracks a weekly goal",
+      "Every task change is written to Supabase and synced to Google Tasks",
+      "Checks Google Calendar for overlaps before booking, and shows the conflict instead of double-booking",
+      "Morning brief at 7:30, evening plan at 21:00 and a weekly report on Fridays at 18:00",
+      "Replies like a close friend in Palestinian Arabic, and matches my mood",
+      "Works only for my Telegram account, and always replies when something fails",
     ],
     results: [],
-    role: "Designed and built the full system: agents, prompts, database and integrations.",
-  },
-  {
-    slug: "restaurant-voice-agent",
-    title: "Restaurant Voice Agent",
-    category: "automation",
-    label: "Automation · Voice",
-    summary:
-      "A bilingual (AR/EN) voice agent that takes takeaway orders for restaurants and cafés, reading the menu and writing orders through an n8n MCP server.",
-    stack: ["ElevenLabs", "n8n MCP Server", "Google Sheets"],
-    keywords: ["voice","phone","call","calls","order","orders","restaurant","booking","bookings","reservation","takeaway","صوت","صوتي","تلفون","هاتف","مكالمات","طلبات","طلب","مطعم","مطاعم","حجز","حجوزات"],
-    problem:
-      "Takeaway orders arrive by phone, often when staff are busiest. Every call needs someone to answer it, go through the menu and write the order down correctly.",
-    solution:
-      "A voice agent that answers the call in Arabic or English, checks the live menu, takes the order and confirms it out loud. ElevenLabs handles the conversation, and an n8n MCP Server Trigger gives it tools to read the menu and write the order to Google Sheets.",
-    capabilities: [
-      "Takes takeaway orders by voice, in Arabic or English",
-      "Built for Italian and British restaurants and cafés",
-      "Reads the menu through a get_menu tool",
-      "Writes orders through a create_order tool",
-      "Google Sheets as the menu and the order log",
+    challenges: [
+      {
+        challenge: "The first plan used slash commands and a Switch node, so I'd have had to remember the commands.",
+        solution: "A main AI agent now understands plain messages and delegates. The commands stayed as optional shortcuts.",
+      },
+      {
+        challenge: "The first agent version had a separate sub-agent for each action: list, add, complete, rename and delete.",
+        solution: "Merged into one Tasks agent that follows clear step-by-step recipes for each action.",
+      },
+      {
+        challenge: "A misunderstood message shouldn't be able to delete a task.",
+        solution: "Deleting needs an explicit /del with the task name, and rows are soft-deleted rather than removed.",
+      },
+      {
+        challenge: "Tasks with a date but no time were stored at 23:59, which looked wrong in messages.",
+        solution: "The agent records that no specific time was set, and shows a time only when I gave one.",
+      },
+      {
+        challenge: "Google Tasks can fail after the database write has already succeeded.",
+        solution: "The database step still finishes, and the reply says what didn't sync.",
+      },
     ],
-    results: [],
-    role: "Designed and built the full system: voice agent, tools and integrations.",
+    role: "Designed, built and use it myself: agents, prompts, database and integrations.",
   },
   {
     slug: "shadow-ai-detector",

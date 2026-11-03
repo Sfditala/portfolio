@@ -127,8 +127,8 @@ export function AudioView({ transcript, src }: { transcript?: string; src?: stri
           <track kind="captions" />
         </audio>
       ) : (
-        // TODO(tala): voice agent audio clip, set as result.audioSrc in the scenario JSON.
-        <Placeholder>[[TALA: voice agent audio clip]]</Placeholder>
+        // TODO(tala): audio clip, set as result.audioSrc in the scenario JSON.
+        <Placeholder>[[TALA: audio clip]]</Placeholder>
       )}
       {transcript && (
         <p dir="auto" className="text-[0.8rem] leading-relaxed text-text-muted">

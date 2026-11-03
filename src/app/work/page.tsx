@@ -9,7 +9,7 @@ import { categories, projects } from "@/content/projects";
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "AI agents, automations and products by Tala Safadi: multi-agent marketing, a Telegram assistant, a restaurant voice agent and more.",
+    "AI agents, automations and products by Tala Safadi: multi-agent marketing, a dental clinic receptionist, a Telegram assistant and more.",
   alternates: { canonical: "/work" },
 };
 

@@ -31,7 +31,7 @@ Newer photo: replace `public/profile.jpg`, keeping the filename. If the crop loo
 
 File: `src/content/projects.ts`. Put files in `public/projects/<slug>/`.
 
-Slugs: `ai-marketing-team`, `clinic-ai-receptionist`, `telegram-ai-assistant`, `restaurant-voice-agent`, `shadow-ai-detector`, `modavi`, `maha-store`.
+Slugs: `ai-marketing-team`, `clinic-ai-receptionist`, `telegram-ai-assistant`, `shadow-ai-detector`, `modavi`, `maha-store`.
 
 | What | Field | Example |
 |---|---|---|
@@ -49,8 +49,7 @@ Full steps: `src/content/workflows/README.md`.
 
 | What | Where |
 |---|---|
-| Real runs: **done** for `ai-marketing-team` (execution #89) and `clinic-ai-receptionist` (#99). Still sample data for `telegram-ai-assistant` and `restaurant-voice-agent` | Convert with `npm run replay:convert`, then replace the JSON in `src/content/workflows/` |
-| Voice agent audio clip | `public/audio/order.mp3`, then set `result.audioSrc` in `restaurant-voice-agent.json` |
+| Real runs: **done** for `ai-marketing-team` (execution #89) and `clinic-ai-receptionist` (#99). Still sample data for `telegram-ai-assistant`, whose workflow is in `04_Learning_Training/n8n_Workflows` but has no execution on the connected n8n account | Convert with `npm run replay:convert`, then replace the JSON in `src/content/workflows/` |
 
 Removing `"_placeholder": true` from a scenario changes its label from "Sample data" to "Replay of a real run". Only do that for a real run. **Read every value first: real executions can contain customer data.**
 
