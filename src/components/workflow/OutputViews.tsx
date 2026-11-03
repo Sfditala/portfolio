@@ -46,7 +46,7 @@ export function JsonView({ value }: { value: unknown }) {
 }
 
 type Table = { columns: string[]; rows: (string | number)[][] };
-type ChatMessage = { from: "user" | "bot"; text: string };
+type ChatMessage = { from: "user" | "bot"; text: string; translation?: string };
 
 const isTable = (v: unknown): v is Table =>
   typeof v === "object" && v !== null && "columns" in v && "rows" in v;
@@ -94,14 +94,19 @@ export function ChatBubble({
   const text = useTypewriter(message.text, typing);
   const isBot = message.from === "bot";
   return (
-    <p
-      dir="auto"
-      className={`max-w-[90%] rounded-xl px-3 py-2 text-[0.8rem] leading-relaxed whitespace-pre-wrap ${
-        isBot ? "self-start rounded-tl-sm bg-white/5 text-text" : "self-end rounded-tr-sm bg-accent/15 text-text"
-      }`}
-    >
-      {text}
-    </p>
+    <div className={`max-w-[90%] ${isBot ? "self-start" : "self-end"}`}>
+      <p
+        dir="auto"
+        className={`rounded-xl px-3 py-2 text-[0.8rem] leading-relaxed whitespace-pre-wrap ${
+          isBot ? "rounded-tl-sm bg-white/5 text-text" : "rounded-tr-sm bg-accent/15 text-text"
+        }`}
+      >
+        {text}
+      </p>
+      {message.translation && (
+        <p className="mt-1 px-1 text-[0.7rem] leading-snug text-text-dim">{message.translation}</p>
+      )}
+    </div>
   );
 }
 

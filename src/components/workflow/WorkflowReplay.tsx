@@ -48,6 +48,9 @@ function ReplayPlayer({ scenario }: { scenario: WorkflowScenario }) {
           ›
         </span>
         {scenario.prompt}
+        {scenario.promptTranslation && (
+          <span className="mt-0.5 block text-xs text-text-dim">{scenario.promptTranslation}</span>
+        )}
       </p>
 
       {isDesktop ? (
@@ -62,6 +65,12 @@ function ReplayPlayer({ scenario }: { scenario: WorkflowScenario }) {
         </div>
       ) : (
         <StepList scenario={scenario} replay={replay} />
+      )}
+
+      {scenario.runNote && (
+        <p className="border-t border-border px-4 py-2.5 font-mono text-[0.68rem] leading-relaxed text-text-dim">
+          {scenario.runNote}
+        </p>
       )}
 
       <p aria-live="polite" className="sr-only">

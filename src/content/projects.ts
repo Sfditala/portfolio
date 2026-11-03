@@ -57,6 +57,12 @@ export const projects: Project[] = [
     title: "AI Marketing Team",
     category: "automation",
     label: "Automation · Multi-agent · Demo",
+    screenshots: [
+      { src: "/projects/ai-marketing-team/agents.png", alt: "The Orchestrator with its Content, Calendar and Analyst agents in n8n" },
+      { src: "/projects/ai-marketing-team/intake.png", alt: "Message intake in n8n: allowlist, input type and voice transcription" },
+      { src: "/projects/ai-marketing-team/reply.png", alt: "Reply step in n8n: voice messages get audio, text messages get text" },
+      { src: "/projects/ai-marketing-team/ingestion.png", alt: "Knowledge ingestion in n8n: upload form, Gemini embeddings and Pinecone" },
+    ],
     summary:
       "A multi-agent Telegram assistant for a coffee shop that writes posts, manages the content calendar and analyses performance, by text or voice. Built in n8n as a demo with sample data.",
     stack: ["n8n", "OpenAI (gpt-5-mini)", "Pinecone", "Gemini Embeddings", "Google Sheets", "ElevenLabs", "Telegram Bot API"],
@@ -82,6 +88,7 @@ export const projects: Project[] = [
       "Calendar conflicts were detected, and posts were saved only after approval.",
       "Performance answers matched hand calculations, such as an engagement rate of 19.76% for one post.",
       "Unknown information, such as a delivery service, was reported as missing instead of invented.",
+      "Asked to announce a discount code that wasn't in the offers file, it stopped and asked the owner to confirm the details instead of publishing it.",
     ],
     challenges: [
       {
@@ -118,6 +125,12 @@ export const projects: Project[] = [
     title: "AI Receptionist for a Dental Clinic",
     category: "automation",
     label: "Automation · RAG · Demo",
+    screenshots: [
+      { src: "/projects/clinic-ai-receptionist/agent.png", alt: "The AI Agent in n8n with its chat model, memory and clinic knowledge search" },
+      { src: "/projects/clinic-ai-receptionist/intake.png", alt: "Message intake in n8n: text and voice paths, audio fix and transcription" },
+      { src: "/projects/clinic-ai-receptionist/reply.png", alt: "Reply step in n8n: voice notes get speech, typed messages get text" },
+      { src: "/projects/clinic-ai-receptionist/ingestion.png", alt: "Knowledge ingestion in n8n: clear old knowledge, download from Drive, store in Supabase" },
+    ],
     summary:
       "A Telegram assistant that answers patient questions accurately from the clinic's own information, by text or voice. It never invents an answer and never gives medical advice. Built in n8n as a demo with sample data.",
     stack: ["n8n", "OpenAI (gpt-5-mini, Whisper, embeddings)", "Supabase pgvector", "Google Drive", "ElevenLabs", "Telegram Bot API"],
@@ -137,7 +150,7 @@ export const projects: Project[] = [
       "Patients always get a reply, even when a service fails, and the owner is alerted",
       "Handles enquiries only, and gives the reception phone and WhatsApp for appointments",
     ],
-    resultsNote: "From testing with sample data, on the same questions before and after the fixes.",
+    resultsNote: "From testing with sample data, on the same questions before and after the fixes. The live replay above is one of these runs.",
     results: [
       '"Are you open on Friday?" went from "information not available" to "closed on Fridays".',
       '"Do you offer implants?" went from "information not available" to "not offered", with the reception number.',

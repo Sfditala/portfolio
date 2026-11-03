@@ -1,131 +1,145 @@
 {
-  "_placeholder": true,
-  "id": "write-and-schedule-post",
+  "id": "schedule-post-with-approval",
   "projectSlug": "ai-marketing-team",
-  "title": "Write a post, schedule it, catch the conflict",
-  "prompt": "Write me a post about the Cold Brew and schedule it Thursday at 7",
+  "title": "Scheduling a post, with the owner's approval",
+  "runNote": "n8n execution #89: a real run on the demo café's data, started by a test message in Telegram's format. Step times are shortened.",
+  "prompt": "جدولي هالبوست على انستا يوم السبت الساعة 11 الصبح: صباحك أحلى مع Cold Brew منقوع 18 ساعة ☕ #بن_الصباح #BenAlSabah",
+  "promptTranslation": "Schedule this post on Instagram for Saturday at 11 AM: \"A better morning with Cold Brew, steeped for 18 hours\"",
   "nodes": [
     { "id": "trigger", "label": "Telegram", "kind": "trigger", "icon": "telegram", "position": { "x": 16, "y": 228 } },
     { "id": "orchestrator", "label": "Orchestrator", "kind": "agent", "icon": "bot", "position": { "x": 229, "y": 228 } },
-    { "id": "content", "label": "Content Agent", "kind": "agent", "icon": "bot", "position": { "x": 442, "y": 50 } },
-    { "id": "pinecone", "label": "Brand RAG", "kind": "rag", "icon": "vector", "position": { "x": 655, "y": 50 } },
-    { "id": "calendar", "label": "Calendar Agent", "kind": "agent", "icon": "bot", "position": { "x": 442, "y": 228 } },
-    { "id": "analyst", "label": "Analyst Agent", "kind": "agent", "icon": "bot", "position": { "x": 442, "y": 410 } },
-    { "id": "conflict", "label": "Conflict check", "kind": "tool", "icon": "code", "position": { "x": 655, "y": 170 } },
-    { "id": "approval", "label": "Owner approval", "kind": "tool", "icon": "approval", "position": { "x": 655, "y": 300 } },
-    { "id": "sheets", "label": "Google Sheets", "kind": "db", "icon": "sheets", "position": { "x": 868, "y": 300 } },
-    { "id": "reply", "label": "Telegram", "kind": "output", "icon": "telegram", "position": { "x": 868, "y": 120 } }
+    { "id": "content", "label": "content_agent", "kind": "agent", "icon": "bot", "position": { "x": 442, "y": 40 } },
+    { "id": "calendar", "label": "calendar_agent", "kind": "agent", "icon": "bot", "position": { "x": 442, "y": 228 } },
+    { "id": "analyst", "label": "analyst_agent", "kind": "agent", "icon": "bot", "position": { "x": 442, "y": 416 } },
+    { "id": "schedule", "label": "get_schedule", "kind": "db", "icon": "sheets", "position": { "x": 655, "y": 110 } },
+    { "id": "conflict", "label": "check_conflict", "kind": "tool", "icon": "code", "position": { "x": 655, "y": 228 } },
+    { "id": "approval", "label": "Approval", "kind": "tool", "icon": "approval", "position": { "x": 655, "y": 346 } },
+    { "id": "add", "label": "add_to_calendar", "kind": "db", "icon": "sheets", "position": { "x": 868, "y": 346 } },
+    { "id": "reply", "label": "Send Reply", "kind": "output", "icon": "telegram", "position": { "x": 868, "y": 110 } }
   ],
   "edges": [
     { "from": "trigger", "to": "orchestrator" },
     { "from": "orchestrator", "to": "content" },
     { "from": "orchestrator", "to": "calendar" },
     { "from": "orchestrator", "to": "analyst" },
-    { "from": "content", "to": "pinecone" },
+    { "from": "orchestrator", "to": "reply" },
+    { "from": "calendar", "to": "schedule" },
     { "from": "calendar", "to": "conflict" },
-    { "from": "conflict", "to": "approval" },
-    { "from": "approval", "to": "sheets" },
-    { "from": "sheets", "to": "reply" }
+    { "from": "calendar", "to": "approval" },
+    { "from": "approval", "to": "add" }
   ],
   "steps": [
     {
       "nodeId": "trigger",
       "durationMs": 700,
-      "log": "owner on the allowlist · language detected: en",
+      "log": "message prepared · reply language: ar",
       "view": "json",
-      "output": { "chat_id": "<redacted>", "input_type": "text", "reply_language": "en", "text": "Write me a post about the Cold Brew and schedule it Thursday at 7" }
+      "output": {
+        "chat_id": "<redacted>",
+        "user_text": "جدولي هالبوست على انستا يوم السبت الساعة 11 الصبح: صباحك أحلى مع Cold Brew منقوع 18 ساعة ☕ #بن_الصباح #BenAlSabah",
+        "is_voice": false,
+        "reply_language": "ar"
+      }
     },
     {
       "nodeId": "orchestrator",
-      "durationMs": 1200,
-      "log": "2 tasks: content, then schedule",
-      "view": "text",
-      "output": "Two tasks. The Content Agent writes the post first, then the Calendar Agent schedules it."
-    },
-    {
-      "nodeId": "content",
-      "durationMs": 900,
-      "log": "short, separate searches",
-      "view": "json",
-      "input": { "task": "Instagram post about the Cold Brew" },
-      "output": { "searches": ["Cold Brew", "Instagram rules", "current offers", "tone of voice"] }
-    },
-    {
-      "nodeId": "pinecone",
       "durationMs": 1000,
-      "log": "4 searches · brand knowledge",
+      "log": "delegates to calendar_agent",
+      "view": "json",
+      "output": {
+        "tool_call": "calendar_agent",
+        "request": { "post_text": "صباحك أحلى مع Cold Brew منقوع 18 ساعة ☕ #بن_الصباح #BenAlSabah", "platform": "Instagram", "date": "Saturday", "time": "11:00" }
+      }
+    },
+    {
+      "nodeId": "calendar",
+      "durationMs": 500,
+      "log": "reads the calendar first",
+      "view": "json",
+      "output": { "tool_call": "get_schedule" }
+    },
+    {
+      "nodeId": "schedule",
+      "durationMs": 800,
+      "log": "read: sheet · 7 rows",
       "view": "table",
       "output": {
-        "columns": ["Search", "Source"],
+        "columns": ["Post", "Date", "Time", "Platform", "Status"],
         "rows": [
-          ["Cold Brew", "Menu & prices"],
-          ["Instagram rules", "Platform rules"],
-          ["Current offers", "Offers"],
-          ["Tone of voice", "Brand guide"]
+          ["P-001", "2026-10-28", "19:00", "Instagram", "published"],
+          ["P-002", "2026-10-30", "14:00", "Facebook", "published"],
+          ["P-006", "2026-11-02", "19:00", "Instagram", "scheduled"],
+          ["P-003", "2026-11-03", "19:00", "Instagram", "scheduled"],
+          ["P-004", "2026-11-05", "19:00", "Instagram", "scheduled"],
+          ["P-005", "2026-11-06", "15:00", "WhatsApp", "scheduled"],
+          ["P-007", "2026-11-07", "19:00", "Instagram", "scheduled"]
         ]
       }
     },
     {
-      "nodeId": "content",
-      "durationMs": 1300,
-      "log": "caption ready",
-      "view": "text",
-      "output": "Instagram caption drafted with the café's voice and hashtags, using the price and offer found in the knowledge base."
-    },
-    {
-      "nodeId": "orchestrator",
-      "durationMs": 600,
-      "log": "post reviewed · delegating to Calendar Agent",
-      "view": "text",
-      "output": "The post looks right. Now the Calendar Agent can schedule it for Thursday at 7."
-    },
-    {
       "nodeId": "calendar",
-      "durationMs": 800,
-      "log": "requested: Thursday 19:00",
+      "durationMs": 400,
+      "log": "checks the slot in code",
       "view": "json",
-      "input": { "post": "Cold Brew", "requested": "Thursday 19:00" },
-      "output": { "tool_call": "check_conflicts" }
+      "input": { "date": "2026-11-07", "time": "11:00", "platform": "Instagram" },
+      "output": { "tool_call": "check_conflict" }
     },
     {
       "nodeId": "conflict",
-      "durationMs": 800,
-      "log": "slot taken · 2 free slots",
+      "durationMs": 900,
+      "log": "slot is free",
       "view": "json",
-      "input": { "slot": "Thursday 19:00" },
-      "output": { "conflict": true, "taken_by": "V60 post", "free_slots": ["Thursday 20:00", "Saturday 11:00"] }
+      "output": { "ok": true, "slot": "Saturday 2026-11-07 11:00", "is_past": false, "slot_taken": false, "conflicting_posts": [] }
+    },
+    {
+      "nodeId": "calendar",
+      "durationMs": 400,
+      "log": "asks to add the post",
+      "view": "json",
+      "output": { "tool_call": "add_to_calendar", "post_id": "P-008", "gate": "human approval required" }
     },
     {
       "nodeId": "approval",
       "durationMs": 1500,
-      "log": "paused until the owner approves",
+      "log": "workflow paused until the owner approved",
+      "view": "json",
+      "input": { "tool": "add_to_calendar", "post_id": "P-008", "platform": "Instagram", "date": "2026-11-07", "time": "11:00" },
+      "output": { "approved": true }
+    },
+    {
+      "nodeId": "add",
+      "durationMs": 900,
+      "log": "append: sheet · 1 row",
+      "view": "table",
+      "output": {
+        "columns": ["Post", "Date", "Time", "Platform", "Status", "Created by"],
+        "rows": [["P-008", "2026-11-07", "11:00", "Instagram", "scheduled", "AI"]]
+      }
+    },
+    {
+      "nodeId": "calendar",
+      "durationMs": 500,
+      "log": "reports back to the Orchestrator",
       "view": "chat",
       "output": {
         "messages": [
-          { "from": "bot", "text": "That slot is taken by the V60 post. Free slots: Thursday 20:00 or Saturday 11:00." },
-          { "from": "user", "text": "Saturday 11" },
-          { "from": "bot", "text": "Approve adding the Cold Brew post on Saturday at 11:00?" },
-          { "from": "user", "text": "Approve" }
+          { "from": "bot", "text": "✅ انضاف للجدول: P-008 — Instagram — السبت 2026-11-07 الساعة 11:00", "translation": "Added to the calendar: P-008, Instagram, Saturday 2026-11-07 at 11:00" }
         ]
       }
     },
     {
-      "nodeId": "sheets",
+      "nodeId": "orchestrator",
       "durationMs": 800,
-      "log": "append · 1 row, after approval",
-      "view": "table",
-      "input": { "operation": "append", "sheet": "Content Calendar" },
-      "output": {
-        "columns": ["Day", "Time", "Post", "Platform", "Status"],
-        "rows": [["Saturday", "11:00", "Cold Brew", "Instagram", "Scheduled"]]
-      }
+      "log": "reviews and writes the final answer",
+      "view": "text",
+      "output": "The calendar agent confirmed the post. One final answer goes back to the owner, in Arabic, because the request was in Arabic."
     },
     {
       "nodeId": "reply",
-      "durationMs": 700,
-      "log": "replied in the same format: text",
+      "durationMs": 600,
+      "log": "text in, so text out",
       "view": "json",
-      "output": { "ok": true, "format": "text" }
+      "output": { "is_voice": false, "format": "text" }
     }
   ],
   "result": {
@@ -133,10 +147,15 @@
     "data": {
       "bot": "Ben Al-Sabah Marketing Team",
       "messages": [
-        { "from": "user", "text": "Write me a post about the Cold Brew and schedule it Thursday at 7" },
-        { "from": "bot", "text": "That slot is taken by the V60 post. Free slots: Thursday 20:00 or Saturday 11:00." },
-        { "from": "user", "text": "Saturday 11" },
-        { "from": "bot", "text": "Done. The Cold Brew post is on the calendar for Saturday at 11:00, after your approval." }
+        {
+          "from": "user",
+          "text": "جدولي هالبوست على انستا يوم السبت الساعة 11 الصبح: صباحك أحلى مع Cold Brew منقوع 18 ساعة ☕ #بن_الصباح #BenAlSabah"
+        },
+        {
+          "from": "bot",
+          "text": "تمت جدولة المنشور بنجاح — الملخّص:\n\n- نص البوست (Instagram): صباحك أحلى مع Cold Brew منقوع 18 ساعة ☕ #بن_الصباح #BenAlSabah\n- منصة: Instagram\n- معرّف الجدولة: P-008\n- التاريخ والوقت: Saturday 07/11/2026 at 11:00",
+          "translation": "The post was scheduled. Instagram, ID P-008, Saturday 07/11/2026 at 11:00."
+        }
       ]
     }
   }

@@ -35,6 +35,10 @@ export type WorkflowScenario = {
   title: string;
   /** The user's trigger message. */
   prompt: string;
+  /** English version, shown under a prompt in another language. */
+  promptTranslation?: string;
+  /** Where a real run came from, shown beside the replay. */
+  runNote?: string;
   nodes: ReplayNode[];
   edges: ReplayEdge[];
   steps: ReplayStep[];

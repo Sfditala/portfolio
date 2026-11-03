@@ -200,9 +200,18 @@ export default async function CaseStudyPage({ params }: Props) {
                 {project.screenshots && (
                   <div className="grid gap-4 md:grid-cols-2">
                     {project.screenshots.map((shot) => (
-                      <div key={shot.src} className="relative aspect-[16/10] overflow-hidden rounded-xl border border-border bg-surface">
-                        <Image src={shot.src} alt={shot.alt} fill sizes="(min-width: 768px) 540px, 100vw" className="object-cover object-top" />
-                      </div>
+                      <figure key={shot.src}>
+                        <a
+                          href={shot.src}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="relative block aspect-[7/3] overflow-hidden rounded-xl border border-border bg-surface transition-colors hover:border-white/20"
+                        >
+                          <Image src={shot.src} alt={shot.alt} fill sizes="(min-width: 768px) 540px, 100vw" className="object-contain" />
+                          <span className="sr-only">(opens the full image)</span>
+                        </a>
+                        <figcaption className="mt-2 text-xs leading-relaxed text-text-dim">{shot.alt}</figcaption>
+                      </figure>
                     ))}
                   </div>
                 )}

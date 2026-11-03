@@ -49,7 +49,7 @@ Full steps: `src/content/workflows/README.md`.
 
 | What | Where |
 |---|---|
-| Real n8n execution exports, one per scenario | Convert with `npm run replay:convert`, then replace the JSON in `src/content/workflows/` |
+| Real runs: **done** for `ai-marketing-team` (execution #89) and `clinic-ai-receptionist` (#99). Still sample data for `telegram-ai-assistant` and `restaurant-voice-agent` | Convert with `npm run replay:convert`, then replace the JSON in `src/content/workflows/` |
 | Voice agent audio clip | `public/audio/order.mp3`, then set `result.audioSrc` in `restaurant-voice-agent.json` |
 
 Removing `"_placeholder": true` from a scenario changes its label from "Sample data" to "Replay of a real run". Only do that for a real run. **Read every value first: real executions can contain customer data.**
