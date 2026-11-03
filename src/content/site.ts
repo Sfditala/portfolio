@@ -73,12 +73,12 @@ export const about: {
     "Today I focus on one thing: finding the work your team repeats every week and handing it to agents that do it reliably. I care about systems that are clear to read, easy to hand over, and boring to run.",
   ],
   education: "AI & Data Science Engineering · University College of Applied Sciences (UCAS)",
-  // TODO(tala): certificates (name, issuer, year, link).
   certificates: [
-    // Add url: "https://…" to make a certificate link out.
-    { name: "[[TALA: certificate]]", issuer: "[[issuer]]", year: "[[year]]" },
-    { name: "[[TALA: certificate]]", issuer: "[[issuer]]", year: "[[year]]" },
-    { name: "[[TALA: certificate]]", issuer: "[[issuer]]", year: "[[year]]" },
+    { name: "Working with the OpenAI Responses API", issuer: "DataCamp", year: "2026", url: "/certificates/2026-10-12_Working_with_the_OpenAI_Responses_API_DataCamp.pdf" },
+    { name: "LLMOps Concepts", issuer: "DataCamp", year: "2026", url: "/certificates/2026-10-12_LLMOps_Concepts_DataCamp.pdf" },
+    { name: "Working with Hugging Face", issuer: "DataCamp", year: "2026", url: "/certificates/2026-10-07_Working_with_Hugging_Face_DataCamp.pdf" },
+    { name: "Prompt Engineering with the OpenAI API", issuer: "DataCamp", year: "2026", url: "/certificates/2026-10-07_Prompt_Engineering_with_the_OpenAI_API_DataCamp.pdf" },
+    { name: "Working with the OpenAI API", issuer: "DataCamp", year: "2026", url: "/certificates/2026-10-03_Working_with_the_OpenAI_API_DataCamp.pdf" },
   ],
 };
 
