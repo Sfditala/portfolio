@@ -325,6 +325,12 @@ export const projects: Project[] = [
     keywords: ["fashion","style","stylist","outfit","clothes","wardrobe","recommendation","موضة","أزياء","ستايل","ملابس","خزانة","لبس","توصيات"],
     liveUrl: "https://modavi.vercel.app/",
     image: "/modavi.png",
+    screenshots: [
+      { src: "/projects/modavi/today.png", alt: "The Today page, with an AI-picked outfit made from the user's own clothes" },
+      { src: "/projects/modavi/wardrobe.png", alt: "The digital wardrobe, with pieces filtered by category" },
+      { src: "/projects/modavi/outfits.png", alt: "Complete outfits the AI styled from the wardrobe" },
+      { src: "/projects/modavi/today-details.png", alt: "The outfit's pieces, a stylist note and matching accessories" },
+    ],
     problem:
       "Most people own plenty of clothes and still don't know what to wear. Generic style advice doesn't help, because it isn't built around the pieces in your own wardrobe.",
     solution:
