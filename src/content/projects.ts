@@ -323,7 +323,7 @@ export const projects: Project[] = [
       "An AI stylist for the clothes you already own. Add your pieces, and it builds complete outfits from them, picks your outfit of the day and suggests looks for each occasion.",
     stack: ["Next.js", "Groq", "Supabase", "Clerk", "Cloudinary", "Framer Motion"],
     keywords: ["fashion","style","stylist","outfit","clothes","wardrobe","recommendation","موضة","أزياء","ستايل","ملابس","خزانة","لبس","توصيات"],
-    liveUrl: "https://modavi.vercel.app/",
+    // TODO(tala): restore liveUrl "https://modavi.vercel.app/" once the app's Supabase project is back.
     image: "/modavi.png",
     screenshots: [
       { src: "/projects/modavi/today.png", alt: "The Today page, with an AI-picked outfit made from the user's own clothes" },
