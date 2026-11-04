@@ -49,6 +49,5 @@ The Hero's mini canvas in `src/components/sections/HeroWorkflow.tsx` has its own
 
 | What | Where |
 |---|---|
-| n8n booking workflow | Set `N8N_BOOKING_WEBHOOK_URL` and `N8N_BOOKING_WEBHOOK_SECRET`. See "Booking webhook" in `README.md` |
-| New Groq key | `GROQ_API_KEY`. The old key was public on the live site, so it must be replaced |
+| n8n booking workflow (optional) | Bookings currently go through the EmailJS form. To send them directly, set `N8N_BOOKING_WEBHOOK_URL` and `N8N_BOOKING_WEBHOOK_SECRET`. See "Booking webhook" in `README.md` |
 | Environment variables on Vercel | See "Environment variables" in `README.md` |
