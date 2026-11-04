@@ -153,23 +153,18 @@ export default async function CaseStudyPage({ params }: Props) {
             </ul>
           </Stop>
 
-          <Stop label="Results">
-            {project.results.length > 0 ? (
-              <>
-                <ul className="max-w-3xl list-disc space-y-2 pl-5 text-base leading-relaxed text-pretty text-text-muted marker:text-accent-bright">
-                  {project.results.map((result) => (
-                    <li key={result}>{result}</li>
-                  ))}
-                </ul>
-                {project.resultsNote && (
-                  <p className="mt-3 font-mono text-xs text-text-dim">{project.resultsNote}</p>
-                )}
-              </>
-            ) : (
-              // TODO(tala): real results for this project.
-              <Placeholder>[[TALA: real results]]</Placeholder>
-            )}
-          </Stop>
+          {project.results.length > 0 && (
+            <Stop label="Results">
+              <ul className="max-w-3xl list-disc space-y-2 pl-5 text-base leading-relaxed text-pretty text-text-muted marker:text-accent-bright">
+                {project.results.map((result) => (
+                  <li key={result}>{result}</li>
+                ))}
+              </ul>
+              {project.resultsNote && (
+                <p className="mt-3 font-mono text-xs text-text-dim">{project.resultsNote}</p>
+              )}
+            </Stop>
+          )}
 
           {project.challenges && (
             <Stop label="Challenges and fixes">

@@ -1,16 +1,31 @@
 import Image from "next/image";
 import type { Project } from "@/content/projects";
 
-/** The first screenshot if there is one; otherwise the white logo cover, inverted for the dark UI. */
+/** A designed thumbnail, the first screenshot, or the white logo cover inverted for the dark UI. */
 export default function ProjectCover({
   project,
   sizes,
+  thumbnail = false,
   className = "",
 }: {
   project: Project;
   sizes: string;
+  thumbnail?: boolean;
   className?: string;
 }) {
+  if (thumbnail) {
+    return (
+      <div className={`relative overflow-hidden bg-bg ${className}`}>
+        <Image
+          src={`/projects/covers/${project.slug}.webp`}
+          alt=""
+          fill
+          sizes={sizes}
+          className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+        />
+      </div>
+    );
+  }
   const screenshot = project.screenshots?.[0];
   if (!screenshot && !project.image) return null;
   return (

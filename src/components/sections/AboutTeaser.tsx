@@ -13,23 +13,24 @@ export default function AboutTeaser() {
     <Section id="about">
       <div className="grid items-start gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-16">
         <Reveal>
-          {/* Photo framed as a workflow node */}
-          <figure className="relative mx-auto max-w-xs rounded-2xl border border-border bg-surface p-2 lg:mx-0">
-            <span aria-hidden className="absolute top-1/2 -right-[5.5px] size-2.5 rounded-full border border-accent bg-bg" />
-            <div className="flex items-center justify-between px-2 pt-1 pb-2.5 font-mono text-[0.68rem] text-text-dim">
+          {/* Photo framed as a round workflow node */}
+          <figure className="relative mx-auto max-w-xs lg:mx-0">
+            <span aria-hidden className="absolute top-1/2 -right-[5.5px] z-10 size-2.5 rounded-full border border-accent bg-bg" />
+            <Image
+              src="/profile.jpg"
+              alt="Portrait of Tala Safadi with her red pixel robot"
+              width={640}
+              height={640}
+              sizes="320px"
+              className="aspect-square w-full rounded-full object-cover"
+            />
+            <figcaption className="relative z-10 mx-auto -mt-5 flex w-fit items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-2 font-mono text-[0.68rem] text-text-dim">
               <span>tala.safadi</span>
+              <span aria-hidden>·</span>
               <span className="flex items-center gap-1.5">
                 <span aria-hidden className="size-1.5 rounded-full bg-success" /> human in the loop
               </span>
-            </div>
-            <Image
-              src="/profile.jpg"
-              alt="Portrait of Tala Safadi"
-              width={480}
-              height={640}
-              sizes="320px"
-              className="aspect-[4/5] w-full rounded-xl object-cover object-top grayscale-[25%]"
-            />
+            </figcaption>
           </figure>
         </Reveal>
 

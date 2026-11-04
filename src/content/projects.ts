@@ -22,7 +22,7 @@ export type Project = {
   problem: string;
   solution: string;
   capabilities: string[];
-  /** Only real outcomes. Empty shows a [[TALA]] placeholder. */
+  /** Only real outcomes. Empty hides the section. */
   results: string[];
   /** Context for the results, e.g. how they were measured. */
   resultsNote?: string;

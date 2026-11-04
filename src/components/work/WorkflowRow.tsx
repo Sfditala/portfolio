@@ -4,12 +4,20 @@ import { ArrowRight } from "lucide-react";
 import { NodeIcon } from "@/components/workflow/icons";
 import { projectUrl, type Project } from "@/content/projects";
 import { scenarioForProject } from "@/content/workflows";
+import ProjectCover from "./ProjectCover";
 
 /** A full-width row for an automation, with its nodes as a chain of icons. */
 export default function WorkflowRow({ project, index }: { project: Project; index: number }) {
   const scenario = scenarioForProject(project.slug);
   return (
-    <article className="group relative rounded-2xl border border-border bg-surface p-6 transition-colors duration-200 hover:border-white/20 sm:p-8">
+    <article className="group relative grid overflow-hidden rounded-2xl border border-border bg-surface transition-colors duration-200 hover:border-white/20 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
+      <ProjectCover
+        project={project}
+        thumbnail
+        sizes="(min-width: 768px) 380px, 100vw"
+        className="aspect-[16/10] border-b border-border md:aspect-auto md:min-h-full md:border-r md:border-b-0"
+      />
+      <div className="min-w-0 p-6 sm:p-8">
       <div className="flex items-start justify-between gap-6">
         <div className="min-w-0">
           <p className="font-mono text-xs text-text-dim">
@@ -40,6 +48,7 @@ export default function WorkflowRow({ project, index }: { project: Project; inde
           ))}
         </div>
       )}
+      </div>
     </article>
   );
 }

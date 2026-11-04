@@ -51,16 +51,15 @@ export default function AboutPage() {
             </AgentButton>
           </div>
 
-          <figure className="mx-auto w-full max-w-xs rounded-2xl border border-border bg-surface p-2 lg:mx-0 lg:ml-auto">
-            {/* TODO(tala): swap in the newer professional photo if you have one. */}
+          <figure className="mx-auto w-full max-w-xs lg:mx-0 lg:ml-auto">
             <Image
               src="/profile.jpg"
-              alt="Portrait of Tala Safadi"
+              alt="Portrait of Tala Safadi with her red pixel robot"
               width={640}
-              height={853}
+              height={640}
               priority
               sizes="(min-width: 1024px) 320px, 90vw"
-              className="aspect-[4/5] w-full rounded-xl object-cover object-top grayscale-[25%]"
+              className="aspect-square w-full rounded-full object-cover"
             />
           </figure>
         </Container>
