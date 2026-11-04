@@ -8,6 +8,8 @@ export type Lead = {
   current_tools?: string;
   timeline?: string;
   timezone?: string;
+  /** Set only for the client, to pre-fill the booking form. */
+  preferred_time?: string;
 };
 
 export type ToolStatus = "running" | "done" | "error";

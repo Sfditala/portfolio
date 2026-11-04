@@ -12,7 +12,7 @@ const PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 const field =
   "w-full rounded-lg border border-border bg-bg px-3 py-2 text-sm text-text placeholder:text-text-dim focus:border-accent/60 focus:outline-none";
 
-/** Fallback when the agent or webhook is unavailable, so no lead is ever lost. */
+/** Sends the request by email when there is no webhook, or when the agent or webhook fails, so no lead is ever lost. */
 export default function BookingForm({
   lead,
   onBooked,
@@ -67,7 +67,7 @@ export default function BookingForm({
       </label>
       <label className="block">
         <span className="sr-only">Preferred time</span>
-        <input name="time" required maxLength={200} placeholder="Preferred time and timezone" dir="auto" className={field} />
+        <input name="time" required maxLength={200} defaultValue={lead.preferred_time} placeholder="Preferred time and timezone" dir="auto" className={field} />
       </label>
 
       {status === "error" && (

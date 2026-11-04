@@ -218,9 +218,9 @@ export async function runTool(
       return {
         result: booked
           ? { booked: true, note: "Request sent. Tala will confirm the time by email." }
-          : { booked: false, fallback: true, note: "Booking is unavailable right now. A short form has appeared in the chat." },
+          : { booked: false, fallback: true, note: "One step left: the visitor sends the pre-filled form that has appeared in the chat. Tell them this in the same language as their latest message, even if that is not English." },
         events: [
-          { type: "lead", lead: merged },
+          { type: "lead", lead: { ...merged, preferred_time: slots.join(", ") } },
           { type: "booking", status: booked ? "confirmed" : "fallback" },
         ],
         lead: merged,
