@@ -39,7 +39,7 @@ Full steps: `src/content/workflows/README.md`.
 
 | What | Where |
 |---|---|
-| Real runs: **done** for `ai-marketing-team` (execution #89) and `clinic-ai-receptionist` (#99). Still sample data for `telegram-ai-assistant`, whose workflow is in `04_Learning_Training/n8n_Workflows` but has no execution on the connected n8n account | Convert with `npm run replay:convert`, then replace the JSON in `src/content/workflows/` |
+| Real runs: **done** for `ai-marketing-team` (execution #89) and `clinic-ai-receptionist` (#99). Still sample data for `telegram-ai-assistant`: its structure matches the exported workflow, but its n8n account is suspended and the exports hold no execution data | Convert with `npm run replay:convert`, then replace the JSON in `src/content/workflows/` |
 
 Removing `"_placeholder": true` from a scenario changes its label from "Sample data" to "Replay of a real run". Only do that for a real run. **Read every value first: real executions can contain customer data.**
 
