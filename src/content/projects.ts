@@ -350,7 +350,13 @@ export const projects: Project[] = [
     stack: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase", "Dexie.js", "Serwist (PWA)", "Web Push", "Capacitor", "Vercel", "GitHub Actions"],
     keywords: ["education","students","study","school","exam","tawjihi","learning","offline","pwa","mobile app","android","تعليم","طلاب","طلبة","مذاكرة","دراسة","توجيهي","امتحان","مدرسة","تطبيق"],
     liveUrl: "https://wejhet-ashwas.vercel.app/app",
-    screenshots: [{ src: "/projects/wejhet-ashwas/login.png", alt: "Wejhet Ashwas sign-in screen" }],
+    screenshots: [
+      { src: "/projects/wejhet-ashwas/today.png", alt: "The student's Today page, with daily stats and a getting-started checklist" },
+      { src: "/projects/wejhet-ashwas/schedule.png", alt: "The schedule builder, with manual, assisted and automatic modes" },
+      { src: "/projects/wejhet-ashwas/pomodoro.png", alt: "The Pomodoro timer, linked to a study task" },
+      { src: "/projects/wejhet-ashwas/doubts.png", alt: "The doubts box, for questions saved while studying" },
+      { src: "/projects/wejhet-ashwas/compete.png", alt: "The optional leaderboard, with student nicknames blurred" },
+    ],
     problem:
       "Tawjihi students juggle school, private lessons and their own studying, often with no clear view of where they're strong or weak. Frequent internet cuts make most online tools unreliable when they need them.",
     solution:
