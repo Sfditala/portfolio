@@ -14,7 +14,7 @@ const person = {
   jobTitle: site.title,
   description: site.positioning,
   url: site.url,
-  image: `${site.url}/profile.jpg`,
+  image: `${site.url}/tala-safadi.jpg`,
   email: `mailto:${site.email}`,
   sameAs: Object.values(site.socials),
   worksFor: organization,

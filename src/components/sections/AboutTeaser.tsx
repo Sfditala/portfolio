@@ -17,12 +17,12 @@ export default function AboutTeaser() {
           <figure className="relative mx-auto max-w-xs lg:mx-0">
             <span aria-hidden className="absolute top-1/2 -right-[5.5px] z-10 size-2.5 rounded-full border border-accent bg-bg" />
             <Image
-              src="/profile.jpg"
+              src="/tala-safadi.jpg"
               alt="Portrait of Tala Safadi with her red pixel robot"
               width={640}
               height={640}
               sizes="320px"
-              className="aspect-square w-full rounded-full object-cover"
+              className="aspect-square w-full rounded-full border-[6px] border-accent-solid object-cover"
             />
             <figcaption className="relative z-10 mx-auto -mt-5 flex w-fit items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-2 font-mono text-[0.68rem] text-text-dim">
               <span>tala.safadi</span>

@@ -16,7 +16,7 @@ File: `src/content/site.ts`
 |---|---|
 | Certificates: 5 added. New ones go in `about.certificates`, with the PDF in `public/certificates/` | `about.certificates` |
 
-Newer photo: replace `public/profile.jpg`, keeping the filename. If the crop looks off, adjust the avatar in `src/components/sections/Hero.tsx`.
+Newer photo: add a square image under a new filename in `public/`, then update it in `about/page.tsx`, `AboutTeaser.tsx` and `JsonLd.tsx`. A new filename avoids showing the old image from cache.
 
 ## Per project
 

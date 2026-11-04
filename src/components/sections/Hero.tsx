@@ -52,16 +52,15 @@ export default function Hero() {
           </div>
 
           <div className="mt-12 flex items-center gap-4 border-t border-border pt-6">
-            {/* The photo is full-length; zoom toward the face for the avatar. */}
-            <div className="size-12 shrink-0 overflow-hidden rounded-full border border-border">
+            <div className="size-12 shrink-0 overflow-hidden rounded-full border border-accent-solid">
               <Image
-                src="/profile.jpg"
+                src="/tala-safadi.jpg"
                 alt="Tala Safadi"
                 width={240}
-                height={320}
+                height={240}
                 sizes="120px"
                 priority
-                className="size-full origin-[50%_24%] scale-[2.4] object-cover grayscale-[35%]"
+                className="size-full object-cover"
               />
             </div>
             <div className="min-w-0 text-sm leading-snug">

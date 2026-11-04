@@ -53,13 +53,13 @@ export default function AboutPage() {
 
           <figure className="mx-auto w-full max-w-xs lg:mx-0 lg:ml-auto">
             <Image
-              src="/profile.jpg"
+              src="/tala-safadi.jpg"
               alt="Portrait of Tala Safadi with her red pixel robot"
               width={640}
               height={640}
               priority
               sizes="(min-width: 1024px) 320px, 90vw"
-              className="aspect-square w-full rounded-full object-cover"
+              className="aspect-square w-full rounded-full border-[6px] border-accent-solid object-cover"
             />
           </figure>
         </Container>
